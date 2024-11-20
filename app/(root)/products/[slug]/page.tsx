@@ -1,9 +1,9 @@
 
 
-function page() {
+function SlugPage() {
     return (
         <div>slug page</div>
     )
 }
 
-export default page
+export default SlugPage

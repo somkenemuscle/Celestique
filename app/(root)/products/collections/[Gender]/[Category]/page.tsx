@@ -1,8 +1,8 @@
 
-function page() {
+function CategoryProductsPage() {
   return (
     <div>category page</div>
   )
 }
 
-export default page
+export default CategoryProductsPage

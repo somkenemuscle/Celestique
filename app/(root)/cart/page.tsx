@@ -1,8 +1,8 @@
 
-function page() {
+function  CartPage() {
     return (
       <div>cart page</div>
     )
   }
   
-  export default page
+  export default  CartPage
