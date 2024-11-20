@@ -1,4 +1,4 @@
-import PaymentButton from '../components/PaymentButton'
+import PaymentButton from '../../components/PaymentButton'
 export default function Home() {
   return (
     <div>
