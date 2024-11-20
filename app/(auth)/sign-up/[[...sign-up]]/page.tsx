@@ -1,6 +1,7 @@
 const SignUpPage = () => {
     return (
         <main>
+            signup
         </main>
     )
 }
