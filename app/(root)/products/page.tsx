@@ -33,7 +33,7 @@ function Page() {
       <h1>All Products</h1>
       <ul>
         {products.map((product: any) => (
-          <Link href={`/products/${product._id}`}>
+          <Link href={`/products/${product.slug}`}>
             <li key={product._id}>{product.name} - {product.price}</li>
           </Link>
         ))}

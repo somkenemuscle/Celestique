@@ -1,7 +1,8 @@
 
+
 function page() {
     return (
-        <div>WoMennnnn page</div>
+        <div>slug page</div>
     )
 }
 

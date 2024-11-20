@@ -1,7 +1,7 @@
 
 function page() {
   return (
-    <div>all men page</div>
+    <div>all gender page</div>
   )
 }
 

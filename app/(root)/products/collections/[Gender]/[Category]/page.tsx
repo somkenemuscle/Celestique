@@ -1,7 +1,7 @@
 
 function page() {
   return (
-    <div>Mennnnn page</div>
+    <div>category page</div>
   )
 }
 
