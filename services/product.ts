@@ -6,7 +6,14 @@ export const getAllProducts = async () => {
 };
 
 
-export const getProductByGenderAndCategory = async (gender: string, category: string) => {
+export const getProductByGender = async (gender: string) => {
+    const response = await axiosInstance.get(`/products/${gender}`);
+    return response.data;
+};
+
+
+
+export const getProductByGenderAndCategory = async (gender: any, category: any) => {
     const response = await axiosInstance.get(`/products/${gender}/${category}`);
     return response.data;
 };
