@@ -6,8 +6,8 @@ export const getAllProducts = async () => {
 };
 
 
-export const getProductByGender = async (gender: string) => {
-    const response = await axiosInstance.get(`/products/${gender}`);
+export const getProductByGender = async (gender: any) => {
+    const response = await axiosInstance.get(`/products/${gender}/all`);
     return response.data;
 };
 
