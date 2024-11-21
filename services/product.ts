@@ -10,3 +10,10 @@ export const getProductByGenderAndCategory = async (gender: string, category: st
     const response = await axiosInstance.get(`/products/${gender}/${category}`);
     return response.data;
 };
+
+
+export const getProductBySlug = async (slug:string) => {
+    const response = await axiosInstance.get(`/products/${slug}`);
+    console.log(response.data)
+    return response.data;
+};
