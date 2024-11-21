@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getAllProducts } from "@/services/product";
 import Loader from "@/components/ui/Loader";
 import Link from "next/link";
-
+import Image from "next/image";
 
 function ViewAllProductsPage() {
   const [products, setProducts] = useState([]);
@@ -36,6 +36,10 @@ function ViewAllProductsPage() {
         {products.map((product: any) => (
           <Link key={product._id} href={`/products/${product.slug}`}>
             <li >{product.name} - {product.price}</li>
+            <img
+              src={product.images[0]}
+              alt="Product-Image"
+            />
           </Link>
         ))}
       </ul>
