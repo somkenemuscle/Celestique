@@ -5,7 +5,7 @@ import { getProductBySlug } from "@/services/product";
 import Loader from "@/components/ui/Loader";
 import Link from "next/link";
 
-function Slugpage({ params: { slug } }:{ params: { slug:string } }) {
+function Slugpage({ params: { slug } }: { params: { slug: string } }) {
 
     type Product = {
         _id: string;
@@ -38,12 +38,12 @@ function Slugpage({ params: { slug } }:{ params: { slug:string } }) {
 
     return (
         <div>
-      <h1>All Products</h1>
-      <ul>
-            <li key={product._id}>{product.name} - {product.price}</li>
+            <h1>All Products</h1>
+            <ul>
+                <li key={product._id}>{product.name} - {product.price}</li>
 
-      </ul>
-    </div>
+            </ul>
+        </div>
     )
 }
 

@@ -5,6 +5,7 @@ import { getAllProducts } from "@/services/product";
 import Loader from "@/components/ui/Loader";
 import Link from "next/link";
 
+
 function ViewAllProductsPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);

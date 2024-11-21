@@ -23,7 +23,7 @@ const PaymentButton = () => {
     return (
         <div>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-            <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Amount" />
+            <input type="number" value={amount} onChange={(e) => setAmount(Number(e.target.value))} placeholder="Amount" />
             <button onClick={handlePayment}>Pay Now</button>
         </div>
     );
