@@ -5,7 +5,7 @@ import { getProductBySlug } from "@/services/product";
 import Loader from "@/components/ui/Loader";
 import Link from "next/link";
 
-function page({ params: { slug } }:{ params: { slug:string } }) {
+function Slugpage({ params: { slug } }:{ params: { slug:string } }) {
 
     type Product = {
         _id: string;
@@ -47,4 +47,4 @@ function page({ params: { slug } }:{ params: { slug:string } }) {
     )
 }
 
-export default page
+export default Slugpage

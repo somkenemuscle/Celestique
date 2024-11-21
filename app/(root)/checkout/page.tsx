@@ -1,8 +1,8 @@
 
-function page() {
+function Checkoutpage() {
     return (
         <div>checkout page</div>
     )
 }
 
-export default page
+export default Checkoutpage
