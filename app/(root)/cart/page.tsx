@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Loader from "@/components/ui/Loader";
 import Image from "next/image";
 import { getCart } from "@/services/cart";
+import Link from "next/link";
 
 function CartPage() {
 
@@ -52,6 +53,10 @@ function CartPage() {
       ))}
 
       <div>total price: ₦{totalPrice}</div>
+
+      <Link href={'/checkout'}>
+        <button className="p-4 bg-black text-white mb-10">Checkout</button>
+      </Link>
 
     </div>
   )
