@@ -7,11 +7,6 @@ import Link from "next/link";
 
 function Slugpage({ params: { slug } }: { params: { slug: string } }) {
 
-    type Product = {
-        _id: string;
-        name: string;
-        price: string;
-    };
 
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
@@ -41,6 +36,15 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
             <h1>All Products</h1>
             <ul>
                 <li key={product._id}>{product.name} - {product.price}</li>
+                <li>{product.quantity} Units left</li>
+                <img src={product.images[0]} alt="" />
+                <li>{product.description}</li>
+                <li>{product.sizes}</li>
+                <li>{product.colors}</li>
+
+
+
+
 
             </ul>
         </div>
