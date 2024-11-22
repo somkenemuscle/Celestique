@@ -8,7 +8,6 @@ import Image from "next/image";
 
 function Slugpage({ params: { slug } }: { params: { slug: string } }) {
 
-
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -28,15 +27,15 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
         fetchProducts();
     }, [slug]);
 
+
     if (loading || !product) return <div className="bg-black"><Loader /></div>;
     if (error) return <div>Error: {error}</div>;
 
 
     return (
         <div>
-            <h1>All Products</h1>
             <ul>
-                <li key={product._id}>{product.name} - {product.price}</li>
+                <li>{product.name} - ₦{product.price}</li>
                 <li>{product.quantity} Units left</li>
                 <Image
                     src={product.images[0]}
@@ -52,4 +51,4 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     )
 }
 
-export default Slugpage
+export default Slugpage;

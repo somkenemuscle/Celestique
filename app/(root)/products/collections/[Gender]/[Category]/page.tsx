@@ -50,7 +50,7 @@ function CategoryAndGenderProductsPage() {
                 width={500}
                 height={500}
               />
-              <p>Price: ${product.price}</p>
+              <p>Price: ₦{product.price}</p>
             </li>
           ))}
         </ul>

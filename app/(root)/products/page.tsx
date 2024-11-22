@@ -5,7 +5,7 @@ import { getAllProducts } from "@/services/product";
 import Loader from "@/components/ui/Loader";
 import Link from "next/link";
 import Image from "next/image";
-import { Span } from "next/dist/trace";
+
 
 function ViewAllProductsPage() {
   const [products, setProducts] = useState([]);
@@ -36,8 +36,7 @@ function ViewAllProductsPage() {
       <ul>
         {products.map((product: any) => (
           <Link key={product._id} href={`/products/${product.slug}`}>
-            <li >{product.name} - {product.price} - {product.quantity === 0 && <span>Sold Out</span>}</li>
-
+            <li >{product.name} - ₦{product.price} {product.quantity === 0 && <span>Sold Out</span>}</li>
             <Image
               src={product.images[0]}
               alt="Product-Image"

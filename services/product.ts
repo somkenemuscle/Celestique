@@ -6,6 +6,7 @@ export const getAllProducts = async () => {
     return response.data;
 };
 
+
 // GET ALL PRODUCTS FOR A GENDER
 export const getProductByGender = async (gender: string | string[]) => {
     // Normalize gender to a string
@@ -15,6 +16,7 @@ export const getProductByGender = async (gender: string | string[]) => {
     const response = await axiosInstance.get(`/products/${genderString}/all`);
     return response.data;
 };
+
 
 // GET ALL PRODUCTS FOR GENDER AND CATEGORY
 export const getProductByGenderAndCategory = async (gender: string | string[], category: string | string[]) => {
@@ -27,9 +29,10 @@ export const getProductByGenderAndCategory = async (gender: string | string[], c
     return response.data;
 };
 
+
+
 //GET A SPECIFIC PRODUCT BY ITS SLUG
 export const getProductBySlug = async (slug: string) => {
     const response = await axiosInstance.get(`/products/${slug}`);
-    console.log(response.data)
     return response.data;
 };
