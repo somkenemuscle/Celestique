@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { getProductBySlug } from "@/services/product";
 import Loader from "@/components/ui/Loader";
-import Link from "next/link";
+import Image from "next/image";
+
 
 function Slugpage({ params: { slug } }: { params: { slug: string } }) {
 
@@ -37,15 +38,15 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
             <ul>
                 <li key={product._id}>{product.name} - {product.price}</li>
                 <li>{product.quantity} Units left</li>
-                <img src={product.images[0]} alt="" />
+                <Image
+                    src={product.images[0]}
+                    alt="Product-Image"
+                    width={500}
+                    height={500}
+                />
                 <li>{product.description}</li>
                 <li>{product.sizes}</li>
                 <li>{product.colors}</li>
-
-
-
-
-
             </ul>
         </div>
     )

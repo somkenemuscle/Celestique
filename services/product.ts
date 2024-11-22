@@ -6,16 +6,24 @@ export const getAllProducts = async () => {
     return response.data;
 };
 
-//GET ALL PRODUCTS FOR A GENDER
-export const getProductByGender = async (gender: string) => {
-    const response = await axiosInstance.get(`/products/${gender}/all`);
+// GET ALL PRODUCTS FOR A GENDER
+export const getProductByGender = async (gender: string | string[]) => {
+    // Normalize gender to a string
+    const genderString = Array.isArray(gender) ? gender[0] : gender;
+
+    // Make the API call with the normalized gender
+    const response = await axiosInstance.get(`/products/${genderString}/all`);
     return response.data;
 };
 
+// GET ALL PRODUCTS FOR GENDER AND CATEGORY
+export const getProductByGenderAndCategory = async (gender: string | string[], category: string | string[]) => {
+    // Normalize gender and category to strings
+    const genderString = Array.isArray(gender) ? gender[0] : gender;
+    const categoryString = Array.isArray(category) ? category[0] : category;
 
-//GET ALL PRODUCTS FOR GENDER AND CATEGORY
-export const getProductByGenderAndCategory = async (gender: string, category: string) => {
-    const response = await axiosInstance.get(`/products/${gender}/${category}`);
+    // Make the API call with normalized values
+    const response = await axiosInstance.get(`/products/${genderString}/${categoryString}`);
     return response.data;
 };
 

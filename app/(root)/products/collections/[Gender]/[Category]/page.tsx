@@ -3,37 +3,38 @@
 import { useEffect, useState } from 'react';
 import { getProductByGenderAndCategory } from '@/services/product';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
+
 
 function CategoryAndGenderProductsPage() {
   const params = useParams();
-  const [products, setProducts] = useState<any[]>([]); // Define state to store the products
-  const [loading, setLoading] = useState(true); // State for loading status
-  const [error, setError] = useState<string | null>(null); // State for error handling
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const { Gender, Category } = params; // Extract Gender and Category from URL params
+  const { Gender, Category } = params;
 
   useEffect(() => {
-    // Function to fetch products based on Gender and Category
     const fetchProducts = async () => {
       if (Gender && Category) {
         try {
-          setLoading(true); // Set loading to true before fetching
-          const fetchedProducts = await getProductByGenderAndCategory(Gender, Category); // Fetch products
-          setProducts(fetchedProducts.products); // Update state with fetched products
+          setLoading(true);
+          const fetchedProducts = await getProductByGenderAndCategory(Gender, Category);
+          setProducts(fetchedProducts.products);
         } catch (err) {
-          setError('Failed to load products'); // Error handling
+          setError('Failed to load products');
         } finally {
-          setLoading(false); // Set loading to false after fetching
+          setLoading(false);
         }
       }
     };
 
-    fetchProducts(); // Call the fetch function when Gender or Category changes
+    fetchProducts();
 
-  }, [Gender, Category]); // Run the effect when Gender or Category changes
+  }, [Gender, Category]);
 
-  if (loading) return <div>Loading...</div>; // Show loading state while fetching data
-  if (error) return <div>{error}</div>; // Show error message if there is an error
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div>
@@ -43,7 +44,12 @@ function CategoryAndGenderProductsPage() {
           {products.map((product: any) => (
             <li key={product._id}>
               <h3>{product.name}</h3>
-              <img src={product.images[0]} alt={product.name} />
+              <Image
+                src={product.images[0]}
+                alt="Product-Image"
+                width={500}
+                height={500}
+              />
               <p>Price: ${product.price}</p>
             </li>
           ))}

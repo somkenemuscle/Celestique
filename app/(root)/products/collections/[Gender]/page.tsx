@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { getProductByGender } from '@/services/product';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
+
 
 function GenderProductsPage() {
   const params = useParams();
@@ -43,7 +45,12 @@ function GenderProductsPage() {
           {products.map((product: any) => (
             <li key={product._id}>
               <h3>{product.name}</h3>
-              <img src={product.images[0]} alt={product.name} />
+              <Image
+                src={product.images[0]}
+                alt="Product-Image"
+                width={500}
+                height={500}
+              />
               <p>Price: ${product.price}</p>
             </li>
           ))}

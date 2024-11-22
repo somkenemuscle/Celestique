@@ -38,9 +38,11 @@ function ViewAllProductsPage() {
           <Link key={product._id} href={`/products/${product.slug}`}>
             <li >{product.name} - {product.price} - {product.quantity === 0 && <span>Sold Out</span>}</li>
 
-            <img
+            <Image
               src={product.images[0]}
               alt="Product-Image"
+              width={500}
+              height={500}
             />
           </Link>
         ))}
