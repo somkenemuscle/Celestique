@@ -19,6 +19,10 @@ function Navbar() {
                 Login</button>
             </Link>
 
+            <Link href={'/cart'}><button className='bg-slate-700 p-4'>
+                Cart</button>
+            </Link>
+
             <Link href={'/products'}><button className='bg-slate-700 p-4'>
                 Search</button>
             </Link>

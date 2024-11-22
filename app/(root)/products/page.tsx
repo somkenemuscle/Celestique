@@ -6,7 +6,6 @@ import Loader from "@/components/ui/Loader";
 import Link from "next/link";
 import Image from "next/image";
 
-
 function ViewAllProductsPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
