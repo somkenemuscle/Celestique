@@ -43,15 +43,15 @@ function CartPage() {
             height={500}
           />
           <li>{item.product.name}</li>
-          <li>{item.size}</li>
-          <li>{item.color}</li>
-          <li>{item.quantity}</li>
-          <li>₦{item.subtotal}</li>
+          <li>size: {item.size}</li>
+          <li>color: {item.color}</li>
+          <li>quantity: {item.quantity}</li>
+          <li>subtotal: ₦{item.subtotal}</li>
           <hr />
         </ul>
       ))}
 
-      <div>₦{totalPrice}</div>
+      <div>total price: ₦{totalPrice}</div>
 
     </div>
   )
