@@ -10,3 +10,8 @@ export const addToCart = async (productId: string, quantity: number, size: strin
     });
     return response.data;
 };
+
+export const getCart = async () => {
+    const response = await axiosInstance.get('/cart')
+    return response.data;
+};
