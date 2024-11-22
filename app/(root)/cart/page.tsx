@@ -8,8 +8,7 @@ import Link from "next/link";
 
 function CartPage() {
 
-  const [cartItems, setCartItems] = useState<CartItems | null>(null);
-  const [totalPrice, setTotalPrice] = useState<string | null>(null);
+  const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -17,8 +16,8 @@ function CartPage() {
     async function fetchCartItems() {
       try {
         const res = await getCart();
-        setTotalPrice(res.cart.totalPrice)
-        setCartItems(res.cart.items)
+        setCart(res.cart)
+        console.log(res.cart)
       } catch (err: any) {
         setError(err.message || "Failed to fetch items");
       } finally {
@@ -29,31 +28,34 @@ function CartPage() {
     fetchCartItems();
   }, []);
 
-  if (loading || !cartItems) return <div className="bg-black"><Loader /></div>;
+  if (loading || !cart) return <div className="bg-black"><Loader /></div>;
   if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
       <h1>cart</h1>
-      {cartItems.map((item: any) => (
-        <ul key={item._id}>
-          <Image
-            src={item.product.images[0]}
-            alt="item-Image"
-            width={500}
-            height={500}
-          />
-          <li>{item.product.name}</li>
-          <li>size: {item.size}</li>
-          <li>color: {item.color}</li>
-          <li>quantity: {item.quantity}</li>
-          <li>subtotal: ₦{item.subtotal}</li>
-          <hr />
-        </ul>
-      ))}
 
-      <div>total price: ₦{totalPrice}</div>
-
+      <ul>
+        {cart.items.map((item: any) => (
+          <>
+            <Image
+              src={item.product.images[0]}
+              alt="item-Image"
+              width={500}
+              height={500} />
+            <li>{item.product.name}</li>
+            <li>size: {item.size}</li>
+            <li>color: {item.color}</li>
+            <li>quantity: {item.quantity}</li>
+            <li>subtotal: ₦{item.subtotal}</li>
+          </>
+        ))}
+        <hr/>
+        <li>subtotal: ₦{cart.subtotal}</li>
+        <li>delivery Fee: ₦{cart.deliveryFee}</li>
+        <li>Total Price: ₦{cart.totalPrice}</li>
+        <hr/>
+      </ul>
       <Link href={'/checkout'}>
         <button className="p-4 bg-black text-white mb-10">Checkout</button>
       </Link>

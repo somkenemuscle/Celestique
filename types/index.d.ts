@@ -11,7 +11,15 @@ type Product = {
     gender: string;
 };
 
-type CartItems=CartItem[]
+type Cart={
+    _id:string;
+    user:string;
+    items:CartItem[];
+    deliveryFee:string;
+    totalPrice:string;
+    subtotal:string;
+ 
+}
 
 type CartItem = {
     _id: string;
