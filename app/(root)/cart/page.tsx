@@ -17,7 +17,6 @@ function CartPage() {
       try {
         const res = await getCart();
         setCart(res.cart)
-        console.log(res.cart)
       } catch (err: any) {
         setError(err.message || "Failed to fetch items");
       } finally {
@@ -36,8 +35,8 @@ function CartPage() {
       <h1>cart</h1>
 
       <ul>
-        {cart.items.map((item: any) => (
-          <>
+        {cart.items.map((item: any, index) => (
+          <span key={index}>
             <Image
               src={item.product.images[0]}
               alt="item-Image"
@@ -48,13 +47,11 @@ function CartPage() {
             <li>color: {item.color}</li>
             <li>quantity: {item.quantity}</li>
             <li>subtotal: ₦{item.subtotal}</li>
-          </>
+          </span>
         ))}
-        <hr/>
+        <hr />
         <li>subtotal: ₦{cart.subtotal}</li>
-        <li>delivery Fee: ₦{cart.deliveryFee}</li>
-        <li>Total Price: ₦{cart.totalPrice}</li>
-        <hr/>
+        <hr />
       </ul>
       <Link href={'/checkout'}>
         <button className="p-4 bg-black text-white mb-10">Checkout</button>
