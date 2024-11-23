@@ -6,6 +6,7 @@ import Image from "next/image";
 import { getCart } from "@/services/cart";
 import Link from "next/link";
 
+
 function CartPage() {
 
   const [cart, setCart] = useState<Cart | null>(null);

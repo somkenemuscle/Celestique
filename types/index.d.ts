@@ -1,4 +1,4 @@
-type Product = {
+interface Product {
     _id: string;
     name: string;
     price: string;
@@ -11,21 +11,37 @@ type Product = {
     gender: string;
 };
 
-type Cart={
-    _id:string;
-    user:string;
-    items:CartItem[];
-    deliveryFee:string;
-    totalPrice:string;
-    subtotal:string;
- 
+interface CartItem {
+    product: string;
+    quantity: number;
+    color: string;
+    size: string;
+    subtotal: number;
 }
 
-type CartItem = {
-    _id: string;
-    quantity: string;
-    product: Product;
-    subtotal:string;
-    color: string; // Array of strings
-    size: string;  // Array of strings
+interface Cart {
+    items: CartItem[];
+    subtotal: number;
+    deliveryFee: number;
+    totalPrice: number;
+}
+
+interface ShippingAddress {
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    state: string;
+    postalCode?: string;
+    country: string;
+    phoneNumber: string;
+}
+
+interface ShippingAddressFormProps {
+    onSubmit: (data: ShippingAddress) => void;
+}
+
+type VerifyPaymentContentProps = {
+    reference?: string;
   };
+  

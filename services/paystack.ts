@@ -1,14 +1,14 @@
-import axios from 'axios';
+import axiosInstance from '@/lib/axiosInstance';
 
-export const initializePayment = async (email: string, amount: number) => {
-  const response = await axios.post('http://localhost:4000/api/payments/initialize', { email, amount });
+export const initializePayment = async (amount: number, shippingAddress: {}) => {
+  const response = await axiosInstance.post('http://localhost:4000/api/payments/initialize', { amount, shippingAddress });
   return response.data;
 };
 
 
-export const verifyPayment = async (reference: string) => {
-  const response = await axios.post('http://localhost:4000/api/payments/verify', {
-    reference
+export const verifyPayment = async (reference: string | string[], totalAmount: number) => {
+  const response = await axiosInstance.post('http://localhost:4000/api/payments/verify', {
+    reference, totalAmount
   });
 
   // Check if the response is successful
