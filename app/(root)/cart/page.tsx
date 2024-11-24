@@ -5,6 +5,7 @@ import Loader from "@/components/ui/Loader";
 import Image from "next/image";
 import { getCart } from "@/services/cart";
 import Link from "next/link";
+import { link } from "fs";
 
 
 function CartPage() {
@@ -48,6 +49,7 @@ function CartPage() {
             <li>color: {item.color}</li>
             <li>quantity: {item.quantity}</li>
             <li>subtotal: ₦{item.subtotal}</li>
+            {item.product.quantity === 0 && (<li className="text-red-700 font-extrabold">OUT OF STOCK</li>)}
           </span>
         ))}
         <hr />
