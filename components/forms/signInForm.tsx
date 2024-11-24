@@ -100,7 +100,7 @@ export default function SignInForm() {
 
 
     return (
-        <div className="min-h-screen justify-center items-center mt-10">
+        <div className="min-h-screen justify-center items-center mt-8">
             <div className="px-4 py-48 sm:px-6 sm:my-auto md:px-8 md:py-24">
                 <div className="mx-auto max-w-lg text-center">
                     <h1 className="text-2xl font-bold sm:text-3xl">Sign In</h1>
