@@ -47,16 +47,16 @@ const VerifyPaymentContent = ({ reference }: VerifyPaymentContentProps) => {
                 const result = await verifyPayment(reference, cart.totalPrice);
 
                 if (result.success) {
-                    setMessage('Payment successful!');
+                    setMessage(result.message);
                     setTimeout(() => {
                         router.push('/'); // Redirect to home or desired page
                     }, 2000);
                 } else {
                     setMessage('Payment failed.');
                 }
-            } catch (error) {
+            } catch (error:any) {
                 console.error('Error verifying payment:', error);
-                setMessage('Error verifying payment.');
+                setMessage(error.message);
             } finally {
                 setLoading(false);
             }
