@@ -54,9 +54,9 @@ const VerifyPaymentContent = ({ reference }: VerifyPaymentContentProps) => {
                 } else {
                     setMessage('Payment failed.');
                 }
-            } catch (error:any) {
+            } catch (error: any) {
                 console.error('Error verifying payment:', error);
-                setMessage(error.message);
+                setMessage(error.response.data.message);
             } finally {
                 setLoading(false);
             }
