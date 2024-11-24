@@ -2,26 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
+#signup-form-input-lastname::placeholder,
+#signup-form-input-firstname::placeholder,
+#signup-form-input-email::placeholder,
+#signup-form-input-password::placeholder,
+#signup-form-input-phonenumber::placeholder,
+#signin-form-input-username::placeholder,
+#signin-form-input-password::placeholder {
+  color: #6b7280;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+
+
+.shadcn-toast-success {
+  background-color: #ffffff !important;
+  color: rgb(8, 160, 8) !important;
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.shadcn-toast-failure {
+  background-color: #ffffff !important;
+  color: rgb(207, 36, 36) !important;
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-} */
