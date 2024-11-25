@@ -110,8 +110,8 @@ export default function Example() {
                                 </Link>
                             </div>
                             <div className="flow-root">
-                                <Link href="/sign-up" className="-m-2 block p-2 font-medium text-gray-900">
-                                    Create account
+                                <Link href="/register" className="-m-2 block p-2 font-medium text-gray-900">
+                                    Register
                                 </Link>
                             </div>
                         </div>
@@ -152,7 +152,7 @@ export default function Example() {
                             {/* Logo */}
                             <div className="ml-4 flex lg:ml-0">
                                 <Link href="/">
-                                    <h1 className="font-extrabold text-"> ᥫ᭡ Celestique Retouch</h1>
+                                    <h1 className="font-extrabold"> ᥫ᭡ Celestique</h1>
                                 </Link>
                             </div>
 
@@ -227,7 +227,7 @@ export default function Example() {
                                         Sign in
                                     </Link>
                                     <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                                    <Link href="/sign-up" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                    <Link href="/register" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                         Register
                                     </Link>
                                 </div>

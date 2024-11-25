@@ -100,7 +100,7 @@ export default function SignInForm() {
 
 
     return (
-        <div className="min-h-screen justify-center items-center mt-8">
+        <div className="min-h-screen justify-center items-center">
             <div className="px-4 py-48 sm:px-6 sm:my-auto md:px-8 md:py-24">
                 <div className="mx-auto max-w-lg text-center">
                     <h1 className="text-2xl font-bold sm:text-3xl">Sign In</h1>
@@ -166,7 +166,7 @@ export default function SignInForm() {
 
                         {/* Sign-up Prompt */}
                         <p className="text-sm text-center text-gray-500">
-                            New to Celestique? <Link className="text-indigo-600 hover:underline" href="/sign-up">Create account here</Link>
+                            New to Celestique? <Link className="text-indigo-600 hover:underline" href="/register">Create account here</Link>
                         </p>
                     </form>
                 </Form>

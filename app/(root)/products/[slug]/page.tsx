@@ -39,7 +39,7 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
             return;
         }
         try {
-            await addToCart(product!._id, selectedQuantity, selectedSize, selectedColor);
+            const res = await addToCart(product!._id, selectedQuantity, selectedSize, selectedColor);
             alert("Item added to cart successfully!");
         } catch (error: any) {
             alert(error.message || "Failed to add item to cart.");
