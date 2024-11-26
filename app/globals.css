@@ -42,3 +42,9 @@
   width: 100%; 
 }
 
+.icon{
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  
+}

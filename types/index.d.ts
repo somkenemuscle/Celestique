@@ -9,7 +9,7 @@ interface Product {
     images: string[];
     category: string;
     gender: string;
-};
+};   
 
 interface CartItem {
     product: string;
