@@ -194,7 +194,7 @@ export default function Navbar() {
                             {/* Logo */}
                             <div className="ml-4 flex lg:ml-0">
                                 <Link href="/">
-                                    <h1 className="font-extrabold text-black" id='logo'> ᥫ᭡ Celestique</h1>
+                                    <h1 className="font-extrabold text-" id='logo'> ᥫ᭡ Celestique</h1>
                                 </Link>
                             </div>
 
@@ -204,7 +204,7 @@ export default function Navbar() {
                                     {navigation.categories.map((category) => (
                                         <Popover key={category.name} className="flex">
                                             <div className="relative flex">
-                                                <PopoverButton className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium text-gray-700 transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-indigo-600 data-[open]:text-indigo-600">
+                                                <PopoverButton className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium  transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-gray-900 data-[open]:text-gray-900">
                                                     {category.name}
                                                 </PopoverButton>
                                             </div>
@@ -255,7 +255,7 @@ export default function Navbar() {
                                         <Link
                                             key={page.name}
                                             href={page.href}
-                                            className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                                            className="flex items-center text-sm font-medium  hover:text-gray-800"
                                         >
                                             {page.name}
                                         </Link>
@@ -265,19 +265,19 @@ export default function Navbar() {
 
                             <div className="ml-auto flex items-center">
                                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <Link href={firstname ? '#' : '/register'} className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                    <Link href={firstname ? '#' : '/register'} className="text-sm font-medium  hover:text-gray-800">
                                         {firstname ? `Hi, ${firstname}` : 'Register'}
                                     </Link>
 
                                     <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                                    <Link href={firstname ? '#' : '/sign-in'} className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                    <Link href={firstname ? '#' : '/sign-in'} className="text-sm font-medium  hover:text-gray-800">
                                         {firstname ? 'Contact Us' : 'Sign In'}
 
                                     </Link>
                                 </div>
 
                                 <div className="hidden lg:ml-8 lg:flex">
-                                    <Link href="#" className="flex items-center text-gray-700 hover:text-gray-800">
+                                    <Link href="#" className="flex items-center  hover:text-gray-800">
                                         <img
                                             alt="Flag of Nigeria"
                                             src="https://flagcdn.com/w320/ng.png"
@@ -292,7 +292,7 @@ export default function Navbar() {
 
 
                                 <div className="flex lg:ml-8">
-                                    <Link href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                                    <Link href="#" className="p-2  hover:text-gray-500">
                                         <span className="sr-only">WishList</span>
                                         <HeartIcon aria-hidden="true" className="size-6" />
                                     </Link>
@@ -301,7 +301,7 @@ export default function Navbar() {
 
                                 {/* Search */}
                                 <div className="flex lg:ml-1">
-                                    <Link href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                                    <Link href="#" className="p-2  hover:text-gray-500">
                                         <span className="sr-only">Search</span>
                                         <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
                                     </Link>
@@ -313,7 +313,7 @@ export default function Navbar() {
                                     <Link href="/cart" className="group -m-2 flex items-center p-2 relative">
                                         <ShoppingBagIcon
                                             aria-hidden="true"
-                                            className="w-6 h-6 text-gray-400 group-hover:text-gray-500"
+                                            className="w-6 h-6  group-hover:text-gray-500"
                                         />
                                         {cartItemCount > 0 && (
                                             <span className="absolute top-1 -right-0 flex h-5 w-5 items-center justify-center rounded-full bg-black text-white text-xs font-bold">
