@@ -301,7 +301,7 @@ export default function Navbar() {
 
                                 {/* Search */}
                                 <div className="flex lg:ml-1">
-                                    <Link href="#" className="p-2  hover:text-gray-500">
+                                    <Link href="/search" className="p-2  hover:text-gray-500">
                                         <span className="sr-only">Search</span>
                                         <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
                                     </Link>
