@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import WhatsappIcon from "@/components/shared/whatasappIcon";
+import WhatsappIcon from "@/components/shared/WhatasappIcon";
 
 
 const geistSans = localFont({
