@@ -33,17 +33,12 @@
   font-size: large;
 }
 
-/* .background-container {
-  background-image: url('https://cdn.shopify.com/s/files/1/0293/9277/collections/COLLECTION-BANNER_JNRSDESKTOP_1d500e4a-e980-4fce-aa36-7199988cb7dc.png?v=1688428795&width=2000&height=536&crop=center');
-  background-size: contain;
+.background-container {
+  background-image: url('https://images.unsplash.com/photo-1529720317453-c8da503f2051?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 75vh; 
-} */
+  height: 100vh;
+  width: 100%; 
+}
 
-/* Media Query for screens smaller than 753px */
-/* @media (max-width: 753px) {
-  .background-container {
-      background-image: url('https://media.boohoo.com/i/boohooamplience/MOB_NONPREM_40_1?qlt=default&fmt=auto');
-  }
-} */

@@ -22,6 +22,7 @@ import { useEffect } from 'react'
 import { getCart } from '@/services/cart'
 import useCartStore from '@/store/cartStore'
 
+
 export default function Navbar() {
     const [open, setOpen] = useState(false)
     const { setGlobalCart } = useCartStore();
