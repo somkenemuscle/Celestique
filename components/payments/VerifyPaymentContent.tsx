@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react';
 import { verifyPayment } from '@/services/paystack';
 import { getCart } from '@/services/cart';
 import { useRouter } from 'next/navigation';
-
+import useCartStore from '@/store/cartStore';
 
 const VerifyPaymentContent = ({ reference }: VerifyPaymentContentProps) => {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
     const [cart, setCart] = useState<Cart | null>(null);
+    const { setGlobalCart } = useCartStore();
 
     // Fetch the cart data
     useEffect(() => {
@@ -44,13 +45,14 @@ const VerifyPaymentContent = ({ reference }: VerifyPaymentContentProps) => {
 
         const checkPayment = async () => {
             try {
-                const result = await verifyPayment(reference, cart.totalPrice);
+                const response = await verifyPayment(reference, cart.totalPrice);
 
-                if (result.success) {
-                    setMessage(result.message);
+                if (response.success) {
+                    setGlobalCart(response.cart);
+                    setMessage(response.message);
                     setTimeout(() => {
-                        router.push('/'); // Redirect to home or desired page
-                    }, 2000);
+                        router.push('/');
+                    }, 4000);
                 } else {
                     setMessage('Payment failed.');
                 }
@@ -63,7 +65,7 @@ const VerifyPaymentContent = ({ reference }: VerifyPaymentContentProps) => {
         };
 
         checkPayment();
-    }, [cart, reference]);
+    }, [cart?.totalPrice, reference]);
 
     return <div>{loading ? <p>Verifying payment...</p> : <p>{message}</p>}</div>;
 };

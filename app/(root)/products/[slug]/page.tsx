@@ -5,11 +5,14 @@ import { getProductBySlug } from "@/services/product";
 import Loader from "@/components/ui/Loader";
 import Image from "next/image";
 import { addToCart } from "@/services/cart";
+import useCartStore from "@/store/cartStore";
 
 function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const { setGlobalCart } = useCartStore();
+
 
     // States for user input
     const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
@@ -40,7 +43,8 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
         }
         try {
             const res = await addToCart(product!._id, selectedQuantity, selectedSize, selectedColor);
-            alert("Item added to cart successfully!");
+            setGlobalCart(res.cart)
+            console.log("Item added to cart successfully!");
         } catch (error: any) {
             alert(error.message || "Failed to add item to cart.");
         }

@@ -19,7 +19,7 @@ import axiosInstance from "@/lib/axiosInstance";
 import ReCAPTCHA from "react-google-recaptcha";
 import Loader from "../ui/Loader"
 import { SignUpFormSchema } from "@/lib/authSchema";
-
+import { signUp } from "@/services/auth";
 
 export default function RegisterForm() {
   const { toast } = useToast();
@@ -74,21 +74,13 @@ export default function RegisterForm() {
       setLoading(true);
 
       // Send a POST request to the signup endpoint
-      const res = await axiosInstance.post('/auth/signup', {
-        firstname: values.firstname,
-        lastname: values.lastname,
-        phoneNumber: values.phonenumber,
-        email: values.email,
-        password: values.password,
-        recaptchaToken
-      });
-
+      const res = await signUp(values.firstname, values.lastname, values.phonenumber, values.email, values.password, recaptchaToken);
 
       // Extract message from response
-      const { message, email } = res.data;
+      const { message, firstname } = res;
 
-      // Store username in local storage
-      localStorage.setItem('email', email);
+      // Store firstname in local storage
+      localStorage.setItem('firstname', firstname);
 
       // Reset the form after successful signup
       form.reset();

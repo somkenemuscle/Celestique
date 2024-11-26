@@ -48,10 +48,10 @@ export default function SignInForm() {
 
             const res = await signIn(values?.email, values?.password);
 
-            const { message, email } = res;
+            const { message, firstname } = res;
 
             // Store email in local storage
-            localStorage.setItem('email', email);
+            localStorage.setItem('firstname', firstname);
 
             // Reset the form and redirect
             form.reset();

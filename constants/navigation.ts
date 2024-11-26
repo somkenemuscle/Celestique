@@ -13,6 +13,16 @@ export const navigation = {
             { name: 'Shirts', href: '#' },
             { name: 'Shorts', href: '#' },
           ],
+        },
+        {
+          id: 'Jewelry',
+          name: 'Jewelry',
+          items: [
+            { name: 'Tops', href: '#' },
+            { name: 'Dresses', href: '#' },
+            { name: 'Shirts', href: '#' },
+            { name: 'Shorts', href: '#' },
+          ],
         }
       ],
     },

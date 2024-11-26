@@ -30,7 +30,7 @@ function ViewAllProductsPage() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
+    <div className="mt-36">
       <h1>All Products</h1>
       <ul>
         {products.map((product: any) => (

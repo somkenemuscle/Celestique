@@ -27,3 +27,23 @@
   font-weight: bold;
   letter-spacing: 0.5px;
 }
+
+#logo{
+  letter-spacing: 1px;
+  font-size: large;
+}
+
+/* .background-container {
+  background-image: url('https://cdn.shopify.com/s/files/1/0293/9277/collections/COLLECTION-BANNER_JNRSDESKTOP_1d500e4a-e980-4fce-aa36-7199988cb7dc.png?v=1688428795&width=2000&height=536&crop=center');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 75vh; 
+} */
+
+/* Media Query for screens smaller than 753px */
+/* @media (max-width: 753px) {
+  .background-container {
+      background-image: url('https://media.boohoo.com/i/boohooamplience/MOB_NONPREM_40_1?qlt=default&fmt=auto');
+  }
+} */

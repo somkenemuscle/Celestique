@@ -2,7 +2,7 @@ import SignInForm from "@/components/forms/SignInForm"
 
 const SignInPage = () => {
     return (
-        <main>
+        <main className="lg:mt-28 sm:mt-20">
             <SignInForm />
         </main>
     )
