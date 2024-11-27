@@ -28,7 +28,7 @@
   letter-spacing: 0.5px;
 }
 
-#logo{
+#logo {
   letter-spacing: 1px;
   font-size: large;
 }
@@ -39,6 +39,14 @@
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
-  width: 100%; 
+  width: 100%;
 }
 
+.cart-body {
+  font-family: sans-serif;
+
+}
+
+#cart-item-price {
+  font-family: sans-serif;
+}
