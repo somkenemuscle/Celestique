@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(root)/verify/page.tsx", "services/paystack.ts", "components/PaymentButton.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(root)/verify/page.tsx", "services/paystack.ts", "components/forms/SignInForm.tsx"],
   "exclude": ["node_modules"]
 }

@@ -20,7 +20,7 @@ import { signIn } from "@/services/auth"
 import axios from "axios"
 
 
-export default function SigninForm() {
+export default function SignInForm() {
     const { toast } = useToast();
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
