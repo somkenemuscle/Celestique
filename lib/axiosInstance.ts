@@ -3,8 +3,8 @@ import axios from 'axios';
 
 // Create an instance of axios with default settings
 const axiosInstance = axios.create({
-  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api`,
-  // baseURL: `http://localhost:4000/api`,
+  // baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api`,
+  baseURL: `http://localhost:4000/api`,
   withCredentials: true,
 });
 
@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
       // Only handle token refresh if the error message indicates token expiration on unauthorization
       if (errorCode === 'UNAUTHORIZED_ISLOGGEDIN_ACCESS') {
         try {
-          await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/token`, {}, { withCredentials: true });
+          await axios.post(`http://localhost:4000/api/auth/token`, {}, { withCredentials: true });
           return axiosInstance(originalRequest);
         } catch (refreshError) {
           console.error('Token refresh error:', refreshError);

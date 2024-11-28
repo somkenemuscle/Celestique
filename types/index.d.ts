@@ -9,10 +9,23 @@ interface Product {
     images: string[];
     category: string;
     gender: string;
-};   
+};
 
 interface CartItem {
-    product: string;
+    product: {
+        _id: string;
+        name: string;
+        price: string;
+        quantity: string;
+        colors: string[];
+        sizes: string[];
+        description: string;
+        images: string[];
+        category: string;
+        gender: {
+            gender: string
+        };
+    };
     quantity: number;
     color: string;
     size: string;
@@ -20,6 +33,7 @@ interface CartItem {
 }
 
 interface Cart {
+    _id: string;
     items: CartItem[];
     subtotal: number;
     deliveryFee: number;
@@ -43,5 +57,8 @@ interface ShippingAddressFormProps {
 
 type VerifyPaymentContentProps = {
     reference?: string;
-  };
-  
+};
+
+type FieldName = "firstname" | "lastname" | "phonenumber" | "email" | "password";
+
+type CheckOutFieldName = "firstname" | "lastname" | "phonenumber" | "city" | "country" | "address" | "postalCode";

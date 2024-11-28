@@ -101,7 +101,7 @@ function CartPage() {
         <h1 className="text-xl font-medium mb-6">Shopping Cart <span className="text-gray-500">( {cart.items.length} items )</span> </h1>
 
         {!cart || cart.items.length === 0 ? (
-          <div className="text-center text-sm tracking-wider pt-10 text-gray-600">
+          <div className="text-center text-sm tracking-wider pt-16 text-gray-600">
             <span>Your Cart is currently empty</span>
             <div className="flex items-center justify-center pt-7">
               <Link href={'/products'}>
@@ -121,7 +121,7 @@ function CartPage() {
 
                 {/* Product Image */}
                 <Image
-                  src={item.product.images === 0 ? '' : item.product.images[0]}
+                  src={item.product.images.length === 0 ? '' : item.product.images[0]}
                   alt={item.product.name}
                   width={100}
                   height={100}

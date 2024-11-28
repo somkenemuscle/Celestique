@@ -3,13 +3,13 @@ import { z } from "zod";
 //signup schema
 export const SignUpFormSchema = z.object({
     firstname: z.string()
-        .min(4, { message: "Firstname must be at least 4 characters" })
+        .min(2, { message: "Firstname must be at least 2 characters" })
         .max(20, { message: "Lastname must be no more than 20 characters." })
-        .regex(/^[a-zA-Z0-9._-]+$/, { message: "Firstname can only contain letters, numbers, periods ( . ), hyphens ( - ), or underscores ( _ )." }),
+        .regex(/^[a-zA-Z]+$/, { message: "Firstname can only contain letters." }),
     lastname: z.string()
-        .min(4, { message: "Lastname must be at least 4 characters" })
+        .min(2, { message: "Lastname must be at least 2 characters" })
         .max(20, { message: "Lastname must be no more than 20 characters." })
-        .regex(/^[a-zA-Z0-9._-]+$/, { message: "Firstname can only contain letters, numbers, periods ( . ), hyphens ( - ), or underscores ( _ )." }),
+        .regex(/^[a-zA-Z]+$/, { message: "Lastname can only contain letters." }),
     phonenumber: z.string()
         .min(11, { message: "Phone number must be at least 11 characters" })
         .max(15, { message: "Phone numbermust be no more than 15 characters." })
