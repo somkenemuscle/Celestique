@@ -4,7 +4,6 @@ import { Form, FormField, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { Eye, EyeOff } from 'react-feather';
 import { useState, useRef } from "react";
@@ -15,9 +14,12 @@ import { signUp } from "@/services/auth";
 import { z } from "zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
+
 
 export default function RegisterForm() {
-  const { toast } = useToast();
+
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
@@ -50,7 +52,7 @@ export default function RegisterForm() {
   const onSubmit = async (values: z.infer<typeof SignUpFormSchema>) => {
     try {
       if (!recaptchaToken) {
-        toast({ className: "shadcn-toast-failure", description: "Please complete the reCAPTCHA" });
+        toast.error('Please complete the reCAPTCHA');
         return;
       }
       setLoading(true);
@@ -61,12 +63,13 @@ export default function RegisterForm() {
       setRecaptchaToken(null);
       resetRecaptcha();
       router.push('/');
-      toast({ className: "shadcn-toast-success", description: message });
+      toast.success(message)
+
     } catch (error: any) {
       const errorMessage = axios.isAxiosError(error) && error.response?.data?.error
         ? error.response.data.error
         : "An unexpected error occurred. Please try again.";
-      toast({ className: "shadcn-toast-failure", description: errorMessage });
+      toast.error(errorMessage)
       setRecaptchaToken(null);
       resetRecaptcha();
     } finally {

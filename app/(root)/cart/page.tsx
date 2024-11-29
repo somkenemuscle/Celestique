@@ -9,6 +9,7 @@ import { FaLock } from "react-icons/fa";
 import { GoTrash } from "react-icons/go";
 import useCartStore from "@/store/cartStore";
 import { updateCartItemQuantity } from "@/services/cart";
+import toast from "react-hot-toast";
 
 
 
@@ -50,8 +51,9 @@ function CartPage() {
       if (quantity < 1) return; // Safety check to avoid sending invalid quantities
       const res = await updateCartItemQuantity(productId, size, color, quantity);
       setCart(res.cart);
+      toast.success(res.message)
     } catch (error) {
-      console.log("Error updating item quantity in cart");
+      toast.error('Error updating item quantity in cart')
     } finally {
       setLoading(false);
       setLoadingItemId(null); // Reset the loading item
@@ -69,8 +71,9 @@ function CartPage() {
       const res = await removeFromCart(productId, size, color);
       setCart(res.cart)
       setGlobalCart(res.cart)
+      toast.success(res.message)
     } catch (error) {
-      console.log("Error removing item from cart")
+      toast.error('Error removing item from cart')
     } finally {
       setLoading(false);
       setLoadingItemId(null); // Reset the loading item
@@ -84,8 +87,9 @@ function CartPage() {
       const res = await clearCart();
       setCart(res.cart)
       setGlobalCart(res.cart)
+      toast.success(res.message)
     } catch (error) {
-      console.log("Error clearing cart")
+      toast.error('Error clearing cart')
     }
   };
 

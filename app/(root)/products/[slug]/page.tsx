@@ -6,7 +6,7 @@ import Loader from "@/components/ui/Loader";
 import Image from "next/image";
 import { addToCart } from "@/services/cart";
 import useCartStore from "@/store/cartStore";
-
+import toast from "react-hot-toast";
 
 
 
@@ -39,14 +39,14 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     // Handler for adding to cart
     const handleAddToCart = async () => {
         if (!selectedSize || !selectedColor || selectedQuantity <= 0) {
-            alert("Please select size, color, and a valid quantity.");
+            toast.error('Please select size, color, and a valid quantity')
             return;
         }
         try {
             setLoading(true)
             const res = await addToCart(product!._id, selectedQuantity, selectedSize, selectedColor);
             setGlobalCart(res.cart)
-            console.log("Item added to cart successfully!");
+            toast.success(res.message)
         } catch (error: any) {
             alert(error.message || "Failed to add item to cart.");
         } finally {
