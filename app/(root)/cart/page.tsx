@@ -94,7 +94,7 @@ function CartPage() {
   if (!cart) return;
 
   return (
-    <div className="cart-body mt-52 container mx-auto  p-4 grid lg:grid-cols-3 gap-8">
+    <div className="cart-body mt-44 container mx-auto  p-4 grid lg:grid-cols-3 gap-8">
 
       {/* Cart Items */}
       <div className="lg:col-span-2">

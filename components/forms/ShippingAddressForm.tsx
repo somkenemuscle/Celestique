@@ -77,7 +77,7 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
 
 
   return (
-    <div className="min-h-screen flex justify-center items-center mt-40 mb-10">
+    <div className="mt-40 mb-10">
       <div className="container mx-auto px-6 sm:px-6 md:px-20 lg:px-20">
         {/* Main Grid Container */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -257,7 +257,8 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full text-center rounded-xl bg-black text-sm font-medium text-white hover:bg-slate-800 p-7"
+                  className={`w-full text-center rounded-xl bg-black text-sm font-medium text-white hover:bg-slate-900 p-7 tracking-wider`}
+                  disabled={cart.totalPrice === 0}
                 >
                   Pay Now ( ₦{cart.totalPrice.toLocaleString()} ){" "}
                   {loading && (
@@ -271,16 +272,16 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
           </div>
 
           {/* CHECKOUT SUMMARY SECTION - Right */}
-          <div className="p-6 border lg:px-10 lg:col-span-6 rounded-xl sm:h-full lg:h-full bg-stone-50">
+          <div className="p-6 border lg:px-10 lg:col-span-6 rounded-xl sm:h-full lg:h-full bg-gray-50 ">
             {cart.items.map((item, index) => (
               <div key={index} className="flex items-center border-b pb-4 mb-4">
                 {/* Product Image */}
                 <Image
                   src={item.product.images.length === 0 ? "" : item.product.images[0]}
                   alt={item.product.name}
-                  width={50}
-                  height={50}
-                  className="rounded-md"
+                  width={54}
+                  height={54}
+                  className="rounded-xl border p-1 bg-gray-100"
                 />
 
                 {/* Product Details */}
@@ -309,17 +310,19 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
                 <span className="text-left">
                   Subtotal ({cart.items.length} items)
                 </span>
-                <span className="text-right">
+                <span className="text-right tracking-wide">
                   ₦{cart.subtotal.toLocaleString()}
                 </span>
               </div>
 
               <div className="flex justify-between items-center py-2">
                 <span className="text-left">Shipping fee</span>
-                <span className="text-right">
+                <span className="text-right tracking-wide">
                   ₦{cart.deliveryFee.toLocaleString()}
                 </span>
               </div>
+
+              <hr className="my-2" />
 
               <div className="flex justify-between items-center font-bold text-lg py-2">
                 <span className="text-left">Total</span>
@@ -330,10 +333,10 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   );
 }
+
+
 

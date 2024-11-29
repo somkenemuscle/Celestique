@@ -6,8 +6,8 @@ const Loader = () => {
             <Image
                 src='/assets/icons/loader.svg'
                 alt='loader'
-                width={20}
-                height={20}
+                width={15}
+                height={15}
                 className='animate-spin'
                 priority
             />

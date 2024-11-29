@@ -1,14 +1,16 @@
 interface Product {
     _id: string;
     name: string;
-    price: string;
-    quantity: string;
+    price: number;
+    quantity: number;
     colors: string[];
     sizes: string[];
     description: string;
     images: string[];
     category: string;
-    gender: string;
+    gender: {
+        gender: string
+    };
 };
 
 interface CartItem {

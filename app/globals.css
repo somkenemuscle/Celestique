@@ -54,3 +54,26 @@
 .shippingFormBody{
   font-family: sans-serif;
 }
+
+.slug-page-body{
+  font-family: sans-serif;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.5s infinite;
+}
