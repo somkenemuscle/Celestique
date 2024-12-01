@@ -66,7 +66,7 @@ export default function Navbar() {
 
 
     return (
-        <div className="bg-white w-full fixed top-0">
+        <div className="bg-white w-full fixed top-0 z-50">
             {/* Mobile menu */}
             <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden lg:fixed">
                 <DialogBackdrop
@@ -179,7 +179,7 @@ export default function Navbar() {
                     FREE DELIVERY ON ORDERS ABOVE ₦10,000!*
                 </p>
 
-                <nav aria-label="Top" className="mx-auto max-w-full px-4 py-2 sm:px-6 lg:px-20">
+                <nav aria-label="Top" className="mx-auto max-w-full px-6 py-2 sm:px-8 ">
                     <div className="">
                         <div className="flex h-16 items-center">
                             <button

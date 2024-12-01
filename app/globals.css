@@ -42,6 +42,19 @@
   width: 100%;
 }
 
+.border-lg{
+  border-radius: 5px;
+}
+
+/* Hide scrollbar for all browsers */
+.scroll-container {
+  -ms-overflow-style: none;  /* Internet Explorer and Edge */
+  scrollbar-width: none;      /* Firefox */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, and Opera */
+
 .cart-body {
   font-family: sans-serif;
 }
