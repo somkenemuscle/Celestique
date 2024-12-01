@@ -1,18 +1,35 @@
 interface Product {
     _id: string;
     name: string;
-    price: string;
-    quantity: string;
+    price: number;
+    quantity: number;
     colors: string[];
     sizes: string[];
     description: string;
+    slug: string;
     images: string[];
     category: string;
-    gender: string;
-};   
+    gender: {
+        gender: string
+    };
+};
 
 interface CartItem {
-    product: string;
+    product: {
+        _id: string;
+        name: string;
+        price: string;
+        quantity: string;
+        colors: string[];
+        sizes: string[];
+        description: string;
+        slug: string;
+        images: string[];
+        category: string;
+        gender: {
+            gender: string
+        };
+    };
     quantity: number;
     color: string;
     size: string;
@@ -20,6 +37,7 @@ interface CartItem {
 }
 
 interface Cart {
+    _id: string;
     items: CartItem[];
     subtotal: number;
     deliveryFee: number;
@@ -43,5 +61,52 @@ interface ShippingAddressFormProps {
 
 type VerifyPaymentContentProps = {
     reference?: string;
-  };
-  
+};
+
+type FieldName = "firstname" | "lastname" | "phonenumber" | "email" | "password";
+
+type CheckOutFieldName = "firstname" | "lastname" | "phonenumber" | "city" | "country" | "address" | "postalCode";
+
+
+interface Order {
+    _id: string; // MongoDB ObjectId as a string
+    user: string; // User ID
+    items: {
+        product: {
+            _id: string;
+            name: string;
+            price: string;
+            quantity: string;
+            colors: string[];
+            sizes: string[];
+            description: string;
+            slug: string;
+            images: string[];
+            category: string;
+            gender: {
+                gender: string
+            };
+        };
+        quantity: number;
+        color: string;
+        size: string;
+        subtotal: number;
+    }[];
+    shippingAddress: {
+        firstName: string;
+        lastName: string;
+        address: string;
+        city: string;
+        state: string;
+        postalCode?: string; // Optional
+        country: string;
+        phoneNumber: string;
+    };
+    totalAmount: number;
+    paymentStatus: 'Pending' | 'Paid' | 'Failed';
+    paymentReference?: string; // Optional because it can be null
+    orderStatus: 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
+    paymentId: string; // Payment ID
+    createdAt: string; // ISO 8601 timestamp
+    updatedAt: string; // ISO 8601 timestamp
+}

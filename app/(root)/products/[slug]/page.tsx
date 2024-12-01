@@ -6,10 +6,13 @@ import Loader from "@/components/ui/Loader";
 import Image from "next/image";
 import { addToCart } from "@/services/cart";
 import useCartStore from "@/store/cartStore";
+import toast from "react-hot-toast";
+
+
 
 function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     const [product, setProduct] = useState<Product | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { setGlobalCart } = useCartStore();
 
@@ -26,8 +29,6 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
                 setProduct(res.product);
             } catch (err: any) {
                 setError(err.message || "Failed to fetch products");
-            } finally {
-                setLoading(false);
             }
         }
 
@@ -38,89 +39,146 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     // Handler for adding to cart
     const handleAddToCart = async () => {
         if (!selectedSize || !selectedColor || selectedQuantity <= 0) {
-            alert("Please select size, color, and a valid quantity.");
+            toast.error('Please select size, color, and a valid quantity')
             return;
         }
         try {
+            setLoading(true)
             const res = await addToCart(product!._id, selectedQuantity, selectedSize, selectedColor);
             setGlobalCart(res.cart)
-            console.log("Item added to cart successfully!");
+            toast.success(res.message)
         } catch (error: any) {
-            alert(error.message || "Failed to add item to cart.");
+            toast.error(error.response.data.message)
+        } finally {
+            setLoading(false)
         }
     };
 
-    if (loading || !product) return <div className="bg-black"><Loader /></div>;
+
+
+    if (!product) return;
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div>
-            <ul>
-                <li>{product.name} - ₦{product.price}</li>
-                <li>{product.quantity} Units left</li>
+        <div className="grid grid-cols-12 mt-32 slug-page-body">
+            {/* Carousel Section */}
+            <div className="col-span-12 md:col-span-6 flex justify-center">
                 <Image
                     src={product.images[0]}
-                    alt="Product-Image"
-                    width={500}
-                    height={500}
+                    alt={`${product.name}`}
+                    width={700}
+                    height={700}
+                    className="object-contain"
                 />
-                <li>{product.description}</li>
+            </div>
+
+            {/* Product Details Section */}
+            <div className="col-span-12 p-10 lg:pr-20 sm:p-20 md:col-span-6 hover:cursor-pointer">
+                <p className="text-sm text-gray-500 mb-1">Celestique</p>
+                <h1 className="text-2xl font-semibold mb-1 tracking-wide">{product.name}</h1>
+                <p className="text-lg tracking-wide"> ₦ {product.price.toLocaleString()}</p>
+                <p className="text-sm tracking-wider text-gray-500 mb-6 flex items-center ">
+                    <span className="flex items-center justify-center mr-2">
+                        <span
+                            className={`absolute h-2 w-2 rounded-full bg-opacity-50 animate-pulse-ring ${product.quantity > 10 ? 'bg-green-600' : 'bg-red-500'
+                                }`}
+                        ></span>
+                        <span
+                            className={`h-2 w-2 rounded-full ${product.quantity > 10 ? 'bg-green-500' : 'bg-red-500'
+                                }`}
+                        ></span>
+                    </span>
+                    {product.quantity > 10 ? <span>In Stock </span> : <span>Low Stock </span>} . ( {product.quantity} Units left )
+                </p>
+
+                <p className="font-semibold text-sm text-red-400 tracking-wider mb-4">{product.quantity === 0 && 'OUT OF STOCK'}</p>
+
+                <hr />
 
                 {/* Size Selection */}
-                <li>
-                    <label htmlFor="size">Size:</label>
+                <div className="my-6">
+                    <label htmlFor="size" className="block font-medium mb-2 text-gray-500">Size</label>
                     <select
                         id="size"
                         value={selectedSize}
                         onChange={(e) => setSelectedSize(e.target.value)}
+                        className="hover:cursor-pointer border border-gray-300 rounded p-3 w-full outline-none"
                     >
                         <option value="">Select Size</option>
                         {product.sizes.map((size: string) => (
-                            <option key={size} value={size}>
-                                {size}
-                            </option>
+                            <option key={size} value={size}>{size}</option>
                         ))}
                     </select>
-                </li>
+                </div>
 
                 {/* Color Selection */}
-                <li>
-                    <label htmlFor="color">Color:</label>
+                <div className="mb-4">
+                    <label htmlFor="color" className="block font-medium mb-2 text-gray-500">Color</label>
                     <select
                         id="color"
                         value={selectedColor}
                         onChange={(e) => setSelectedColor(e.target.value)}
+                        className="hover:cursor-pointer border border-gray-300 rounded p-3 w-full outline-none"
                     >
                         <option value="">Select Color</option>
                         {product.colors.map((color: string) => (
-                            <option key={color} value={color}>
-                                {color}
-                            </option>
+                            <option key={color} value={color}>{color}</option>
                         ))}
                     </select>
-                </li>
+                </div>
 
                 {/* Quantity Selection */}
-                <li>
-                    <label htmlFor="quantity">Quantity:</label>
-                    <input
-                        type="number"
-                        id="quantity"
-                        min="1"
-                        max={product.quantity}
-                        value={selectedQuantity}
-                        onChange={(e) => setSelectedQuantity(Number(e.target.value))}
-                    />
-                </li>
-            </ul>
+                <div className="mb-6">
+                    <label htmlFor="quantity" className="block font-medium mb-2 text-gray-500">
+                        Quantity
+                    </label>
+                    <div className="flex items-center space-x-2 border border-gray-300 rounded w-24 py-2">
+                        <button
+                            onClick={() => setSelectedQuantity((prev) => Math.max(1, prev - 1))}
+                            className="px-3  rounded text-gray-700"
+                            disabled={selectedQuantity <= 1}
+                        >
+                            -
+                        </button>
+                        <input
+                            type="text"
+                            id="quantity"
+                            value={selectedQuantity}
+                            readOnly
+                            className="text-sm text-center outline-none w-5"
+                        />
+                        <button
+                            onClick={() => setSelectedQuantity((prev) => Math.min(product.quantity, prev + 1))}
+                            className="px-3 rounded text-gray-700 text-sm"
+                            disabled={selectedQuantity >= product.quantity}
+                        >
+                            +
+                        </button>
+                    </div>
+                </div>
 
-            <button
-                className="bg-black text-white p-4"
-                onClick={handleAddToCart}
-            >
-                Add to cart
-            </button>
+
+                {/* Add to Cart Button */}
+                <button
+                    className="bg-black tracking-wider text-sm text-white p-3 rounded hover:bg-gray-800 transition w-full mt-3"
+                    onClick={handleAddToCart} >
+                    <span className="inline-block">{loading ? (<Loader />) : 'ADD TO CART'}</span>
+                </button>
+
+                <button className="w-full p-3 tracking-wider text-sm mt-3 text-center border border-gray-400 rounded hover:bg-gray-100 transition">
+                    SAVE FOR LATER
+                </button>
+
+
+                <div className="mt-10">
+                    <h1 className="text-gray-500 font-semibold">Product Details</h1>
+                    <p className="text-sm text-left pt-2">{product.description}</p>
+                </div>
+            </div>
         </div>
+
+
+
     );
 }
 

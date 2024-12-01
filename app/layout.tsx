@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
 import WhatsappIcon from "@/components/shared/WhatasappIcon";
-
-
+import { Toaster } from 'react-hot-toast'
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -32,8 +30,22 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <WhatsappIcon/>
-        <Toaster />
+        <WhatsappIcon />
+        <Toaster position="bottom-left" toastOptions={{
+          // Global default options
+          success: {
+            style: {
+              background: 'green',
+              color: 'white',
+            },
+          },
+          error: {
+            style: {
+              background: 'red',
+              color: 'white',
+            },
+          },
+        }} />
       </body>
     </html>
   );

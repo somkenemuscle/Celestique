@@ -1,40 +1,30 @@
-'use client'
+'use client';
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormField,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormField, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { Eye, EyeOff } from 'react-feather';
 import { useState, useRef } from "react";
-import axiosInstance from "@/lib/axiosInstance";
 import ReCAPTCHA from "react-google-recaptcha";
-import Loader from "../ui/Loader"
+import Loader from "../ui/Loader";
 import { SignUpFormSchema } from "@/lib/authSchema";
 import { signUp } from "@/services/auth";
+import { z } from "zod";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
+
 
 export default function RegisterForm() {
-  const { toast } = useToast();
+
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
-
-  // Toggle password visibility
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
 
   const form = useForm<z.infer<typeof SignUpFormSchema>>({
     resolver: zodResolver(SignUpFormSchema),
@@ -47,190 +37,111 @@ export default function RegisterForm() {
     }
   });
 
-
   const onReCAPTCHAChange = (token: string | null) => {
     setRecaptchaToken(token);
   };
 
-  //Reser captch function
   const resetRecaptcha = () => {
     if (recaptchaRef.current) {
       recaptchaRef.current.reset();
     }
   };
 
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
-  async function onSubmit(values: z.infer<typeof SignUpFormSchema>) {
+  const onSubmit = async (values: z.infer<typeof SignUpFormSchema>) => {
     try {
       if (!recaptchaToken) {
-        toast({
-          className: "shadcn-toast-failure",
-          description: "Please complete the reCAPTCHA",
-        });
+        toast.error('Please complete the reCAPTCHA');
         return;
       }
-
-      // Show loader before making the request
       setLoading(true);
-
-      // Send a POST request to the signup endpoint
       const res = await signUp(values.firstname, values.lastname, values.phonenumber, values.email, values.password, recaptchaToken);
-
-      // Extract message from response
       const { message, firstname } = res;
-
-      // Store firstname in local storage
       localStorage.setItem('firstname', firstname);
-
-      // Reset the form after successful signup
       form.reset();
-
-
-
-      // Clear the reCAPTCHA token
       setRecaptchaToken(null);
       resetRecaptcha();
-
-
-      // Redirect to the home page or another route after successful signup
       router.push('/');
-
-      // Show success toast notification
-      toast({
-        className: "shadcn-toast-success",
-        description: message
-      });
+      toast.success(message)
 
     } catch (error: any) {
-      console.error('Error occurred during signup:', error);
-
-      // Default error message
-      let errorMessage = 'An error occurred. Please try again.';
-
-      // Check if the error is an Axios error
-      if (axios.isAxiosError(error)) {
-        // Check for a response error
-        if (error.response) {
-          // Extract message from response if available
-          const responseMessage = error.response.data?.error;
-          if (responseMessage) {
-            errorMessage = responseMessage;
-          } else {
-            errorMessage = error.response.data?.message || errorMessage;
-          }
-        } else {
-          // Handle cases where no response is available (e.g., network errors)
-          errorMessage = 'Network error. Please try again.';
-        }
-      } else {
-        // Handle unexpected error types
-        errorMessage = 'An unexpected error occurred. Please try again later.';
-      }
-
-      // Show error toast notification
-      toast({
-        className: "shadcn-toast-failure",
-        description: errorMessage
-      });
-
-      // Clear the reCAPTCHA token
+      const errorMessage = axios.isAxiosError(error) && error.response?.data?.error
+        ? error.response.data.error
+        : "An unexpected error occurred. Please try again.";
+      toast.error(errorMessage)
       setRecaptchaToken(null);
       resetRecaptcha();
     } finally {
-      // Hide the loader after request is complete (either success or error)
       setLoading(false);
     }
-  }
+  };
 
-
+  // Dynamic fields configuration
+  const fields: { name: FieldName; placeholder: string; type: string }[] = [
+    { name: "firstname", placeholder: "Enter firstname", type: "text" },
+    { name: "lastname", placeholder: "Enter lastname", type: "text" },
+    { name: "phonenumber", placeholder: "Enter phonenumber", type: "tel" },
+    { name: "email", placeholder: "Enter email", type: "text" }
+  ];
 
   return (
     <div className="min-h-screen justify-center items-center">
       <div className="px-4 py-48 sm:px-6 sm:my-auto md:px-8 md:py-24">
         <div className="mx-auto max-w-lg text-center">
           <h1 className="text-2xl font-bold sm:text-3xl">Register</h1>
-          <p className="mt-3 text-gray-500">
-            Start shopping with us and enjoy brand deals!
-          </p>
+          <p className="mt-3 text-gray-500">Start shopping with us and enjoy brand deals!</p>
         </div>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="mx-auto mt-8 max-w-xl space-y-4">
-            {/* Name Fields Row */}
+            {/* Render fields dynamically */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Firstname Field */}
-              <FormField
-                control={form.control}
-                name="firstname"
-                render={({ field }) => (
-                  <div>
-                    <Input
-                      type="text"
-                      {...field}
-                      placeholder="Enter firstname"
-                      className="w-full rounded-xl border-gray-200 p-6 pe-12 text-sm shadow-sm"
-                      id="signup-form-input-firstname"
-                    />
-                    <FormMessage className="text-red-600 pt-3" />
-                  </div>
-                )}
-              />
-
-              {/* Lastname Field */}
-              <FormField
-                control={form.control}
-                name="lastname"
-                render={({ field }) => (
-                  <div>
-                    <Input
-                      type="text"
-                      {...field}
-                      placeholder="Enter lastname"
-                      className="w-full rounded-xl border-gray-200 p-6 pe-12 text-sm shadow-sm"
-                      id="signup-form-input-lastname"
-                    />
-                    <FormMessage className="text-red-600 pt-3" />
-                  </div>
-                )}
-              />
+              {fields
+                .filter((field) => field.name === "firstname" || field.name === "lastname")
+                .map((field) => (
+                  <FormField
+                    key={field.name}
+                    control={form.control}
+                    name={field.name}
+                    render={({ field: formField }) => (
+                      <div>
+                        <Input
+                          type={field.type}
+                          {...formField}
+                          placeholder={field.placeholder}
+                          className="w-full rounded-xl border-gray-200 p-6 pe-12 text-sm shadow-sm"
+                          id={`signup-form-input-${field.name}`}
+                        />
+                        <FormMessage className="text-red-600 pt-3" />
+                      </div>
+                    )}
+                  />
+                ))}
             </div>
 
-            {/* PhoneNumber Field */}
-            <FormField
-              control={form.control}
-              name="phonenumber"
-              render={({ field }) => (
-                <>
-                  <Input
-                    type="tel"
-                    {...field}
-                    placeholder="Enter phonenumber"
-                    className="w-full rounded-xl border-gray-200 p-6 pe-12 text-sm shadow-sm"
-                    id="signup-form-input-phonenumber"
-                  />
-                  <FormMessage className="text-red-600" />
-                </>
-              )}
-            />
-
-            {/* Email Field */}
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <>
-                  <Input
-                    type="text"
-                    {...field}
-                    placeholder="Enter email"
-                    className="w-full rounded-xl border-gray-200 p-6 pe-12 text-sm shadow-sm"
-                    id="signup-form-input-email"
-                  />
-                  <FormMessage className="text-red-600" />
-                </>
-              )}
-            />
-
+            {/* Render remaining fields */}
+            {fields
+              .filter((field) => field.name !== "firstname" && field.name !== "lastname")
+              .map((field) => (
+                <FormField
+                  key={field.name}
+                  control={form.control}
+                  name={field.name}
+                  render={({ field: formField }) => (
+                    <div>
+                      <Input
+                        type={field.type}
+                        {...formField}
+                        placeholder={field.placeholder}
+                        className="w-full rounded-xl border-gray-200 p-6 pe-12 text-sm shadow-sm"
+                        id={`signup-form-input-${field.name}`}
+                      />
+                      <FormMessage className="text-red-600 pt-3" />
+                    </div>
+                  )}
+                />
+              ))}
             {/* Password Field */}
             <FormField
               control={form.control}
@@ -299,7 +210,6 @@ export default function RegisterForm() {
         </Form>
       </div>
     </div>
-
   )
 }
 

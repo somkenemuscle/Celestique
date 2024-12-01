@@ -10,7 +10,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { useRouter } from "next/navigation"
-import { useToast } from "@/hooks/use-toast"
 import Link from "next/link"
 import { Eye, EyeOff } from 'react-feather';
 import { useState } from "react";
@@ -18,10 +17,11 @@ import Loader from "../ui/Loader";
 import { SignInFormSchema } from "@/lib/authSchema"
 import { signIn } from "@/services/auth"
 import axios from "axios"
+import toast from "react-hot-toast";
 
 
-export default function SignInForm() {
-    const { toast } = useToast();
+
+export default function LoginForm() {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -58,10 +58,7 @@ export default function SignInForm() {
             router.push('/');
 
             // Show success toast
-            toast({
-                className: "shadcn-toast-success",
-                description: message
-            });
+            toast.success(message)
 
         } catch (error: any) {
             // Default error message
@@ -87,10 +84,8 @@ export default function SignInForm() {
                 errorMessage = 'An unexpected error occurred. Please try again later.';
             }
 
-            toast({
-                className: "shadcn-toast-failure",
-                description: errorMessage
-            });
+            toast.error(errorMessage)
+
         } finally {
             // Hide the loader after request is complete (either success or error)
             setLoading(false);

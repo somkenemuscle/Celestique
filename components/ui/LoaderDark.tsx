@@ -1,13 +1,13 @@
 import Image from 'next/image'
 
-const Loader = () => {
+const LoaderDark = () => {
     return (
         <span className='loader '>
             <Image
-                src='/assets/icons/loader.svg'
+                src='/assets/icons/loaderDark.svg'
                 alt='loader'
-                width={15}
-                height={15}
+                width={10}
+                height={10}
                 className='animate-spin'
                 priority
             />
@@ -15,4 +15,4 @@ const Loader = () => {
     )
 }
 
-export default Loader;
+export default LoaderDark;

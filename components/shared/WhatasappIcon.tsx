@@ -4,6 +4,7 @@ import { FaWhatsapp } from 'react-icons/fa'
 
 export default function WhatsappIcon() {
   return (
+
     <div className="fixed bottom-4 z-20 right-6">
   <Link href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
     <FaWhatsapp
@@ -11,6 +12,7 @@ export default function WhatsappIcon() {
     />
   </Link>
 </div>
+
 
   )
 }
