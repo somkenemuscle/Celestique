@@ -48,7 +48,7 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
             setGlobalCart(res.cart)
             toast.success(res.message)
         } catch (error: any) {
-            alert(error.message || "Failed to add item to cart.");
+            toast.error(error.response.data.message)
         } finally {
             setLoading(false)
         }
@@ -60,7 +60,7 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div className="grid grid-cols-12 mt-48 slug-page-body">
+        <div className="grid grid-cols-12 mt-32 slug-page-body">
             {/* Carousel Section */}
             <div className="col-span-12 md:col-span-6 flex justify-center">
                 <Image
@@ -90,6 +90,8 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
                     </span>
                     {product.quantity > 10 ? <span>In Stock </span> : <span>Low Stock </span>} . ( {product.quantity} Units left )
                 </p>
+
+                <p className="font-semibold text-sm text-red-400 tracking-wider mb-4">{product.quantity === 0 && 'OUT OF STOCK'}</p>
 
                 <hr />
 

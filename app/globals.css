@@ -44,7 +44,6 @@
 
 .cart-body {
   font-family: sans-serif;
-
 }
 
 #cart-item-price {
@@ -56,6 +55,10 @@
 }
 
 .slug-page-body{
+  font-family: sans-serif;
+}
+
+.verify-page-body{
   font-family: sans-serif;
 }
 

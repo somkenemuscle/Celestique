@@ -58,11 +58,7 @@ export default function LoginForm() {
             router.push('/');
 
             // Show success toast
-            toast.success(message,{
-                style: {
-                  marginTop: '140px'
-                },
-              })
+            toast.success(message)
 
         } catch (error: any) {
             // Default error message

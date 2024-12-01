@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import Loader from "@/components/ui/Loader";
 import { getCart } from "@/services/cart";
 import ShippingAddressForm from "@/components/forms/ShippingAddressForm";
 

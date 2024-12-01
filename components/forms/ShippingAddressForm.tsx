@@ -260,12 +260,11 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
                   className={`w-full text-center rounded-xl bg-black text-sm font-medium text-white hover:bg-slate-900 p-7 tracking-wider`}
                   disabled={cart.totalPrice === 0}
                 >
-                  Pay Now ( ₦{cart.totalPrice.toLocaleString()} ){" "}
-                  {loading && (
+                  {loading ? (
                     <span className="ml-3">
                       <Loader />
                     </span>
-                  )}
+                  ) : (`Pay Now ₦${cart.totalPrice.toLocaleString()}`)}
                 </Button>
               </form>
             </Form>

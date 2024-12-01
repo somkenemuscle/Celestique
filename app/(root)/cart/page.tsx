@@ -122,15 +122,17 @@ function CartPage() {
 
             return (
               <div key={index} className="flex items-center border-b pb-4 mb-4">
+                <Link href={`/products/${item.product.slug}`}>
 
-                {/* Product Image */}
-                <Image
-                  src={item.product.images.length === 0 ? '' : item.product.images[0]}
-                  alt={item.product.name}
-                  width={100}
-                  height={100}
-                  className="rounded-md"
-                />
+                  {/* Product Image */}
+                  <Image
+                    src={item.product.images.length === 0 ? '' : item.product.images[0]}
+                    alt={item.product.name}
+                    width={100}
+                    height={100}
+                    className="rounded-md"
+                  />
+                </Link>
 
                 {/* Product Details */}
                 <div className="ml-4 flex-grow">
@@ -138,6 +140,7 @@ function CartPage() {
                   <p className="text-xs text-gray-600">
                     {item.product.gender.gender} / {item.size} / {item.color}
                   </p>
+
                   {item.product.quantity === 0 && (
                     <p className="text-red-600 font-bold text-sm">OUT OF STOCK</p>
                   )}
