@@ -91,6 +91,8 @@ export default function Navbar() {
                             </button>
                         </div>
 
+
+
                         {/* Links */}
                         <TabGroup className="mt-2">
                             <div className="border-b border-gray-200">
@@ -179,7 +181,7 @@ export default function Navbar() {
                     FREE DELIVERY ON ORDERS ABOVE ₦10,000!*
                 </p>
 
-                <nav aria-label="Top" className="mx-auto max-w-full px-6 py-2 sm:px-8 ">
+                <nav aria-label="Top" className="mx-auto max-w-full  px-4 py-2 sm:px-6 lg:px-20">
                     <div className="">
                         <div className="flex h-16 items-center">
                             <button
