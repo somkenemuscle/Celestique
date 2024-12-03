@@ -1,9 +1,12 @@
 import axiosInstance from '@/lib/axiosInstance';
 
 //GET ALL PRODUCTS
-export const getAllProducts = async () => {
-    const response = await axiosInstance.get('/products');
+export const getAllProducts = async (page: number) => {
+    const response = await axiosInstance.get(`/products`, {
+        params: { page }
+    });
     return response.data;
+
 };
 
 

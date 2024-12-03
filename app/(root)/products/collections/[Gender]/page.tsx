@@ -3,9 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getProductByGender } from '@/services/product';
 import { useParams } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
-
+import ProductCard from '@/components/ui/ProductCard';
 
 function GenderProductsPage() {
   const params = useParams();
@@ -33,34 +31,17 @@ function GenderProductsPage() {
     fetchProducts();
   }, [Gender]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading || !products) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
 
   return (
-    <div>
-      <h1>products for {Gender}</h1>
-      {products.length > 0 ? (
-        <ul>
-          {products.map((product: any) => (
-            <Link key={product._id} href={`/products/${product.slug}`} >
-             <li key={product._id}>
-              <h3>{product.name}</h3>
-              <Image
-                src={product.images[0]}
-                alt="Product-Image"
-                width={500}
-                height={500}
-              />
-              <p>Price: ₦{product.price}</p>
-            </li>
-            </Link>
-           
-          ))}
-        </ul>
-      ) : (
-        <p>No products found.</p>
-      )}
+    <div className='mt-32'>
+      <ul className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 sm:p-4 lg:p-11 gap-3">
+        {products.map((product) => (
+          <ProductCard key={product._id} product={product} />
+        ))}
+      </ul>
     </div>
   );
 }
