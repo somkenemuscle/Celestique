@@ -264,7 +264,7 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
                     <span className="ml-3">
                       <Loader />
                     </span>
-                  ) : (`Pay Now ₦${cart.totalPrice.toLocaleString()}`)}
+                  ) : (`Pay Now (₦${cart.totalPrice.toLocaleString()})`)}
                 </Button>
               </form>
             </Form>

@@ -80,18 +80,18 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
                 <p className="text-sm tracking-wider text-gray-500 mb-6 flex items-center ">
                     <span className="flex items-center justify-center mr-2">
                         <span
-                            className={`absolute h-2 w-2 rounded-full bg-opacity-50 animate-pulse-ring ${product.quantity > 10 ? 'bg-green-600' : 'bg-red-500'
+                            className={`absolute h-2 w-2 rounded-full bg-opacity-50 animate-pulse-ring ${product.quantity > 10 ? 'bg-green-600' : 'bg-red-600'
                                 }`}
                         ></span>
                         <span
-                            className={`h-2 w-2 rounded-full ${product.quantity > 10 ? 'bg-green-500' : 'bg-red-500'
+                            className={`h-2 w-2 rounded-full ${product.quantity > 10 ? 'bg-green-500' : 'bg-red-600'
                                 }`}
                         ></span>
                     </span>
                     {product.quantity > 10 ? <span>In Stock </span> : <span>Low Stock </span>} . ( {product.quantity} Units left )
                 </p>
 
-                <p className="font-semibold text-sm text-red-400 tracking-wider mb-4">{product.quantity === 0 && 'OUT OF STOCK'}</p>
+                <p className="font-semibold text-sm text-red-500 tracking-wider mb-4">{product.quantity === 0 && 'OUT OF STOCK'}</p>
 
                 <hr />
 
