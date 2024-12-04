@@ -123,7 +123,7 @@
 
 @media (max-width: 420px)  {
   .truncate-text {
-    width: 7rem !important; /* Adjust width as needed */
+    width: 5rem !important; /* Adjust width as needed */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
