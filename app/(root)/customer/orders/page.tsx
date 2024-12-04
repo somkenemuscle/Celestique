@@ -16,7 +16,7 @@ function OrdersPage() {
     try {
       const res = await getUserOrders();
       setUserOrders(res.orders)
-      console.log(res.orders)
+
 
     } catch (err: any) {
       setError(err.message || "Failed to fetch products");
