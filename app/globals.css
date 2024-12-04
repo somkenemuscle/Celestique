@@ -94,6 +94,10 @@
   font-family: sans-serif;
 }
 
+.filter-body{
+  font-family: sans-serif;
+}
+
 @keyframes pulse-ring {
   0% {
     transform: scale(1);

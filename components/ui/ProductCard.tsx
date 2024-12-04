@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 
-
 function ProductCard({ product }: { product: Product }) {
     const [isHovered, setIsHovered] = useState(false);
 
@@ -24,7 +23,7 @@ function ProductCard({ product }: { product: Product }) {
                         height={500}
                         className="pb-4 transition-transform duration-300"
                     />
-                    <h2 className="text-xs font-medium tracking-wide mt-2">{product.name}</h2>
+                    <h2 className="text-xs font-medium tracking-wide mt-2 truncate">{product.name}</h2>
                     <p className="tracking-wide text-xs font-medium">
                         ₦{product.price.toLocaleString()}
                     </p>
