@@ -128,9 +128,9 @@ function CartPage() {
                   <Image
                     src={item.product.images.length === 0 ? '' : item.product.images[0]}
                     alt={item.product.name}
-                    width={100}
-                    height={100}
-                    className="rounded-md"
+                    width={80}
+                    height={80}
+                    className="border rounded-xl bg-gray-50 p-1"
                   />
                 </Link>
 

@@ -6,6 +6,10 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'sfycdn.speedsize.com'
+            },
+            {
+                protocol: 'https',
+                hostname: 'cdn.shopify.com'
             }
         ],
     },

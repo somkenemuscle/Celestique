@@ -44,15 +44,16 @@ function ViewAllProductsPage() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="mt-36 flex">
+    <div className="flex">
       {/* Sidebar */}
-      <div className="w-64 flex-shrink-0">
+      <div>
         <FilterSortSidebar />
       </div>
 
+
       {/* Products and Pagination */}
       <div className="flex-1">
-        <ul className="grid grid-cols-2 sm:grid-cols-2  md:grid-cols-3 p-4 sm:p-4 lg:p-11 gap-3">
+        <ul className="grid grid-cols-2 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 p-4 sm:p-4 lg:p-11 gap-3">
           {products.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
