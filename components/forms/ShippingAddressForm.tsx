@@ -77,7 +77,7 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
 
 
   return (
-    <div className="mt-40 mb-10">
+    <div className="mt-10 mb-10">
       <div className="container mx-auto px-6 sm:px-6 md:px-20 lg:px-20">
         {/* Main Grid Container */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -271,7 +271,7 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
           </div>
 
           {/* CHECKOUT SUMMARY SECTION - Right */}
-          <div className="p-6 border lg:px-10 lg:col-span-6 rounded-xl sm:h-full lg:h-full bg-gray-50 ">
+          <div className="p-6 border lg:px-10 lg:col-span-6 rounded-xl sm:h-full lg:h-full bg-gray-50">
             {cart.items.map((item, index) => (
               <div key={index} className="flex items-center border-b pb-4 mb-4">
                 {/* Product Image */}

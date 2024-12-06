@@ -75,9 +75,9 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
 
     return (
         <div>
-            <div className="grid grid-cols-12 mt-28 slug-page-body">
+            <div className="grid grid-cols-12 slug-page-body">
                 {/* Carousel Section */}
-                <div className="col-span-12 md:col-span-6 mt-2 flex">
+                <div className="col-span-12 md:col-span-6  flex">
                     <Image
                         src={product.images[0]}
                         alt={`${product.name}`}
