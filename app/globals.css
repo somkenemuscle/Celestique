@@ -121,8 +121,47 @@
 
 
 
-@media (max-width: 420px)  {
-  .truncate-text {
+
+ 
+
+#order-history-container{
+width: 75%;
+
+}
+
+#order-details-container{
+  width: 80%;
+  
+}
+
+
+@media (min-width:460px) and (max-width: 540px)  {
+  .truncate-custom {
+    width: 13rem !important; /* Adjust width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+ 
+}
+
+
+@media (min-width:362px) and (max-width: 460px)  {
+  .truncate-custom {
+    width: 8rem !important; /* Adjust width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+ 
+}
+
+
+
+
+
+@media (max-width: 362px)  {
+  .truncate-custom {
     width: 5rem !important; /* Adjust width as needed */
     overflow: hidden;
     text-overflow: ellipsis;
@@ -131,7 +170,7 @@
  
 }
 
-#order-history-container{
-width: 70%;
-
+#search-input{
+  outline: none;
+  
 }
