@@ -111,3 +111,10 @@ interface Order {
     updatedAt: string; // ISO 8601 timestamp
 }
 
+
+
+interface PaginationProps {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+}

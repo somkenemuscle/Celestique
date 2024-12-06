@@ -3,34 +3,42 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-
+import { FaHeart, FaRegHeart } from "react-icons/fa"; // Using Font Awesome icons
 
 function ProductCard({ product }: { product: Product }) {
     const [isHovered, setIsHovered] = useState(false);
 
+
     return (
         <div>
-            <Link href={`/products/${product.slug}`}>
-                <li
-                    className="mb-7 relative group"
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                >
+            <li
+                className="mb-7 relative group"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+            >
+                {/* Heart Icon */}
+                <button className="absolute top-2 right-2  p-1">
+                    <FaRegHeart className="text-gray-500 hover:text-red-700" size={18} />
+                </button>
+                <Link href={`/products/${product.slug}`}>
+                    {/* Product Image */}
                     <Image
                         src={isHovered && product.images[1] ? product.images[1] : product.images[0]}
                         alt={product.name}
                         width={500}
                         height={500}
-                        className="pb-4 transition-transform duration-300"
+                        className="rounded"
                     />
-                    <h2 className="text-xs font-medium tracking-wide mt-2 truncate">{product.name}</h2>
-                    <p className="tracking-wide text-xs font-medium">
-                        ₦{product.price.toLocaleString()}
-                    </p>
-                </li>
-            </Link>
-        </div>
+                </Link>
+                {/* Product Name */}
+                <h2 className="text-xs font-medium tracking-wide mt-2 truncate">{product.name}</h2>
 
+                {/* Product Price */}
+                <p className="tracking-wide text-sm font-bold text-amber-800">
+                    ₦{product.price.toLocaleString()}
+                </p>
+            </li>
+        </div>
     );
 }
 

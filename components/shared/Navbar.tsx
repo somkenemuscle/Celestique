@@ -66,7 +66,7 @@ export default function Navbar() {
 
 
     return (
-        <div className="bg-white w-full fixed top-0 z-50">
+        <div className="bg-white w-full top-0 z-50">
             {/* Mobile menu */}
             <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden lg:fixed">
                 <DialogBackdrop
@@ -177,8 +177,8 @@ export default function Navbar() {
 
             {/* ON LARGE SCREEN */}
             <header className="relative bg-gray-50 border-b border-gray-200">
-                <p className="p-3 text-center tracking-wider bg-black px-4 text-xs text-white sm:px-6 lg:px-10">
-                    FREE DELIVERY ON ORDERS ABOVE ₦10,000!*
+                <p className="p-3 text-center tracking-wider bg-black px-4 text-xs font-extrabold text-white sm:px-6 lg:px-10">
+                    FREE DELIVERY ON ORDERS ABOVE ₦10,000
                 </p>
 
                 <nav aria-label="Top" className="mx-auto max-w-full  px-4 py-2 sm:px-6 lg:px-20">
@@ -197,12 +197,12 @@ export default function Navbar() {
                             {/* Logo */}
                             <div className="ml-4 flex lg:ml-0">
                                 <Link href="/">
-                                    <h1 className="font-extrabold text-" id='logo'> ᥫ᭡ Celestique</h1>
+                                    <h1 className="font-extrabold" id='logo'> ᥫ᭡ <span className='font-normal'> Celes</span>tique</h1>
                                 </Link>
                             </div>
 
                             {/* Flyout menus */}
-                            <PopoverGroup className="hidden lg:ml-8 lg:block lg:self-stretch">
+                            <PopoverGroup className="hidden lg:ml-8 lg:block lg:self-stretch z-40">
                                 <div className="flex h-full space-x-8">
                                     {navigation.categories.map((category) => (
                                         <Popover key={category.name} className="flex">
