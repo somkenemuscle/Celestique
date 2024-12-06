@@ -98,7 +98,7 @@ function CartPage() {
   if (!cart) return;
 
   return (
-    <div className="cart-body mt-44 container mx-auto p-10 grid lg:grid-cols-3 gap-8">
+    <div className="cart-body mt-10 container mx-auto p-10 grid lg:grid-cols-3 gap-8">
 
       {/* Cart Items */}
       <div className="lg:col-span-2">
@@ -128,9 +128,9 @@ function CartPage() {
                   <Image
                     src={item.product.images.length === 0 ? '' : item.product.images[0]}
                     alt={item.product.name}
-                    width={100}
-                    height={100}
-                    className="rounded-md"
+                    width={80}
+                    height={80}
+                    className="border rounded-xl bg-gray-50 p-1"
                   />
                 </Link>
 

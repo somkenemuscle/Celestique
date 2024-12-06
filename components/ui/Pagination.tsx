@@ -1,7 +1,7 @@
 
 function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
     return (
-        <div className="flex justify-center items-center m-6 mt-10 space-x-4 text-xs">
+        <div className="flex justify-center items-center m-6 mt-10 mb-20 space-x-4 text-xs">
             {/* Previous Button */}
             <button
                 onClick={() => onPageChange(currentPage - 1)}

@@ -94,7 +94,7 @@
   font-family: sans-serif;
 }
 
-.filter-body{
+.filter-body {
   font-family: sans-serif;
 }
 
@@ -121,17 +121,12 @@
 
 
 
-@media (max-width: 420px)  {
-  .truncate-text {
-    width: 5rem !important; /* Adjust width as needed */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
- 
+
+
+#order-history-container {
+  width: 70%;
 }
 
-#order-history-container{
-width: 70%;
-
+#filter-sortBtn {
+  font-family: Arial, Helvetica, sans-serif;
 }
