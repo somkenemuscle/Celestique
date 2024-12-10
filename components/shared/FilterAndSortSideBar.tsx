@@ -4,7 +4,7 @@ import { useState } from "react";
 import axiosInstance from "@/lib/axiosInstance";
 
 
-const filterColors = ["Blue", "Green", "Black", "White", "Yellow", "Grey", "Purple"];
+const filterColors = ["Blue", "Green", "Black", "White", "Yellow", "Grey", "Purple", "Red", "Brown"];
 const filterSizes = ["S", "M", "L", "XL"];
 const sortOptions = [{ label: "High to Low", value: "desc" }, { label: "Low to High", value: "asc" }];
 
@@ -86,9 +86,20 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
           <ul className="space-y-1">
             {filterColors.map((color, index) => (
               <li key={index}>
-                <label className="flex items-center">
-                  <input name="color" type="checkbox" className="mr-2" onClick={() => handleFilterByColor(color)} />
-                  {color}
+                <label className="flex items-center cursor-pointer ">
+                  <input
+                    name="color"
+                    type="checkbox"
+                    className="hidden peer" // Hide the default checkbox
+                    onClick={() => handleFilterByColor(color)}
+                  />
+                  {/* Circle to represent color */}
+                  <span
+                    className="w-4 h-4 rounded-full border border-gray-300 peer-checked:ring-2 peer-checked:ring-offset-1 peer-checked:ring-gray-300 mr-2"
+                    style={{ backgroundColor: color }}
+                  ></span>
+                  {/* Color name */}
+                  <span>{color}</span>
                 </label>
               </li>
             ))}
@@ -111,8 +122,8 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
         </div>
 
         <div className="mt-14">
-          <button onClick={() => fetchProducts()} className="border p-3 mr-2">(x) Clear All</button>
-          <button className="border p-3">Apply</button>
+          <button onClick={() => fetchProducts()} className="border p-3 mr-2 hover:bg-slate-800 hover:text-white">(x) Clear All</button>
+          <button className="border p-3 hover:bg-slate-800 hover:text-white">Apply</button>
         </div>
       </div>
 
@@ -163,9 +174,20 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
                 <ul className="space-y-1">
                   {filterColors.map((color, index) => (
                     <li key={index}>
-                      <label className="flex items-center">
-                        <input name="color" type="checkbox" className="mr-2" onClick={() => handleFilterByColor(color)} />
-                        {color}
+                      <label className="flex items-center cursor-pointer ">
+                        <input
+                          name="color"
+                          type="checkbox"
+                          className="hidden peer" // Hide the default checkbox
+                          onClick={() => handleFilterByColor(color)}
+                        />
+                        {/* Circle to represent color */}
+                        <span
+                          className="w-4 h-4 rounded-full border border-gray-300 peer-checked:ring-2 peer-checked:ring-offset-1 peer-checked:ring-gray-300 mr-2"
+                          style={{ backgroundColor: color }}
+                        ></span>
+                        {/* Color name */}
+                        <span>{color}</span>
                       </label>
                     </li>
                   ))}
@@ -187,8 +209,8 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
                 </ul>
               </div>
               <div className="mt-14">
-                <button onClick={() => fetchProducts()} className="border p-3 mr-2">(x) Clear All</button>
-                <button className="border p-3">Apply</button>
+                <button onClick={() => fetchProducts()} className="border p-3 mr-2 hover:bg-slate-800 hover:text-white">(x) Clear All</button>
+                <button className="border p-3 hover:bg-slate-800 hover:text-white">Apply</button>
               </div>
             </div>
           </div>

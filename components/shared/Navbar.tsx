@@ -207,7 +207,7 @@ export default function Navbar() {
                                     {navigation.categories.map((category) => (
                                         <Popover key={category.name} className="flex">
                                             <div className="relative flex">
-                                                <PopoverButton className="relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium  transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-gray-900 data-[open]:text-gray-900">
+                                                <PopoverButton className="outline-none relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium  transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-gray-900 data-[open]:text-gray-900">
                                                     {category.name}
                                                 </PopoverButton>
                                             </div>
