@@ -8,20 +8,9 @@ export const navigation = {
           id: 'clothing',
           name: 'Clothing',
           items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Shirts', href: '#' },
-            { name: 'Shorts', href: '#' },
-          ],
-        },
-        {
-          id: 'Jewelry',
-          name: 'Jewelry',
-          items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Shirts', href: '#' },
-            { name: 'Shorts', href: '#' },
+            { name: 'Tops', href: '/products/collections/women/tops' },
+            { name: 'Dresses', href: '/products/collections/women/dresses' },
+            { name: 'All Women', href: '/products/collections/women' },
           ],
         }
       ],
@@ -34,10 +23,9 @@ export const navigation = {
           id: 'clothing',
           name: 'Clothing',
           items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Shirts', href: '#' },
-            { name: 'Shorts', href: '#' },
+            { name: 'Shirts', href: '/products/collections/men/shirts' },
+            { name: 'Shorts', href: '/products/collections/men/shorts' },
+            { name: 'All Men', href: '/products/collections/men' },
           ],
         },
       ],
