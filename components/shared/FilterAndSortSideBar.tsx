@@ -1,12 +1,15 @@
 'use client';
 
 import { useState } from "react";
+import axiosInstance from "@/lib/axiosInstance";
 
-const filterColors = ["Red", "Blue", "Green", "Black", "White", "Yellow"];
+
+const filterColors = ["Blue", "Green", "Black", "White", "Yellow", "Grey", "Purple"];
 const filterSizes = ["S", "M", "L", "XL"];
-const sortOptions = ["High to Low", "Low to High"];
+const sortOptions = [{ label: "High to Low", value: "desc" }, { label: "Low to High", value: "asc" }];
 
-function FilterSortSidebar() {
+
+function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps) {
 
   // State to control the visibility of the modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,6 +19,48 @@ function FilterSortSidebar() {
     setIsModalOpen(!isModalOpen);
   };
 
+
+  //Handle price sorting function
+  async function handleSorting(option: string) {
+    try {
+      const res = await axiosInstance.get(`${baseRoute}?sortPrice=${option}`);
+      onFilterChange(res.data.products, res.data.totalPages);
+    } catch (error) {
+      console.error("Error fetching sorted data:", error);
+    }
+  }
+
+
+  //Handle Size Filtering function
+  async function handleFilterBySize(size: string) {
+    try {
+      const res = await axiosInstance.get(`${baseRoute}?size=${size}`);
+      onFilterChange(res.data.products, res.data.totalPages);
+    } catch (error) {
+      console.error("Error fetching sorted data:", error);
+    }
+  }
+
+
+  //Handle Color Filtering function
+  async function handleFilterByColor(color: string) {
+    try {
+      const res = await axiosInstance.get(`${baseRoute}?color=${color}`);
+      onFilterChange(res.data.products, res.data.totalPages);
+    } catch (error) {
+      console.error("Error fetching sorted data:", error);
+    }
+  }
+
+  //Clear filtering 
+  async function fetchProducts() {
+    try {
+      const res = await axiosInstance.get(`${baseRoute}`);
+      onFilterChange(res.data.products, res.data.totalPages);
+    } catch (error) {
+      console.error("Error fetching sorted data:", error);
+    }
+  }
 
   return (
     <>
@@ -28,8 +73,8 @@ function FilterSortSidebar() {
           <div className="space-y-2">
             {sortOptions.map((option, index) => (
               <label key={index} className="block">
-                <input type="radio" name="sort" className="mr-2" />
-                Price: {option}
+                <input type="radio" name="sort" className="mr-2" onClick={() => handleSorting(option.value)} />
+                Price: {option.label}
               </label>
             ))}
           </div>
@@ -42,7 +87,7 @@ function FilterSortSidebar() {
             {filterColors.map((color, index) => (
               <li key={index}>
                 <label className="flex items-center">
-                  <input type="checkbox" className="mr-2" />
+                  <input name="color" type="checkbox" className="mr-2" onClick={() => handleFilterByColor(color)} />
                   {color}
                 </label>
               </li>
@@ -57,7 +102,7 @@ function FilterSortSidebar() {
             {filterSizes.map((size, index) => (
               <li key={index}>
                 <label className="flex items-center">
-                  <input type="checkbox" className="mr-2" />
+                  <input name="size" type="checkbox" className="mr-2" onClick={() => handleFilterBySize(size)} />
                   {size}
                 </label>
               </li>
@@ -66,11 +111,9 @@ function FilterSortSidebar() {
         </div>
 
         <div className="mt-14">
-          <button className="border p-3 mr-2">(x) Clear All</button>
+          <button onClick={() => fetchProducts()} className="border p-3 mr-2">(x) Clear All</button>
           <button className="border p-3">Apply</button>
         </div>
-
-
       </div>
 
 
@@ -107,8 +150,8 @@ function FilterSortSidebar() {
                 <div className="space-y-2">
                   {sortOptions.map((option, index) => (
                     <label key={index} className="block">
-                      <input type="radio" name="sort" className="mr-2" />
-                      Price: {option}
+                      <input type="radio" name="sort" className=" mr-2" onClick={() => handleSorting(option.value)} />
+                      Price: {option.label}
                     </label>
                   ))}
                 </div>
@@ -121,7 +164,7 @@ function FilterSortSidebar() {
                   {filterColors.map((color, index) => (
                     <li key={index}>
                       <label className="flex items-center">
-                        <input type="checkbox" className="mr-2" />
+                        <input name="color" type="checkbox" className="mr-2" onClick={() => handleFilterByColor(color)} />
                         {color}
                       </label>
                     </li>
@@ -136,12 +179,16 @@ function FilterSortSidebar() {
                   {filterSizes.map((size, index) => (
                     <li key={index}>
                       <label className="flex items-center">
-                        <input type="checkbox" className="mr-2" />
+                        <input name="size" type="checkbox" className="mr-2" onClick={() => handleFilterBySize(size)} />
                         {size}
                       </label>
                     </li>
                   ))}
                 </ul>
+              </div>
+              <div className="mt-14">
+                <button onClick={() => fetchProducts()} className="border p-3 mr-2">(x) Clear All</button>
+                <button className="border p-3">Apply</button>
               </div>
             </div>
           </div>
