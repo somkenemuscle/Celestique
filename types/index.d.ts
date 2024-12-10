@@ -119,3 +119,7 @@ interface PaginationProps {
     onPageChange: (page: number) => void;
 }
 
+interface FilterSortSidebarProps {
+    baseRoute: string;
+    onFilterChange: (data: Product[], pages: number) => void;
+}

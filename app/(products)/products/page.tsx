@@ -14,6 +14,7 @@ function ViewAllProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  
   useEffect(() => {
     fetchProducts(currentPage);
   }, [currentPage]);
@@ -40,6 +41,12 @@ function ViewAllProductsPage() {
     }
   };
 
+  // Callback to handle state updates
+  const handleFilterChange = (newProducts: Product[], pages: number) => {
+    setProducts(newProducts);
+    setTotalPages(pages)
+  };
+
   if (loading) return <div className="bg-black"><Loader /></div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -47,7 +54,9 @@ function ViewAllProductsPage() {
     <div className="flex">
       {/* Sidebar */}
       <div>
-        <FilterSortSidebar />
+        <FilterSortSidebar
+          baseRoute={'/products'}
+          onFilterChange={handleFilterChange} />
       </div>
 
 
