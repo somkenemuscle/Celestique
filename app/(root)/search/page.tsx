@@ -4,7 +4,7 @@ import { getSearchedItems } from "@/services/search"
 import { FaGreaterThan, FaLessThan } from "react-icons/fa"
 import Pagination from "@/components/ui/Pagination"
 import ProductCard from "@/components/ui/ProductCard"
-import FilterSortSidebar from "@/components/shared/FilterAndSortSideBar"
+// import FilterSortSidebar from "@/components/shared/FilterAndSortSideBar"
 
 export default function SearchPage() {
   const [searchedTerm, setSearchedTerm] = useState('')
@@ -54,9 +54,9 @@ export default function SearchPage() {
       {Products && Products.length > 0 ? (
         <div className="flex" >
           {/* Sidebar */}
-          < div >
+          {/* < div >
             <FilterSortSidebar />
-          </div>
+          </div> */}
 
           {/* Products and Pagination */}
           <div className="flex-1" >
