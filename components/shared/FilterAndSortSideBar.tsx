@@ -3,77 +3,94 @@
 import { useState } from "react";
 import axiosInstance from "@/lib/axiosInstance";
 
-
-const filterColors = ["Blue", "Green", "Black", "White", "Yellow", "Grey", "Purple", "Red", "Brown"];
-const filterSizes = ["S", "M", "L", "XL"];
+//FILTER AND SORT DATA
+const filterColors = ["Blue", "Green", "Black", "White", "Yellow", "Grey", "Purple", "Red", "Brown", "Pink", "HotPink", "Orange"];
+const filterSizes = ["XS", "S", "M", "L", "XL", "XXL"];
 const sortOptions = [{ label: "High to Low", value: "desc" }, { label: "Low to High", value: "asc" }];
 
 
 function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps) {
+  // STATES FOR SELECTED FILTERS
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [sortOption, setSortOption] = useState<string>("");
 
-  // State to control the visibility of the modal
+  // STATE TO CONTROL MODAL VISIBILITY
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Function to toggle modal visibility
+
+  // FUNCTION TO TOGGLE COLOR
+  const toggleColor = (color: string) => {
+    setSelectedColors((prev) =>
+      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
+    );
+  };
+
+  // FUNCTION TO TOGGLE SIZE
+  const toggleSize = (size: string) => {
+    setSelectedSizes((prev) =>
+      prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
+    );
+  };
+
+
+  // FUNCTION TO TOGGLE MODAL VISIBILTY
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
 
-  //Handle price sorting function
-  async function handleSorting(option: string) {
+  // FUNCTION TO FETCH PRODUCTS BASED ON CURRENT FILTERS
+  const fetchFilteredProducts = async () => {
     try {
-      const res = await axiosInstance.get(`${baseRoute}?sortPrice=${option}`);
+      const params = new URLSearchParams();
+
+      if (selectedColors.length > 0) {
+        params.append("color", selectedColors.join(","));
+      }
+      if (selectedSizes.length > 0) {
+        params.append("size", selectedSizes.join(","));
+      }
+      if (sortOption) {
+        params.append("sortPrice", sortOption);
+      }
+
+      const res = await axiosInstance.get(`${baseRoute}?${params.toString()}`);
       onFilterChange(res.data.products, res.data.totalPages);
     } catch (error) {
-      console.error("Error fetching sorted data:", error);
+      console.error("Error fetching filtered data:", error);
     }
-  }
+  };
 
 
-  //Handle Size Filtering function
-  async function handleFilterBySize(size: string) {
-    try {
-      const res = await axiosInstance.get(`${baseRoute}?size=${size}`);
-      onFilterChange(res.data.products, res.data.totalPages);
-    } catch (error) {
-      console.error("Error fetching sorted data:", error);
-    }
-  }
+  // FUNCTION TO CLEAR ALL FILTERS
+  const clearFilters = async () => {
+    setSelectedColors([]);
+    setSelectedSizes([]);
+    setSortOption("");
+    const res = await axiosInstance.get(`${baseRoute}`);
+    onFilterChange(res.data.products, res.data.totalPages);
+  };
 
 
-  //Handle Color Filtering function
-  async function handleFilterByColor(color: string) {
-    try {
-      const res = await axiosInstance.get(`${baseRoute}?color=${color}`);
-      onFilterChange(res.data.products, res.data.totalPages);
-    } catch (error) {
-      console.error("Error fetching sorted data:", error);
-    }
-  }
-
-  //Clear filtering 
-  async function fetchProducts() {
-    try {
-      const res = await axiosInstance.get(`${baseRoute}`);
-      onFilterChange(res.data.products, res.data.totalPages);
-    } catch (error) {
-      console.error("Error fetching sorted data:", error);
-    }
-  }
 
   return (
     <>
       {/* FOR LARGE DEVICES */}
-      <div className="hidden md:block cursor-pointer w-64 h-screen max-h-[calc(100vh-64px)] p-4 pl-7 tracking-wider rounded-lg sticky top-9 filter-body text-sm overflow-y-auto mt-9">
-        <h1 className="text-xl font-semibold mb-10">Filter and sort</h1>
+      <div className="hidden md:block cursor-pointer  w-64 h-screen max-h-[calc(100vh-64px)] p-4 pl-7 tracking-wider rounded-lg sticky top-9 filter-body text-sm overflow-y-auto mt-9">
         {/* Sort By */}
         <div className="mb-6">
           <h4 className="font-semibold mb-2">Sort By</h4>
           <div className="space-y-2">
             {sortOptions.map((option, index) => (
               <label key={index} className="block">
-                <input type="radio" name="sort" className="mr-2" onClick={() => handleSorting(option.value)} />
+                <input
+                  type="radio"
+                  name="sort"
+                  className="mr-2"
+                  checked={sortOption === option.value}
+                  onChange={() => setSortOption(option.value)}
+                />
                 Price: {option.label}
               </label>
             ))}
@@ -86,19 +103,17 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
           <ul className="space-y-1">
             {filterColors.map((color, index) => (
               <li key={index}>
-                <label className="flex items-center cursor-pointer ">
+                <label className="flex items-center cursor-pointer">
                   <input
-                    name="color"
                     type="checkbox"
-                    className="hidden peer" // Hide the default checkbox
-                    onClick={() => handleFilterByColor(color)}
+                    className="hidden peer"
+                    checked={selectedColors.includes(color)}
+                    onChange={() => toggleColor(color)}
                   />
-                  {/* Circle to represent color */}
                   <span
-                    className="w-4 h-4 rounded-full border border-gray-300 peer-checked:ring-2 peer-checked:ring-offset-1 peer-checked:ring-gray-300 mr-2"
+                    className="w-4 h-4 rounded-full border border-gray-100 peer-checked:ring-2 peer-checked:ring-offset-1 peer-checked:ring-gray-300 mr-2"
                     style={{ backgroundColor: color }}
                   ></span>
-                  {/* Color name */}
                   <span>{color}</span>
                 </label>
               </li>
@@ -113,7 +128,12 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
             {filterSizes.map((size, index) => (
               <li key={index}>
                 <label className="flex items-center">
-                  <input name="size" type="checkbox" className="mr-2" onClick={() => handleFilterBySize(size)} />
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                    checked={selectedSizes.includes(size)}
+                    onChange={() => toggleSize(size)}
+                  />
                   {size}
                 </label>
               </li>
@@ -122,8 +142,12 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
         </div>
 
         <div className="mt-14">
-          <button onClick={() => fetchProducts()} className="border p-3 mr-2 hover:bg-slate-800 hover:text-white">(x) Clear All</button>
-          <button className="border p-3 hover:bg-slate-800 hover:text-white">Apply</button>
+          <button onClick={clearFilters} className="border p-3 mr-2 hover:bg-slate-800 hover:text-white">
+            (x) Clear All
+          </button>
+          <button onClick={fetchFilteredProducts} className="border p-3 hover:bg-slate-800 hover:text-white">
+            Apply
+          </button>
         </div>
       </div>
 
@@ -161,7 +185,13 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
                 <div className="space-y-2">
                   {sortOptions.map((option, index) => (
                     <label key={index} className="block">
-                      <input type="radio" name="sort" className=" mr-2" onClick={() => handleSorting(option.value)} />
+                      <input
+                        type="radio"
+                        name="sort"
+                        className="mr-2"
+                        checked={sortOption === option.value}
+                        onChange={() => setSortOption(option.value)}
+                      />
                       Price: {option.label}
                     </label>
                   ))}
@@ -174,19 +204,17 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
                 <ul className="space-y-1">
                   {filterColors.map((color, index) => (
                     <li key={index}>
-                      <label className="flex items-center cursor-pointer ">
+                      <label className="flex items-center cursor-pointer">
                         <input
-                          name="color"
                           type="checkbox"
-                          className="hidden peer" // Hide the default checkbox
-                          onClick={() => handleFilterByColor(color)}
+                          className="hidden peer"
+                          checked={selectedColors.includes(color)}
+                          onChange={() => toggleColor(color)}
                         />
-                        {/* Circle to represent color */}
                         <span
-                          className="w-4 h-4 rounded-full border border-gray-300 peer-checked:ring-2 peer-checked:ring-offset-1 peer-checked:ring-gray-300 mr-2"
+                          className="w-4 h-4 rounded-full border border-gray-100 peer-checked:ring-2 peer-checked:ring-offset-1 peer-checked:ring-gray-300 mr-2"
                           style={{ backgroundColor: color }}
                         ></span>
-                        {/* Color name */}
                         <span>{color}</span>
                       </label>
                     </li>
@@ -201,7 +229,12 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
                   {filterSizes.map((size, index) => (
                     <li key={index}>
                       <label className="flex items-center">
-                        <input name="size" type="checkbox" className="mr-2" onClick={() => handleFilterBySize(size)} />
+                        <input
+                          type="checkbox"
+                          className="mr-2"
+                          checked={selectedSizes.includes(size)}
+                          onChange={() => toggleSize(size)}
+                        />
                         {size}
                       </label>
                     </li>
@@ -209,8 +242,12 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
                 </ul>
               </div>
               <div className="mt-14">
-                <button onClick={() => fetchProducts()} className="border p-3 mr-2 hover:bg-slate-800 hover:text-white">(x) Clear All</button>
-                <button className="border p-3 hover:bg-slate-800 hover:text-white">Apply</button>
+                <button onClick={clearFilters} className="border p-3 mr-2 hover:bg-slate-800 hover:text-white">
+                  (x) Clear All
+                </button>
+                <button onClick={fetchFilteredProducts} className="border p-3 hover:bg-slate-800 hover:text-white">
+                  Apply
+                </button>
               </div>
             </div>
           </div>
