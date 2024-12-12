@@ -37,6 +37,15 @@ function ProductCard({ product }: { product: Product }) {
                 <p className="tracking-wide text-sm font-bold text-amber-800">
                     ₦{product.price.toLocaleString()}
                 </p>
+
+                <ul>
+                    {product.colors.map((color, index) => (
+                        <li
+                            key={index} className="inline-block w-4 h-4 rounded-full mr-2 border border-gray-200"
+                            style={{ backgroundColor: color }}
+                        ></li>
+                    ))}
+                </ul>
             </li>
         </div>
     );

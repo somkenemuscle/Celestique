@@ -87,7 +87,7 @@ export default function RegisterForm() {
 
   return (
     <div className="min-h-screen justify-center items-center">
-      <div className="px-4 py-48 sm:px-6 sm:my-auto md:px-8 md:py-24">
+      <div className="px-4 py-16 sm:px-6 sm:my-auto md:px-8 md:py-24">
         <div className="mx-auto max-w-lg text-center">
           <h1 className="text-2xl font-bold sm:text-3xl">Register</h1>
           <p className="mt-3 text-gray-500">Start shopping with us and enjoy brand deals!</p>
