@@ -13,7 +13,6 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
         try {
             const res = await getOrderDetails(orderId);
             setOrdrDetails(res.orders)
-            console.log(res)
         } catch (err: any) {
             setError(err.message || "Failed to fetch products");
         } finally {
@@ -61,13 +60,14 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
                             ) : (
                                 <li>{OrderDetails.items.length} item</li>
                             )}
-                            <li>Placed on {new Date(OrderDetails.createdAt).toLocaleDateString('en-GB', {
+                            <li>Placed On <span className='text-black font-medium'> {new Date(OrderDetails.createdAt).toLocaleDateString('en-GB', {
                                 day: 'numeric',
                                 month: 'numeric',
                                 year: 'numeric',
                             }).replace(/\//g, '-')}
+                            </span>
                             </li>
-                            <li>Total: ₦{OrderDetails.totalAmount}</li>
+                            <li>Total: ₦{OrderDetails.totalAmount.toLocaleString()}</li>
                         </ul>
                     </div>
 
@@ -87,7 +87,7 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
                                 </span>
                             ) : OrderDetails.orderStatus === 'Delivered' ? (
                                 <span className='flex items-center justify-between'>
-                                    <h3 className='text-black font-medium'>on {ConvertedDate}</h3>
+                                    <h3 className='text-black font-medium'>On {ConvertedDate}</h3>
                                     <button className='bg-green-700 text-white rounded p-1'>{OrderDetails.orderStatus}</button>
                                 </span>
                             ) : (
@@ -96,7 +96,7 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
                         </section>
                         <section className='py-5'>
                             {OrderDetails.items.map((item: any, index: number) => (
-                                <React.Fragment key={item.product._id}>
+                                <div key={item.product._id}>  
                                     <div className='flex'>
                                         <Image
                                             src={item.product.images.length === 0 ? '' : item.product.images[0]}
@@ -114,14 +114,14 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
                                                 <li>Color - {item.color}</li>
                                                 <li>Qty - {item.quantity}</li>
                                                 <li>{item.size}</li>
-                                                <li>₦{item.subtotal}</li>
+                                                <li>₦{item.subtotal.toLocaleString()}</li>
                                             </ul>
 
                                         </div>
 
                                     </div>
                                     {index < OrderDetails.items.length - 1 && <hr className="my-5 text-black" />}
-                                </React.Fragment>
+                                </div>
                             ))}
                         </section>
                     </div>
@@ -132,11 +132,11 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
                             <h3 className='font-medium text-base py-2 px-4 border-b'>PAYMENT INFORMATION</h3>
                             <div className='grid grid-cols-1 px-4'>
                                 <h2 className='font-semibold text-base py-2 '>Payment Method</h2>
-                                <h4 className='text-gray-500  text-sm'>Tap & Relax, Pay with Bank Transfer on Delivery</h4>
+                                <h4 className='text-gray-500  text-sm'>{OrderDetails.paymentId.paymentMethod}</h4>
 
                                 <h2 className='font-semibold text-base pt-7'>Payment Details</h2>
                                 <ul className='text-gray-500  text-sm pb-7 pt-2'>
-                                    <li>Total: ₦{OrderDetails.totalAmount}</li>
+                                    <li>Total: ₦{OrderDetails.totalAmount.toLocaleString()}</li>
                                 </ul>
 
                             </div>
