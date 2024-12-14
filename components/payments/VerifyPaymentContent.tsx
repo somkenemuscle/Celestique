@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import useCartStore from '@/store/cartStore';
 import toast from 'react-hot-toast';
 
-const VerifyPaymentContent = ({ reference }: { reference: string }) => {
+const VerifyPaymentContent = ({ reference }: { reference: string | undefined }) => {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
