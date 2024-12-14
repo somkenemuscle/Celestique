@@ -50,12 +50,12 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
     }
 
     return (
-        <div id='order-details-container' className='mt-40 justify-self-center '>
+        <div id='order-details-container' className='mt-16 justify-self-center '>
             {OrderDetails && (
                 <>
-                    <div>
-                        <h2 className='font-semibold text-base pb-2'>ORDER DETAILS</h2>
-                        <ul className=' text-gray-700 text-base '>
+                    <div className='border rounded pb-2 mb-10'>
+                        <h2 className='font-semibold text-base py-2 px-4 border-b'>ORDER DETAILS</h2>
+                        <ul className=' text-gray-700 text-base py-2 px-4 '>
                             {OrderDetails.items.length > 1 ? (
                                 <li>{OrderDetails.items.length} items</li>
                             ) : (
@@ -71,7 +71,6 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
                         </ul>
                     </div>
 
-                    <hr className='my-5 text-gray-300' />
 
                     {OrderDetails.items.length > 1 ? (
                         <h2 className='font-semibold text-base pb-2'>ITEMS IN YOUR ORDER</h2>

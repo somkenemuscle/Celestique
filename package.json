@@ -19,6 +19,7 @@
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.460.0",
     "next": "14.2.17",
     "react": "^18",
@@ -37,6 +38,7 @@
     "zustand": "^5.0.1"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
