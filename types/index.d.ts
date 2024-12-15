@@ -106,7 +106,7 @@ interface Order {
     paymentStatus: 'Pending' | 'Paid' | 'Failed';
     paymentReference?: string; // Optional because it can be null
     orderStatus: 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
-    paymentId: {paymentMethod:string} ;
+    paymentId: { paymentMethod: string };
     createdAt: string; // ISO 8601 timestamp
     updatedAt: string; // ISO 8601 timestamp
 }
