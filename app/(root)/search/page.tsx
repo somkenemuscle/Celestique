@@ -23,6 +23,7 @@ export default function SearchPage() {
       if (value === "") {
         setshowSuggestions(false);
         setSuggestions([])
+        setError('')
         return;
       }
 
@@ -30,10 +31,9 @@ export default function SearchPage() {
         setLoading(true);
         const res = await getSearchedItems(value, currentPage);
         setSuggestions(res.products);
-        console.log(suggestions)
         setshowSuggestions(true);
       } catch (err: any) {
-        setError(err.message || "Failed to fetch products");
+        console.log(err)
       } finally {
         setLoading(false);
       }
@@ -57,12 +57,13 @@ export default function SearchPage() {
     } else {
       e.preventDefault(); // Prevent default form submission behavior
     }
+
     try {
       const res = await getSearchedItems(value, currentPage); // Use state values
       setProducts(res.products)
       setTotalPages(res.totalPages)// Update total pages if provided by the API
-
     } catch (err: any) {
+      setshowSuggestions(false)
       setError(err.message || "Failed to fetch products");
     } finally {
       setLoading(false); // Set loading state to false after completion
@@ -75,49 +76,63 @@ export default function SearchPage() {
     }
   };
 
-  return (
-    <div className="flex">
-      {Products.length > 0 && (
-        <FilterSortSidebar
-          baseRoute=""
-          onFilterChange={() => { }}
-        />
-      )}
 
-      <div className="flex-1" onClick={() => setshowSuggestions(false)}>
-        <div className={`pt-11 justify-self-center  w-3/4  ${Products.length > 0 ? 'mt-0' : 'mt-28'}`}>
+  return (
+    <>
+      <div onClick={() => setshowSuggestions(false)} className={`${Products.length>0 ? 'mt-5' : 'my-20'}`} >
+        <div onClick={() => setshowSuggestions(false)} className="justify-self-center w-10/12   md:w-8/12 ">
+          <h1 className="font-medium md:text-xl text-center pb-10 tracking-wide text-lg">Search Our Store</h1>
           <form onSubmit={HandleSubmit} className="relative flex-col">
             <input
               onChange={Handlechange}
               value={searchedTerm}
               type="text"
               placeholder="Search"
-              className="w-full py-2 px-6 border border-black outline-none border-lg"
+              className="w-full py-3 px-6 border border-black outline-none border-lg"
             />
-            <button className="absolute top-5 transform -translate-y-1/2 right-3 text-gray-600" type="submit">
+            <button className="absolute top-6 transform -translate-y-1/2 right-3 text-gray-600" type="submit">
               <SearchIcon className="h-5 w-5" />
             </button>
 
-
             {showsuggestions && (
-              <ul className="border text-sm w-full shadow-sm rounded z-50 absolute  bg-white">
-                <li className="py-3 px-6">Suggestions</li>
-                {suggestions.map((suggestion) => (
-                  <li
-                    key={suggestion._id}
-                    className="py-3 px-6 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => { HandleSubmit(suggestion.name) }}
-                  >
-                    {suggestion.name}
-                  </li>
-                ))}
-              </ul>
+              <div className="border text-sm w-full shadow-sm rounded z-50 absolute  bg-white">
+                <ul>
+                  <li className="py-3 px-6 font-medium">Suggestions</li>
+                  {suggestions.map((suggestion) => (
+                    <li
+                      key={suggestion._id}
+                      className="py-3 px-6 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => { HandleSubmit(suggestion.name) }}
+                    >
+                      {suggestion.name}
+                    </li>
+                  ))}
+                </ul>
+                <div className="bg-black text-white py-3 font-medium text-center tracking-wide cursor-pointer hover:bg-zinc-900" onClick={() => { HandleSubmit(searchedTerm) }}> Search for "{searchedTerm}"</div>
+              </div>
             )}
+
+
+            {error && (
+              <h1 className="font-medium md:text-xl text-center pt-14 tracking-wide text-lg">Product Not Found</h1>
+            )}
+
           </form>
+        </div>
+      </div>
+
+      <div className="flex">
+        <div>
+          {Products.length > 0 && (
+            <FilterSortSidebar
+              baseRoute=""
+              onFilterChange={() => { }}
+            />
+          )}
         </div>
 
         {Products.length > 0 && (
-          <>
+          <div className="flex-1">
             <ul className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4 lg:p-11 gap-3">
               {Products.map((product) => (
                 <ProductCard key={product._id} product={product} />
@@ -128,10 +143,10 @@ export default function SearchPage() {
               totalPages={totalPages}
               onPageChange={handlePageChange}
             />
-          </>
+          </div>
         )}
       </div>
-    </div>
+    </>
 
   )
 }
