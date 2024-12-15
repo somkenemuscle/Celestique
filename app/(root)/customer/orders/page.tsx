@@ -48,7 +48,7 @@ function OrdersPage() {
                   alt={item.product.name}
                   width={100}
                   height={100}
-                  className=" rounded aspect-auto mb-4"
+                  className=" rounded-xl aspect-auto mb-6"
                 />
 
                 <div className="w-full pt-2  pl-4 grid" >
