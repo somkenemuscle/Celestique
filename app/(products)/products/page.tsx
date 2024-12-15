@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { getAllProducts } from "@/services/product";
-import Loader from "@/components/ui/Loader";
 import ProductCard from "@/components/ui/ProductCard";
 import Pagination from "@/components/ui/Pagination";
 import FilterSortSidebar from "@/components/shared/FilterAndSortSideBar";
+import ProductCardSkeleton from "@/components/ui/ProductCardSkeleton";
+
 
 function ViewAllProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -14,7 +15,7 @@ function ViewAllProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  
+
   useEffect(() => {
     fetchProducts(currentPage);
   }, [currentPage]);
@@ -47,7 +48,7 @@ function ViewAllProductsPage() {
     setTotalPages(pages)
   };
 
-  if (loading) return <div className="bg-black"><Loader /></div>;
+  if (loading) return <div><ProductCardSkeleton /></div>;
   if (error) return <div>Error: {error}</div>;
 
   return (

@@ -6,6 +6,8 @@ import { useParams } from 'next/navigation';
 import ProductCard from '@/components/ui/ProductCard';
 import Pagination from '@/components/ui/Pagination';
 import FilterSortSidebar from '@/components/shared/FilterAndSortSideBar';
+import ProductPageSkeleton from '@/components/ui/ProductCardSkeleton';
+
 
 function GenderProductsPage() {
   const params = useParams();
@@ -51,7 +53,7 @@ function GenderProductsPage() {
   };
 
 
-  if (loading || !products) return <div>Loading...</div>;
+  if (loading || !products) return <div><ProductPageSkeleton /></div>;
   if (error) return <div>{error}</div>;
 
 

@@ -71,7 +71,7 @@ const VerifyPaymentContent = ({ reference }: { reference: string | undefined }) 
 
     // Render
     return (
-        <div className="min-h-screen flex items-center justify-center px-4 verify-page-body">
+        <div className="mt-20 flex items-center justify-center px-4 verify-page-body">
             <div className="max-w-3xl w-full rounded-lg p-6">
                 {loading && (
                     <div className="flex flex-col items-center justify-center">
