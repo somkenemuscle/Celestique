@@ -47,7 +47,7 @@ export default function SearchPage() {
     HandleChange(value);
   }
 
-  async function HandleSubmit(e: React.FormEvent<HTMLFormElement> | string  ) {
+  async function HandleSubmit(e: React.FormEvent<HTMLFormElement> | string) {
     setshowSuggestions(false);
 
     let value = searchedTerm; // Default to the current state
@@ -85,7 +85,7 @@ export default function SearchPage() {
       )}
 
       <div className="flex-1" onClick={() => setshowSuggestions(false)}>
-        <div className={`pt-11 justify-self-center  w-3/4  ${Products.length>0 ?'mt-0':'mt-28'}`}>
+        <div className={`pt-11 justify-self-center  w-3/4  ${Products.length > 0 ? 'mt-0' : 'mt-28'}`}>
           <form onSubmit={HandleSubmit} className="relative flex-col">
             <input
               onChange={Handlechange}

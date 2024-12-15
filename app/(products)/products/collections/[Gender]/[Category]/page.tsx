@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import ProductCard from '@/components/ui/ProductCard';
 import Pagination from '@/components/ui/Pagination';
 import FilterSortSidebar from '@/components/shared/FilterAndSortSideBar';
+import ProductPageSkeleton from '@/components/ui/ProductCardSkeleton';
 
 
 function CategoryAndGenderProductsPage() {
@@ -51,7 +52,7 @@ function CategoryAndGenderProductsPage() {
     setTotalPages(pages)
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading || !products) return <div><ProductPageSkeleton /></div>;
   if (error) return <div>{error}</div>;
 
   return (
