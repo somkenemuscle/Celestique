@@ -38,12 +38,9 @@ function OrdersPage() {
       <h1 className="text-black font-sans pb-5 font-bold text-xl sm:text-2xl text-left tracking-wide">Order history</h1>
       {UserOrders.map((order: any) => (
         <div key={order._id} className="rounded px-4 border py-5 text-xs mb-5 border-gray-200 ">
-          {order.items.map((item: any, index: number) => (
-
-            <div key={item._id}>
-             {item.product.images.length > 1 && index === item.product.images.length - 1 && (
-                  <div className="pt-5"></div>
-                )}
+          {order.items.map((item:CartItem, index: number) => (
+            <div key={index}>
+             
               <div className="flex items-start">
                 
                 <Image
@@ -51,14 +48,14 @@ function OrdersPage() {
                   alt={item.product.name}
                   width={100}
                   height={100}
-                  className=" rounded aspect-auto"
+                  className=" rounded aspect-auto mb-4"
                 />
 
                 <div className="w-full pt-2  pl-4 grid" >
                   <h2 className="text-left pb-1 text-base font-semibold truncate">{item.product.name}</h2>
                   <ul key={order.items._id} >
                     <li className=" text-gray-600 font-semibold">
-                      {new Date(order.createdAt).toLocaleDateString()}
+                     On {new Date(order.createdAt).toLocaleDateString()}
                     </li>
                   </ul>
                   {order.items.length && index === 0 && (

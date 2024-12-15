@@ -95,8 +95,8 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
                             )}
                         </section>
                         <section className='py-5'>
-                            {OrderDetails.items.map((item: any, index: number) => (
-                                <div key={item.product._id}>  
+                            {OrderDetails.items.map((item:CartItem, index: number) => (
+                                <div key={index}>  
                                     <div className='flex'>
                                         <Image
                                             src={item.product.images.length === 0 ? '' : item.product.images[0]}
