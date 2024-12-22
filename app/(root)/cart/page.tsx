@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import LoaderDark from "@/components/ui/LoaderDark";
+import LoaderDark from "@/components/ui/loaders/LoaderDark";
 import Image from "next/image";
 import { getCart, removeFromCart, clearCart } from "@/services/cart";
 import Link from "next/link";

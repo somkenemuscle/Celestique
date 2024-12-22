@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getProductBySlug } from "@/services/product";
-import Loader from "@/components/ui/Loader";
+import Loader from "@/components/ui/loaders/Loader";
 import Image from "next/image";
 import { addToCart } from "@/services/cart";
 import useCartStore from "@/store/cartStore";

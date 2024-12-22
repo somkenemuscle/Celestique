@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Eye, EyeOff } from 'react-feather';
 import { useState, useRef } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
-import Loader from "../ui/Loader";
+import Loader from "../ui/loaders/Loader";
 import { SignUpFormSchema } from "@/lib/authSchema";
 import { signUp } from "@/services/auth";
 import { z } from "zod";

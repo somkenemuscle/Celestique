@@ -5,7 +5,7 @@ import { getAllProducts } from "@/services/product";
 import ProductCard from "@/components/ui/ProductCard";
 import Pagination from "@/components/ui/Pagination";
 import FilterSortSidebar from "@/components/shared/FilterAndSortSideBar";
-import ProductCardSkeleton from "@/components/ui/ProductCardSkeleton";
+import ProductCardSkeleton from "@/components/ui/skelentons/ProductCardSkeleton";
 
 
 function ViewAllProductsPage() {

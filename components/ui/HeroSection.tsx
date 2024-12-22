@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-
 function HeroSection() {
     return (
         <div>
