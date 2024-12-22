@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import Loader from "../ui/Loader";
+import Loader from "../ui/loaders/Loader";
 import { shippingFormSchema } from "@/lib/shippingSchema";
 import { z } from "zod";
 import { useRouter } from "next/navigation";

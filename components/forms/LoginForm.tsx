@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Eye, EyeOff } from 'react-feather';
 import { useState } from "react";
-import Loader from "../ui/Loader";
+import Loader from "../ui/loaders/Loader";
 import { SignInFormSchema } from "@/lib/authSchema"
 import { signIn } from "@/services/auth"
 import axios from "axios"

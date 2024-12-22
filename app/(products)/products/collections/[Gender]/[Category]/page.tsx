@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import ProductCard from '@/components/ui/ProductCard';
 import Pagination from '@/components/ui/Pagination';
 import FilterSortSidebar from '@/components/shared/FilterAndSortSideBar';
-import ProductPageSkeleton from '@/components/ui/ProductCardSkeleton';
+import ProductPageSkeleton from '@/components/ui/skelentons/ProductCardSkeleton';
 
 
 function CategoryAndGenderProductsPage() {
