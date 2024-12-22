@@ -6,7 +6,7 @@ import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa';
 
 export default function Footer() {
     return (
-        <footer className="bg-black text-white items-start pt-16 pb-10 bottom-0">
+        <footer className="bg-gray-950  text-white items-start pt-16 pb-10 bottom-0 mt-24">
             <div className=" mx-auto  sm:px-7 lg:px-9 px-6">
                 {/* Grid layout */}
                 <div className="flex flex-col md:justify-between md:flex-row">
