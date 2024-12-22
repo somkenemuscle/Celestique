@@ -80,7 +80,7 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
       <div className="hidden md:block cursor-pointer  w-64 h-screen max-h-[calc(100vh-64px)] p-4 pl-7 tracking-wider rounded-lg sticky top-9 filter-body text-sm overflow-y-auto mt-9">
         {/* Sort By */}
         <div className="mb-6">
-          <h4 className="font-semibold mb-2">Sort By</h4>
+          <h4 className="font-medium mb-2">Sort By</h4>
           <div className="space-y-2">
             {sortOptions.map((option, index) => (
               <label key={index} className="block">
@@ -99,7 +99,7 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
 
         {/* Filter by Color */}
         <div className="mb-6">
-          <h4 className="font-semibold mb-2">Color</h4>
+          <h4 className="font-medium mb-2">Colors</h4>
           <ul className="space-y-1">
             {filterColors.map((color, index) => (
               <li key={index}>
@@ -123,7 +123,7 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
 
         {/* Filter by Size */}
         <div>
-          <h4 className="font-semibold mb-2">Size</h4>
+          <h4 className="font-medium mb-2">Size</h4>
           <ul className="space-y-1">
             {filterSizes.map((size, index) => (
               <li key={index}>

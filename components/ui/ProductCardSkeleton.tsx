@@ -13,7 +13,7 @@ function ProductPageSkeleton() {
                     {Array.from({ length: 8 }).map((_, index) => (
                         <li key={index} className="mb-7 mt-7 relative animate-pulse mr-8">
                             {/* Skeleton Image */}
-                            <div className="w-11/12 h-96 bg-gray-200 rounded"></div>
+                            <div className="w-[170px] md:w-[200px] xl:w-[250px] h-96 bg-gray-200 rounded"></div>
 
                             {/* Skeleton Product Name */}
                             <div className="mt-2 w-3/4 h-4 bg-gray-200 rounded"></div>
