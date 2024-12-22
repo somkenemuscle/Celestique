@@ -6,7 +6,7 @@ import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa';
 
 export default function Footer() {
     return (
-        <footer className="bg-gray-950  text-white items-start pt-16 pb-10 bottom-0 mt-24">
+        <footer className="bg-black text-white items-start pt-16 pb-10 bottom-0 mt-24">
             <div className=" mx-auto  sm:px-7 lg:px-9 px-6">
                 {/* Grid layout */}
                 <div className="flex flex-col md:justify-between md:flex-row">
@@ -35,7 +35,7 @@ export default function Footer() {
                     </div>
 
                     {/* Quick Links */}
-                    <div className='md:text-start md:px-28'>
+                    <div className='md:text-start  md:px-28'>
                         <h3 className="text-lg font-semibold md:mb-4 mb-3 mt-5 md:mt-0">Quick Links</h3>
                         <ul className="space-y-2 text-gray-300">
                             <li>

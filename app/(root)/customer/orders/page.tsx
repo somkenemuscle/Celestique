@@ -5,6 +5,8 @@ import Image from "next/image";
 import React from "react";
 import { CheckCircle } from "lucide-react";
 import Link from "next/link";
+import LoaderDarkLarge from "@/components/ui/loaders/LoaderDarkLarge";
+import StatusGraphic from "@/components/ui/StatusGraphic";
 
 
 
@@ -19,7 +21,7 @@ function OrdersPage() {
       const res = await getUserOrders();
       setUserOrders(res.orders)
     } catch (err: any) {
-      setError(err.message || "Failed to fetch products");
+      setError(err.response.data.message || "Failed to fetch products");
     } finally {
       setLoading(false);
     }
@@ -29,16 +31,13 @@ function OrdersPage() {
     fetchOrder();
   }, []);
 
-  if (error) return <div>Error: {error}</div>;
+  if (error) return <div className=""><StatusGraphic message={error}/></div>
+  
+  if (loading) return <div className="my-40 justify-self-center"><LoaderDarkLarge/></div>;
+  
 
   return (
     <>
-      {UserOrders.length === 0 && (
-        <div className="flex justify-center items-center h-screen">
-          <h1 className="font-medium md:text-xl text-center tracking-wide text-lg">No Order Has Been Made</h1>
-        </div>
-      )}
-      
       <div id="order-history-container" className="justify-self-center mt-20 text-black">
         <h1 className="text-black font-sans pb-5 font-bold text-xl sm:text-2xl text-left tracking-wide">Order history</h1>
         {UserOrders.map((order: any) => (
