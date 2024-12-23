@@ -7,6 +7,7 @@ import Image from "next/image";
 import { addToCart } from "@/services/cart";
 import useCartStore from "@/store/cartStore";
 import toast from "react-hot-toast";
+import StatusGraphic from "@/components/ui/StatusGraphic";
 
 
 
@@ -70,7 +71,7 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
 
 
 
-    if (!product) return;
+    if (!product) return <div><StatusGraphic message="Product Not Found" /></div>;
     if (error) return <div>Error: {error}</div>;
 
     return (

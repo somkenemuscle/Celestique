@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 export default function GenderGridImage() {
     return (
-        <div className="h-[450px] grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-x-10 my-5  px-3 lg:px-8">
+        <div className="h-[600px] grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-x-10 my-5  px-3 lg:px-8">
             {/* Image 1 */}
             <div className="relative group overflow-hidden border-lg">
                 <div className=" transition-transform  transform group-hover:scale-105" style={{ transition: 'transform 1s ease-in-out' }}>
