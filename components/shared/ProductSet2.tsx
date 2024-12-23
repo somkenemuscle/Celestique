@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { getAllProducts } from "@/services/product";
 import ProductCard from "@/components/ui/ProductCard";
-import ProductCardSkeleton from "../ui/skelentons/ProductCardSkeleton";
+import ProductHomePageSkeleton from "../ui/skelentons/ProductCardHomePageSkeleton";
 import Link from "next/link";
 
 
@@ -23,7 +23,7 @@ export default function ProductSet2() {
         setError(null);
         try {
             const res = await getAllProducts(1);
-            setProducts(res.products.splice(4,8));
+            setProducts(res.products.splice(4, 8));
         } catch (err: any) {
             setError(err.message || "Failed to fetch products");
         } finally {
@@ -32,20 +32,17 @@ export default function ProductSet2() {
     };
 
 
-    if (loading) return <div><ProductCardSkeleton /></div>;
+    if (loading) return <div><ProductHomePageSkeleton /></div>;
     if (error) return <div>Error: {error}</div>;
 
     return (
         <>
-            <ul className="grid grid-cols-2 sm:grid-cols-2  md:grid-cols-4 lg:grid-cols-4 px-4 sm:p-4 lg:px-8 gap-x-8 mt-10">
+            <h1 className="pl-4 lg:pl-8 font-extrabold text-xl tracking-wide mt-16 font-sans">FEMALE CATALOGUE</h1>
+            <h4 className="pl-4 lg:pl-8 font-medium text-sm tracking-wide text-gray-500 font-sans">Dress & Gowns</h4>
+            <ul className="grid grid-cols-2 sm:grid-cols-2  md:grid-cols-4 lg:grid-cols-4 px-4 sm:p-4 lg:px-8 gap-x-8 mt-4">
                 {products.map((product) => (
                     <ProductCard key={product._id} product={product} />
                 ))}
-                <Link href={'/products'}>
-                    <button className="px-6 py-2 font-sans font-medium tracking-wider  border border-solid text-white bg-black">
-                        View More
-                    </button>
-                </Link>
             </ul>
         </>
 
