@@ -1,11 +1,11 @@
 import Link from "next/link";
 
-function HeroSection() {
+function HeroSection({ videoUrl }: { videoUrl: string }) {
     return (
         <div>
             <Link href='/products'>
                 <video
-                    src="https://cdn.shopify.com/videos/c/o/v/189099819a87448e8de16605f2ba18f1.mp4"
+                    src={videoUrl}
                     autoPlay
                     loop
                     muted
@@ -19,3 +19,5 @@ function HeroSection() {
 }
 
 export default HeroSection;
+
+

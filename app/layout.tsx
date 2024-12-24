@@ -3,6 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import WhatsappIcon from "@/components/shared/WhatasappIcon";
 import { Toaster } from 'react-hot-toast'
+import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -29,6 +32,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Navbar />
         {children}
         <WhatsappIcon />
         <Toaster position="bottom-left" toastOptions={{
@@ -46,6 +50,7 @@ export default function RootLayout({
             },
           },
         }} />
+        <Footer />
       </body>
     </html>
   );

@@ -16,7 +16,7 @@ export default function GenderGridImage() {
                         alt="Men"
                         width={500}
                         height={300}
-                       className="w-full object-cover h-full border-lg"
+                        className="w-full object-cover h-full border-lg"
                     />
                 </div>
                 <div className="absolute inset-0 bg-black bg-opacity-0 border-lg group-hover:bg-opacity-50 flex flex-col items-center justify-center text-white transition-opacity">
