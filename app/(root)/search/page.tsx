@@ -79,16 +79,16 @@ export default function SearchPage() {
 
   return (
     <>
-      <div onClick={() => setshowSuggestions(false)} className={`${Products.length>0 ? 'mt-5' : 'my-20'}`} >
+      <div onClick={() => setshowSuggestions(false)} className={`${Products.length > 0 ? 'mt-5' : 'my-20'}`} >
         <div onClick={() => setshowSuggestions(false)} className="justify-self-center w-10/12   md:w-8/12 ">
-          <h1 className="font-medium md:text-xl text-center pb-10 tracking-wide text-lg">Search Our Store</h1>
+          <h1 className="font-medium md:text-xl text-center pb-10 tracking-wider text-lg font-sans">Search Our Store</h1>
           <form onSubmit={HandleSubmit} className="relative flex-col">
             <input
               onChange={Handlechange}
               value={searchedTerm}
               type="text"
               placeholder="Search"
-              className="w-full py-3 px-6 border border-black outline-none border-lg"
+              className="w-full py-3 px-6 border border-gray-300 outline-none border-lg"
             />
             <button className="absolute top-6 transform -translate-y-1/2 right-3 text-gray-600" type="submit">
               <SearchIcon className="h-5 w-5" />

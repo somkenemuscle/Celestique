@@ -25,43 +25,25 @@ import useCartStore from '@/store/cartStore'
 
 export default function Navbar() {
     const [open, setOpen] = useState(false)
-    const { setGlobalCart } = useCartStore();
-    const [cartItemCount, setCartItemCount] = useState(0);
     const [firstname, setFirstname] = useState('');
+    const cartItemCount = useCartStore((state) => state.cart.items.length);
 
 
-    //Get users firstname
-    function GetFirstname() {
-        const firstname = localStorage.getItem('firstname');
-        if (firstname) {
-            setFirstname(firstname);
-        }
-    }
-
-
-    //Fetch Users Cart
     useEffect(() => {
+        const storedFirstname = localStorage.getItem('firstname');
+        if (storedFirstname) {
+            setFirstname(storedFirstname);
+        }
         async function fetchCart() {
             try {
                 const res = await getCart();
-                setGlobalCart(res.cart)
+                useCartStore.getState().setGlobalCart(res.cart);
             } catch (error) {
                 console.error(error);
             }
         }
-        GetFirstname();
         fetchCart();
-
-
-        // Listen to cart changes using Zustand subscribe
-        const unsubscribe = useCartStore.subscribe((state) => {
-            const newCount = state.cart.items.length; // Extract the specific value
-            setCartItemCount(newCount); // Update the local state
-        });
-
-        // Cleanup the subscription on unmount
-        return () => unsubscribe();
-    }, [setGlobalCart]);
+    }, []);
 
 
 

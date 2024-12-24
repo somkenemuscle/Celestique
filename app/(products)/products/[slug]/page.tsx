@@ -8,7 +8,7 @@ import { addToCart } from "@/services/cart";
 import useCartStore from "@/store/cartStore";
 import toast from "react-hot-toast";
 import StatusGraphic from "@/components/ui/StatusGraphic";
-
+import ProductSet1 from "@/components/shared/ProductSet1";
 
 
 function Slugpage({ params: { slug } }: { params: { slug: string } }) {
@@ -68,6 +68,7 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
         setIsModalOpen(false);
         setCurrentImage(null);
     };
+
 
 
 
@@ -214,10 +215,8 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
                     </div>
                 )}
             </div>
-
+            <ProductSet1 header="Recommended" subheader="You might also like this" />
         </div>
-
-
     );
 }
 
