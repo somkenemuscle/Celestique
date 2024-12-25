@@ -45,17 +45,17 @@ export default function Footer() {
             links: [
                 {
                     href: '/search',
-                    label: 'Search',
+                    label: 'Search Products',
                     external: true,
                 },
                 {
-                    href: 'https://www.instagram.com',
-                    label: 'Instagram',
+                    href: '#',
+                    label: 'Refund Policy',
                     external: true,
                 },
                 {
-                    href: 'https://www.twitter.com',
-                    label: 'Twitter',
+                    href: '#',
+                    label: 'Delivery Information',
                     external: true,
                 },
             ],
@@ -64,7 +64,7 @@ export default function Footer() {
 
     return (
         <>
-            <div className='bg-white text-gray-600 text-sm font-sans p-4 lg:p-10 text-left lg:text-center border mt-20 border-t-gray-300'>
+            <div className='bg-gray-100 text-gray-600 text-sm font-sans p-4 lg:p-10 text-left lg:text-center border mt-20 border-t-gray-300'>
                 <h1 className='font-extrabold text-sm tracking-wider mb-4 text-black'>ABOUT US</h1>
                 We are more than just a brand. We aim to inspire confidence when it comes to how you dress and present yourself to the world. We have gone beyond offering just women’s clothing and accessories, to become an authority in fashion and beauty in our own right, endeavoring to build a community of #EveryBODYinPLT. If fast delivery and easy returns are your thing then PLT should be your go-to for women’s clothing online.
             </div>

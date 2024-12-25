@@ -9,7 +9,7 @@ import useCartStore from "@/store/cartStore";
 import toast from "react-hot-toast";
 import StatusGraphic from "@/components/ui/StatusGraphic";
 import ProductSet1 from "@/components/shared/ProductSet1";
-
+import { validateCartInputs } from "@/lib/validate";
 
 function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     const [product, setProduct] = useState<Product | null>(null);
@@ -41,23 +41,29 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     }, [slug]);
 
 
+
+
     // Handler for adding to cart
     const handleAddToCart = async () => {
-        if (!selectedSize || !selectedColor || selectedQuantity <= 0) {
-            toast.error('Please select size, color, and a valid quantity')
+        const validationErrors = validateCartInputs(selectedColor, selectedSize, selectedQuantity);
+        if (validationErrors) {
+            toast.error(validationErrors);
             return;
         }
+
         try {
-            setLoading(true)
+            setLoading(true);
             const res = await addToCart(product!._id, selectedQuantity, selectedSize, selectedColor);
-            setGlobalCart(res.cart)
-            toast.success(res.message)
+            setGlobalCart(res.cart);
+            toast.success(res.message);
         } catch (error: any) {
-            toast.error(error.response.data.message)
+            toast.error(error.response?.data?.message || 'An error occurred while adding to cart');
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     };
+
+
 
     const openModal = (image: string) => {
         setCurrentImage(image);
