@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getProductBySlug } from "@/services/product";
+import LoaderDark from "@/components/ui/loaders/LoaderDark";
 import Loader from "@/components/ui/loaders/Loader";
 import Image from "next/image";
 import { addToCart } from "@/services/cart";
@@ -14,6 +15,7 @@ import { validateCartInputs } from "@/lib/validate";
 function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(false);
+    const [initialLoading, setInitialLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { setGlobalCart } = useCartStore();
 
@@ -29,14 +31,14 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
 
     useEffect(() => {
         async function fetchProduct() {
-            setLoading(true); // Set loading to true at the start
+            setInitialLoading(true); // Set loading to true at the start
             try {
                 const res = await getProductBySlug(slug);
                 setProduct(res.product);
             } catch (err: any) {
                 setError(err.message || "Failed to fetch product");
             } finally {
-                setLoading(false); // Ensure loading is false at the end
+                setInitialLoading(false); // Ensure loading is false at the end
             }
         }
         fetchProduct();
@@ -78,14 +80,9 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     };
 
 
+    if (initialLoading) return (<div className="mt-72 mb-72 justify-self-center"><LoaderDark /></div>)
+    if (!product) return (<div className="mt-72 justify-self-center"><StatusGraphic message="Product Not Found" /></div>)
 
-    // if (!product && !loading) {
-    //     return (
-    //         <div className="flex justify-center items-center min-h-screen">
-    //             <StatusGraphic message="Product Not Found" />
-    //         </div>
-    //     );
-    // }
 
     return (
         <div>

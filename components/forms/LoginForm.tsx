@@ -18,13 +18,15 @@ import { SignInFormSchema } from "@/lib/authSchema"
 import { signIn } from "@/services/auth"
 import axios from "axios"
 import toast from "react-hot-toast";
-
+import useFirstNameStore from "@/store/usernameStore"
 
 
 export default function LoginForm() {
     const router = useRouter();
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const { firstname, setFirstname } = useFirstNameStore();
+
 
     // Toggle password visibility
     const togglePasswordVisibility = () => {
@@ -52,6 +54,7 @@ export default function LoginForm() {
 
             // Store email in local storage
             localStorage.setItem('firstname', firstname);
+            setFirstname(firstname);
 
             // Reset the form and redirect
             form.reset();

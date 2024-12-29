@@ -21,11 +21,11 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 import { getCart } from '@/services/cart'
 import useCartStore from '@/store/cartStore'
-
+import useFirstNameStore from '@/store/usernameStore'
 
 export default function Navbar() {
     const [open, setOpen] = useState(false)
-    const [firstname, setFirstname] = useState('');
+    const { firstname, setFirstname } = useFirstNameStore();
     const cartItemCount = useCartStore((state) => state.cart.items.length);
 
 
@@ -43,7 +43,7 @@ export default function Navbar() {
             }
         }
         fetchCart();
-    }, []);
+    }, [firstname]);
 
 
 

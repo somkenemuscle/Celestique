@@ -49,7 +49,7 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
     }
 
     return (
-        <div id='order-details-container' className='mt-16 justify-self-center '>
+        <div id='order-details-container' className='mt-16 justify-self-center tracking-wider'>
             {OrderDetails && (
                 <>
                     <div className='border rounded pb-2 mb-10'>
@@ -60,7 +60,7 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
                             ) : (
                                 <li>{OrderDetails.items.length} item</li>
                             )}
-                            <li>Placed On <span className='text-black font-medium'> {new Date(OrderDetails.createdAt).toLocaleDateString('en-GB', {
+                            <li>Placed On <span className='font-medium'> {new Date(OrderDetails.createdAt).toLocaleDateString('en-GB', {
                                 day: 'numeric',
                                 month: 'numeric',
                                 year: 'numeric',
@@ -94,6 +94,7 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
                                     <button className='bg-red-700 text-white rounded p-1'>{OrderDetails.orderStatus}</button>
                             )}
                         </section>
+                        <hr className='mt-4'/>
                         <section className='py-5'>
                             {OrderDetails.items.map((item:CartItem, index: number) => (
                                 <div key={index}>  
@@ -106,7 +107,7 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
                                             className="rounded-xl aspect-auto"
                                         />
                                         <div className="flex-col pl-5 grid">
-                                            <h3 className="text-black font-semibold font-sans text-xl  truncate">
+                                            <h3 className="text-black font-semibold font-sans   truncate">
                                                 {item.product.name}
                                             </h3>
 
@@ -151,6 +152,7 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
                                 <h2 className='font-semibold text-base pt-7'>Shipping Address</h2>
                                 <ul className='text-gray-500  text-sm pb-7 pt-2 leading-tight'>
                                     <li>{OrderDetails.shippingAddress.lastName} {OrderDetails.shippingAddress.firstName}</li>
+                                    <li>{OrderDetails.shippingAddress.phoneNumber}</li>
                                     <li>{OrderDetails.shippingAddress.address}</li>
                                     <li>{OrderDetails.shippingAddress.city} , {OrderDetails.shippingAddress.state}</li>
                                     <li>{OrderDetails.shippingAddress.country}.</li>
