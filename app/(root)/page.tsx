@@ -11,9 +11,9 @@ export default function Home() {
       <HeroSection videoUrl="https://cdn.shopify.com/videos/c/o/v/f4f59cd761da4057807fd19b9e2ab16b.mp4" />
       <ProductSet1 header="SHOP THE LATEST" subheader="Men's T-Shirts" />
       <GenderGridImage />
-      <ProductSet2 header="FEMALE CATALOGUE" subheader="Dress & Gowns" />
+      <ProductSet2 header="FEMALE CATALOGUE" subheader="Dresses & Gowns" />
       <HeroSection videoUrl="https://cdn.shopify.com/videos/c/o/v/189099819a87448e8de16605f2ba18f1.mp4" />
-      <ProductSet2 header="FEMALE CATALOGUE" subheader="Dress & Gowns" />
+      <ProductSet2 header="FEMALE CATALOGUE" subheader="Dresses & Gowns" />
     </div>
   );
 }
