@@ -22,7 +22,7 @@ axiosInstance.interceptors.response.use(
       const errorCode = response.data?.code;
 
       // Only handle token refresh if the error message indicates token expiration on unauthorization
-      if (errorCode === 'UNAUTHORIZED_ISLOGGEDIN_ACCESS') {
+      if (errorCode === 'UNAUTHORIZED') {
         try {
           await axios.post(`http://localhost:4000/api/auth/token`, {}, { withCredentials: true });
           return axiosInstance(originalRequest);
