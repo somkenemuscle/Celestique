@@ -15,7 +15,7 @@ import { z } from "zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-
+import useFirstNameStore from "@/store/usernameStore";
 
 
 export default function RegisterForm() {
@@ -25,6 +25,8 @@ export default function RegisterForm() {
   const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const { firstname, setFirstname } = useFirstNameStore();
+
 
   const form = useForm<z.infer<typeof SignUpFormSchema>>({
     resolver: zodResolver(SignUpFormSchema),
@@ -59,6 +61,7 @@ export default function RegisterForm() {
       const res = await signUp(values.firstname, values.lastname, values.phonenumber, values.email, values.password, recaptchaToken);
       const { message, firstname } = res;
       localStorage.setItem('firstname', firstname);
+      setFirstname(firstname);
       form.reset();
       setRecaptchaToken(null);
       resetRecaptcha();

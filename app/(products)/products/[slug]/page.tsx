@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { getProductBySlug } from "@/services/product";
+import LoaderDark from "@/components/ui/loaders/LoaderDark";
 import Loader from "@/components/ui/loaders/Loader";
 import Image from "next/image";
 import { addToCart } from "@/services/cart";
@@ -10,10 +11,13 @@ import toast from "react-hot-toast";
 import StatusGraphic from "@/components/ui/StatusGraphic";
 import ProductSet1 from "@/components/shared/ProductSet1";
 import { validateCartInputs } from "@/lib/validate";
+import { saveProductToFavorite } from "@/services/favoriteProduct";
 
 function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(false);
+    const [WishlistLoading, setWishlistLoading] = useState(false);
+    const [initialLoading, setInitialLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { setGlobalCart } = useCartStore();
 
@@ -29,14 +33,14 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
 
     useEffect(() => {
         async function fetchProduct() {
-            setLoading(true); // Set loading to true at the start
+            setInitialLoading(true); // Set loading to true at the start
             try {
                 const res = await getProductBySlug(slug);
                 setProduct(res.product);
             } catch (err: any) {
                 setError(err.message || "Failed to fetch product");
             } finally {
-                setLoading(false); // Ensure loading is false at the end
+                setInitialLoading(false); // Ensure loading is false at the end
             }
         }
         fetchProduct();
@@ -59,7 +63,7 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
             setGlobalCart(res.cart);
             toast.success(res.message);
         } catch (error: any) {
-            toast.error(error.response?.data?.message || 'An error occurred while adding to cart');
+            toast.error(error.response?.data?.message || 'An error occurred while adding to the cart');
         } finally {
             setLoading(false);
         }
@@ -77,15 +81,23 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
         setCurrentImage(null);
     };
 
+    async function handleSave(id: string) {
+        try {
+            setWishlistLoading(true)
+            const res = await saveProductToFavorite(id);
+            toast.success(res.message)
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setWishlistLoading(false)
+        }
+    }
 
 
-    // if (!product && !loading) {
-    //     return (
-    //         <div className="flex justify-center items-center min-h-screen">
-    //             <StatusGraphic message="Product Not Found" />
-    //         </div>
-    //     );
-    // }
+    if (initialLoading) return (<div className="mt-72 mb-72 justify-self-center"><LoaderDark /></div>)
+    if (!product) return (<div className="mt-72 justify-self-center"><StatusGraphic message="Product Not Found" /></div>)
+
 
     return (
         <div>
@@ -196,8 +208,9 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
                             <span className="inline-block">{loading ? (<Loader />) : 'ADD TO CART'}</span>
                         </button>
 
-                        <button className="w-full p-3 tracking-wider text-sm mt-3 text-center border border-gray-400 rounded hover:bg-gray-100 transition">
-                            SAVE FOR LATER
+                        <button onClick={() => handleSave(product._id)} className="w-full p-3 tracking-wider text-sm mt-3 text-center border border-gray-400 rounded hover:bg-gray-100 transition">
+                            <span className="inline-block">{WishlistLoading ? (<LoaderDark />) : 'SAVE FOR LATER'}</span>
+
                         </button>
 
 

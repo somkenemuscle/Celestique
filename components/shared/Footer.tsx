@@ -1,67 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import { FooterSections } from '@/constants/footer';
+
 
 export default function Footer() {
-    const sections = [
-        {
-            title: 'About Us',
-            links: [
-                { href: '/about', label: 'About' },
-                { href: '/contact', label: 'Contact' },
-                { href: '/faq', label: 'FAQ' },
-            ],
-        },
-        {
-            title: 'Customer Service',
-            links: [
-                { href: '/shipping', label: 'Shipping Policy' },
-                { href: '/returns', label: 'Return Policy' },
-                { href: '/terms', label: 'Terms of Service' },
-            ],
-        },
-        {
-            title: 'Stay Connected',
-            links: [
-                {
-                    href: 'https://www.facebook.com',
-                    label: 'Facebook',
-                    external: true,
-                },
-                {
-                    href: 'https://www.instagram.com',
-                    label: 'Instagram',
-                    external: true,
-                },
-                {
-                    href: 'https://www.twitter.com',
-                    label: 'Twitter',
-                    external: true,
-                },
-            ],
-        },
-        {
-            title: 'Need Help?',
-            links: [
-                {
-                    href: '/search',
-                    label: 'Search Products',
-                    external: true,
-                },
-                {
-                    href: '#',
-                    label: 'Refund Policy',
-                    external: true,
-                },
-                {
-                    href: '#',
-                    label: 'Delivery Information',
-                    external: true,
-                },
-            ],
-        },
-    ];
-
     return (
         <>
             <div className='bg-gray-100 text-gray-600 text-sm font-sans p-4 lg:p-10 text-left lg:text-center border mt-20 border-t-gray-300'>
@@ -72,7 +15,7 @@ export default function Footer() {
 
                 <div className="container mx-auto px-4">
                     <div className="leading-9 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20 mt-10">
-                        {sections.map((section, index) => (
+                        {FooterSections.map((section, index) => (
                             <div key={index}>
                                 <h3 className="text-sm font-bold mb-4">{section.title}</h3>
                                 <ul>

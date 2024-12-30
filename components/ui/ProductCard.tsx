@@ -4,9 +4,21 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FaHeart, FaRegHeart } from "react-icons/fa"; // Using Font Awesome icons
+import { saveProductToFavorite } from "@/services/favoriteProduct";
+import toast from "react-hot-toast";
 
 function ProductCard({ product }: { product: Product }) {
     const [isHovered, setIsHovered] = useState(false);
+
+    async function handleSave(id: string) {
+        try {
+            const res = await saveProductToFavorite(id);
+            toast.success(res.message)
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
     return (
@@ -17,7 +29,7 @@ function ProductCard({ product }: { product: Product }) {
                 onMouseLeave={() => setIsHovered(false)}
             >
                 {/* Heart Icon */}
-                <button className="absolute top-2 right-2  p-1">
+                <button onClick={() => handleSave(product._id)} className="absolute top-2 right-2  p-1">
                     <FaRegHeart className="text-gray-500 hover:text-red-700" size={18} />
                 </button>
                 <Link href={`/products/${product.slug}`}>
