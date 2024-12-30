@@ -11,10 +11,12 @@ import toast from "react-hot-toast";
 import StatusGraphic from "@/components/ui/StatusGraphic";
 import ProductSet1 from "@/components/shared/ProductSet1";
 import { validateCartInputs } from "@/lib/validate";
+import { saveProductToFavorite } from "@/services/favoriteProduct";
 
 function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(false);
+    const [WishlistLoading, setWishlistLoading] = useState(false);
     const [initialLoading, setInitialLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { setGlobalCart } = useCartStore();
@@ -78,6 +80,19 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
         setIsModalOpen(false);
         setCurrentImage(null);
     };
+
+    async function handleSave(id: string) {
+        try {
+            setWishlistLoading(true)
+            const res = await saveProductToFavorite(id);
+            toast.success(res.message)
+
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setWishlistLoading(false)
+        }
+    }
 
 
     if (initialLoading) return (<div className="mt-72 mb-72 justify-self-center"><LoaderDark /></div>)
@@ -193,8 +208,9 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
                             <span className="inline-block">{loading ? (<Loader />) : 'ADD TO CART'}</span>
                         </button>
 
-                        <button className="w-full p-3 tracking-wider text-sm mt-3 text-center border border-gray-400 rounded hover:bg-gray-100 transition">
-                            SAVE FOR LATER
+                        <button onClick={() => handleSave(product._id)} className="w-full p-3 tracking-wider text-sm mt-3 text-center border border-gray-400 rounded hover:bg-gray-100 transition">
+                            <span className="inline-block">{WishlistLoading ? (<LoaderDark />) : 'SAVE FOR LATER'}</span>
+
                         </button>
 
 

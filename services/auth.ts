@@ -16,3 +16,8 @@ export const signUp = async (firstname: string, lastname: string, phoneNumber: s
     return response.data;
 };
 
+//LOGOUT
+export const LogOut = async () => {
+    const response = await axiosInstance.post('/auth/logout');
+    return response.data;
+};

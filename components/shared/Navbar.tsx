@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useRef } from 'react'
 import {
     Dialog,
     DialogBackdrop,
@@ -14,19 +14,41 @@ import {
     TabList,
     TabPanel,
     TabPanels,
-} from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon, HeartIcon } from '@heroicons/react/24/outline'
-import { navigation } from '@/constants/navigation'
-import Link from 'next/link'
-import { useEffect } from 'react'
-import { getCart } from '@/services/cart'
-import useCartStore from '@/store/cartStore'
-import useFirstNameStore from '@/store/usernameStore'
+} from '@headlessui/react';
+import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { navigation } from '@/constants/navigation';
+import Link from 'next/link';
+import { useEffect } from 'react';
+import { getCart } from '@/services/cart';
+import useCartStore from '@/store/cartStore';
+import useFirstNameStore from '@/store/usernameStore';
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
+import DropDown from '../ui/DropDown';
+
+
 
 export default function Navbar() {
     const [open, setOpen] = useState(false)
     const { firstname, setFirstname } = useFirstNameStore();
-    const cartItemCount = useCartStore((state) => state.cart.items.length);
+    let cartItemCount = useCartStore((state) => state.cart.items.length);
+    const setGlobalCart = useCartStore((state) => state.setGlobalCart);
+    const [ShowDropDown, setShowDropDown] = useState(false)
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setShowDropDown(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
 
     useEffect(() => {
@@ -39,12 +61,24 @@ export default function Navbar() {
                 const res = await getCart();
                 useCartStore.getState().setGlobalCart(res.cart);
             } catch (error) {
+                setShowDropDown(false);
                 console.error(error);
+                setGlobalCart({
+                    items: [],
+                    subtotal: 0,
+                    deliveryFee: 0,
+                    totalPrice: 0
+                });
             }
         }
         fetchCart();
     }, [firstname]);
 
+
+    //Dropdown toggle function
+    function DropDownFunc() {
+        setShowDropDown(!ShowDropDown)
+    }
 
 
     return (
@@ -249,16 +283,21 @@ export default function Navbar() {
                             </PopoverGroup>
 
                             <div className="ml-auto flex items-center">
-                                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <Link href={firstname ? '#' : '/register'} className="text-sm font-medium  hover:text-gray-800">
-                                        {firstname ? `Hi, ${firstname}` : 'Register'}
+                                <div className='relative' ref={dropdownRef}>
+                                    <Link href={firstname ? '' : '/sign-in'} className="text-sm font-medium  hover:text-gray-800">
+                                        {firstname ? (
+                                            <button onClick={DropDownFunc} className='inline-flex items-center outline-none'>
+                                                Hi, {firstname}
+                                                {ShowDropDown ? (
+                                                    <ChevronUpIcon className='pl-1 w-5 h-5 top-1' />
+                                                ) : (
+                                                    <ChevronDownIcon className='pl-1 w-5 h-5 top-1' />
+                                                )}
+                                            </button>) :
+                                            ('Sign in')
+                                        }
                                     </Link>
-
-                                    <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
-                                    <Link href={firstname ? '#' : '/sign-in'} className="text-sm font-medium  hover:text-gray-800">
-                                        {firstname ? 'Contact Us' : 'Sign In'}
-
-                                    </Link>
+                                    {ShowDropDown && <DropDown />}
                                 </div>
 
                                 <div className="hidden lg:ml-8 lg:flex">
@@ -272,12 +311,11 @@ export default function Navbar() {
                                         {/* <span className="ml-3 block text-sm font-medium">NIG</span> */}
                                     </Link>
                                     <span aria-hidden="true" className="ml-6 h-6 w-px bg-gray-300" />
-
                                 </div>
 
 
                                 <div className="flex lg:ml-8">
-                                    <Link href="#" className="p-2  hover:text-gray-500">
+                                    <Link href="/customer/wishlist" className="p-2  hover:text-gray-500">
                                         <span className="sr-only">WishList</span>
                                         <HeartIcon aria-hidden="true" className="size-6" />
                                     </Link>
