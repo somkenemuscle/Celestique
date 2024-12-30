@@ -2,11 +2,7 @@
 
 import { useState } from "react";
 import axiosInstance from "@/lib/axiosInstance";
-
-//FILTER AND SORT DATA
-const filterColors = ["Blue", "Green", "Black", "White", "Yellow", "Grey", "Purple", "Red", "Brown", "Pink", "HotPink", "Orange"];
-const filterSizes = ["XS", "S", "M", "L", "XL", "XXL"];
-const sortOptions = [{ label: "High to Low", value: "desc" }, { label: "Low to High", value: "asc" }];
+import { filterColors, filterSizes, sortOptions } from "@/constants/filterSidebar";
 
 
 function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps) {
