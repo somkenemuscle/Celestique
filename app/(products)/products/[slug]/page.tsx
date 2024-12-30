@@ -61,7 +61,7 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
             setGlobalCart(res.cart);
             toast.success(res.message);
         } catch (error: any) {
-            toast.error(error.response?.data?.message || 'An error occurred while adding to cart');
+            toast.error(error.response?.data?.message || 'An error occurred while adding to the cart');
         } finally {
             setLoading(false);
         }
