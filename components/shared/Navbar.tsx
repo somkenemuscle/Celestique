@@ -308,7 +308,6 @@ export default function Navbar() {
                                             className="block h-auto w-5 shrink-0"
                                         />
 
-                                        {/* <span className="ml-3 block text-sm font-medium">NIG</span> */}
                                     </Link>
                                     <span aria-hidden="true" className="ml-6 h-6 w-px bg-gray-300" />
                                 </div>
@@ -316,7 +315,7 @@ export default function Navbar() {
 
                                 <div className="flex lg:ml-8">
                                     <Link href="/customer/wishlist" className="p-2  hover:text-gray-500">
-                                        <span className="sr-only">WishList</span>
+                                        <span className="sr-only">WishLists</span>
                                         <HeartIcon aria-hidden="true" className="size-6" />
                                     </Link>
                                 </div>
