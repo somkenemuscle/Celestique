@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { getCart } from "@/services/cart";
 import ShippingAddressForm from "@/components/forms/ShippingAddressForm";
-
+import ShippingFormSkelenton from "@/components/ui/skelentons/ShippingFormSkelenton";
 
 function CheckoutPage() {
     const [cart, setCart] = useState<Cart | null>(null);
@@ -26,7 +26,7 @@ function CheckoutPage() {
     }, []);
 
 
-    if (loading || !cart) return;
+    if (loading || !cart) return <ShippingFormSkelenton />;
     if (error) return <div>Error: {error}</div>;
 
     return (
