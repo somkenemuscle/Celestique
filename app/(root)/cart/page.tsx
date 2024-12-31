@@ -10,12 +10,13 @@ import { GoTrash } from "react-icons/go";
 import useCartStore from "@/store/cartStore";
 import { updateCartItemQuantity } from "@/services/cart";
 import toast from "react-hot-toast";
-
-
+import CartSkeleton from "@/components/ui/skelentons/CartSkeleton";
+import ProductSet1 from "@/components/shared/ProductSet1";
 
 function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
   const { setGlobalCart } = useCartStore();
+  const [InitialLoading, setInitialLoading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isAnyOutOfStock, setIsAnyOutOfStock] = useState(false);
@@ -25,6 +26,7 @@ function CartPage() {
   useEffect(() => {
     async function fetchCartItems() {
       try {
+        setInitialLoading(true);
         const res = await getCart();
         setCart(res.cart);
 
@@ -34,6 +36,7 @@ function CartPage() {
       } catch (err: any) {
         setError(err.message || "Failed to fetch items");
       } finally {
+        setInitialLoading(false);
         setLoading(false);
       }
     }
@@ -94,129 +97,135 @@ function CartPage() {
   };
 
 
-
+  if (InitialLoading) return <CartSkeleton />;
   if (!cart) return;
 
   return (
-    <div className="cart-body mt-10 container mx-auto p-10 grid lg:grid-cols-3 gap-8">
+    <>
+      <div className="cart-body mt-10 container mx-auto p-10 grid lg:grid-cols-3 gap-8">
 
-      {/* Cart Items */}
-      <div className="lg:col-span-2">
-        <h1 className="text-xl font-medium mb-6">Shopping Cart <span className="text-gray-500">( {cart.items.length} items )</span> </h1>
+        {/* Cart Items */}
+        <div className="lg:col-span-2">
+          <h1 className="text-lg font-medium tracking-wider mb-6 bg-gr">Shopping Cart <span className="text-gray-500">( {cart.items.length} items )</span> </h1>
 
-        {!cart || cart.items.length === 0 ? (
-          <div className="text-center text-sm tracking-wider pt-16 text-gray-600">
-            <span>Your Cart is currently empty</span>
-            <div className="flex items-center justify-center pt-7">
-              <Link href={'/products'}>
-                <button className="flex items-center justify-center px-4 py-3 bg-black text-white rounded w-60">
-                  Shop now
-                </button>
-              </Link>
-            </div>
-          </div>
-        ) : (
-
-          cart.items.map((item: any, index) => {
-            const isLoading = loadingItemId === `${item.product._id}-${item.size}-${item.color}`;
-
-            return (
-              <div key={index} className="flex items-center border-b pb-4 mb-4">
-                <Link href={`/products/${item.product.slug}`}>
-
-                  {/* Product Image */}
-                  <Image
-                    src={item.product.images.length === 0 ? '' : item.product.images[0]}
-                    alt={item.product.name}
-                    width={80}
-                    height={80}
-                    className="border rounded-xl bg-gray-50 p-1"
-                  />
+          {!cart || cart.items.length === 0 ? (
+            <div className="text-center text-sm tracking-wider pt-16 text-gray-600">
+              <span>Your Cart is currently empty</span>
+              <div className="flex items-center justify-center pt-7">
+                <Link href={'/products'}>
+                  <button className="flex items-center justify-center px-4 py-3 bg-black text-white rounded w-60">
+                    Shop now
+                  </button>
                 </Link>
-
-                {/* Product Details */}
-                <div className="ml-4 flex-grow">
-                  <h2 className="text-xs font-semibold uppercase">{item.product.name}</h2>
-                  <p className="text-xs text-gray-600">
-                    {item.product.gender.gender} / {item.size} / {item.color}
-                  </p>
-
-                  {item.product.quantity === 0 && (
-                    <p className="text-red-600 font-bold text-sm">OUT OF STOCK</p>
-                  )}
-
-                  {/* Quantity Controls */}
-                  <div className="flex items-center mt-2 hover:cursor-pointer">
-                    <span className="border p-0.5">
-                      <button
-                        className="px-2 text-sm"
-                        onClick={() =>
-                          handleCartQuantityUpdate(item.product._id, item.size, item.color, item.quantity - 1)
-                        }
-                        disabled={item.quantity <= 1}
-                      >
-                        -
-                      </button>
-
-                      <span className="text-center text-xs px-3">{isLoading ? <span className="inline-block text-center"><LoaderDark /> </span> : item.quantity}</span>
-
-                      <button
-                        className="px-2 text-sm"
-                        onClick={() =>
-                          handleCartQuantityUpdate(item.product._id, item.size, item.color, item.quantity + 1)
-                        }
-                        disabled={item.quantity >= item.product.quantity}
-                      >
-                        +
-                      </button>
-                    </span>
-                    {/* Delete Button */}
-                    <button
-                      className="ml-4"
-                      onClick={() => handleDelete(item.product._id, item.size, item.color)}
-                    >
-                      <GoTrash className="size-4 hover:text-red-500" />
-                    </button>
-                  </div>
-                </div>
-                <p className="text-sm" id="cart-item-price">
-                  {isLoading ? <LoaderDark /> : `₦${item.subtotal.toLocaleString()}`}
-                </p>
               </div>
-            );
-          }))}
+            </div>
+          ) : (
+
+            cart.items.map((item: any, index) => {
+              const isLoading = loadingItemId === `${item.product._id}-${item.size}-${item.color}`;
+
+              return (
+                <div key={index} className="flex items-center border-b pb-4 mb-4">
+                  <Link href={`/products/${item.product.slug}`}>
+
+                    {/* Product Image */}
+                    <Image
+                      src={item.product.images.length === 0 ? '' : item.product.images[0]}
+                      alt={item.product.name}
+                      width={80}
+                      height={80}
+                      className="border rounded-xl bg-gray-50 p-1"
+                    />
+                  </Link>
+
+                  {/* Product Details */}
+                  <div className="ml-4 flex-grow">
+                    <h2 className="text-xs font-semibold uppercase">{item.product.name}</h2>
+                    <p className="text-xs text-gray-600">
+                      {item.product.gender.gender} / {item.size} / {item.color}
+                    </p>
+
+                    {item.product.quantity === 0 && (
+                      <p className="text-red-600 font-bold text-sm">OUT OF STOCK</p>
+                    )}
+
+                    {/* Quantity Controls */}
+                    <div className="flex items-center mt-2 hover:cursor-pointer">
+                      <span className="border p-0.5">
+                        <button
+                          className="px-2 text-sm"
+                          onClick={() =>
+                            handleCartQuantityUpdate(item.product._id, item.size, item.color, item.quantity - 1)
+                          }
+                          disabled={item.quantity <= 1}
+                        >
+                          -
+                        </button>
+
+                        <span className="text-center text-xs px-3">{isLoading ? <span className="inline-block text-center"><LoaderDark /> </span> : item.quantity}</span>
+
+                        <button
+                          className="px-2 text-sm"
+                          onClick={() =>
+                            handleCartQuantityUpdate(item.product._id, item.size, item.color, item.quantity + 1)
+                          }
+                          disabled={item.quantity >= item.product.quantity}
+                        >
+                          +
+                        </button>
+                      </span>
+                      {/* Delete Button */}
+                      <button
+                        className="ml-4"
+                        onClick={() => handleDelete(item.product._id, item.size, item.color)}
+                      >
+                        <GoTrash className="size-4 hover:text-red-500" />
+                      </button>
+                    </div>
+                  </div>
+                  <p className="text-sm" id="cart-item-price">
+                    {isLoading ? <LoaderDark /> : `₦${item.subtotal.toLocaleString()}`}
+                  </p>
+                </div>
+              );
+            }))}
+        </div>
+
+
+        {/* Order Summary */}
+        <div className="h-72 border p-6  rounded-lg">
+          <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
+          <hr className="my-4" />
+          <p className="flex justify-between">
+            <span>Subtotal <span aria-hidden="true">→</span></span>
+            <span>₦{cart.subtotal.toLocaleString()}</span>
+          </p>
+          <hr className="my-4" />
+          <p className="text-xs text-gray-600">Shipping will be calculated at checkout</p>
+          <hr className="my-4" />
+
+          <Link href={isAnyOutOfStock || cart.subtotal === 0 ? '#' : '/checkout'}>
+            <button
+              className={`w-full p-3 rounded-md ${isAnyOutOfStock || cart.subtotal === 0 ? 'bg-black text-white cursor-not-allowed' : 'bg-black text-white hover:bg-gray-900'}`}
+              disabled={isAnyOutOfStock}
+            >
+              {isAnyOutOfStock || cart.subtotal === 0 ? (
+                <span className="flex items-center justify-center gap-2">
+                  <FaLock /> Checkout Disabled
+                </span>
+              ) : (
+                'Check Out'
+              )}
+            </button>
+          </Link>
+          <p onClick={() => { handleClearCart() }} className="text-right text-sm py-3 hover:cursor-pointer hover:underline text-gray-500 tracking-wider">Clear Cart ?</p>
+        </div>
+
       </div>
-
-
-      {/* Order Summary */}
-      <div className="h-72 border p-6  rounded-lg">
-        <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
-        <hr className="my-4" />
-        <p className="flex justify-between">
-          <span>Subtotal <span aria-hidden="true">→</span></span>
-          <span>₦{cart.subtotal.toLocaleString()}</span>
-        </p>
-        <hr className="my-4" />
-        <p className="text-xs text-gray-600">Shipping will be calculated at checkout</p>
-        <hr className="my-4" />
-
-        <Link href={isAnyOutOfStock || cart.subtotal === 0 ? '#' : '/checkout'}>
-          <button
-            className={`w-full p-3 rounded-md ${isAnyOutOfStock || cart.subtotal === 0 ? 'bg-black text-white cursor-not-allowed' : 'bg-black text-white hover:bg-gray-900'}`}
-            disabled={isAnyOutOfStock}
-          >
-            {isAnyOutOfStock || cart.subtotal === 0 ? (
-              <span className="flex items-center justify-center gap-2">
-                <FaLock /> Checkout Disabled
-              </span>
-            ) : (
-              'Check Out'
-            )}
-          </button>
-        </Link>
-        <p onClick={() => { handleClearCart() }} className="text-right text-sm py-3 hover:cursor-pointer hover:underline text-gray-500 tracking-wider">Clear Cart ?</p>
+      <div className="p-4 mt-10 md:px-20">
+        <ProductSet1 header="keep Shopping" subheader="You might also like this" />
       </div>
-    </div>
+    </>
   );
 }
 

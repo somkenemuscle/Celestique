@@ -283,7 +283,7 @@ export default function Navbar() {
                             </PopoverGroup>
 
                             <div className="ml-auto flex items-center">
-                                <div className='relative' ref={dropdownRef}>
+                                <div className='hidden lg:flex relative' ref={dropdownRef}>
                                     <Link href={firstname ? '' : '/sign-in'} className="text-sm font-medium  hover:text-gray-800">
                                         {firstname ? (
                                             <button onClick={DropDownFunc} className='inline-flex items-center outline-none'>

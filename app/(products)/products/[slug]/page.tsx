@@ -12,6 +12,9 @@ import StatusGraphic from "@/components/ui/StatusGraphic";
 import ProductSet1 from "@/components/shared/ProductSet1";
 import { validateCartInputs } from "@/lib/validate";
 import { saveProductToFavorite } from "@/services/favoriteProduct";
+import SlugPageSkelenton from "@/components/ui/skelentons/SlugPageSkelenton";
+
+
 
 function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     const [product, setProduct] = useState<Product | null>(null);
@@ -95,7 +98,7 @@ function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     }
 
 
-    if (initialLoading) return (<div className="mt-72 mb-72 justify-self-center"><LoaderDark /></div>)
+    if (initialLoading) return <SlugPageSkelenton />;
     if (!product) return (<div className="mt-72 justify-self-center"><StatusGraphic message="Product Not Found" /></div>)
 
 
