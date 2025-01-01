@@ -24,6 +24,7 @@ import useCartStore from '@/store/cartStore';
 import useFirstNameStore from '@/store/usernameStore';
 import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
 import DropDown from '../ui/DropDown';
+import ProductDropdown from '../ui/ProductDropdown';
 
 
 
@@ -32,15 +33,19 @@ export default function Navbar() {
     const { firstname, setFirstname } = useFirstNameStore();
     let cartItemCount = useCartStore((state) => state.cart.items.length);
     const setGlobalCart = useCartStore((state) => state.setGlobalCart);
-    const [ShowDropDown, setShowDropDown] = useState(false)
+    const [ShowDropDown, setShowDropDown] = useState(false);
+    const [openDropdown, setOpenDropdown] = useState<string | null>(null); // Tracks the currently open dropdown
     const dropdownRef = useRef<HTMLDivElement | null>(null);
+    const dropdownUlRef = useRef<HTMLUListElement | null>(null);
+
 
 
     // Close dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node) && dropdownUlRef.current && !dropdownUlRef.current.contains(event.target as Node)) {
                 setShowDropDown(false);
+                setOpenDropdown(null); // Close all dropdowns
             }
         };
 
@@ -79,6 +84,10 @@ export default function Navbar() {
     function DropDownFunc() {
         setShowDropDown(!ShowDropDown)
     }
+    const toggleDropdown = (dropdown: string) => {
+        setOpenDropdown((prev) => (prev === dropdown ? null : dropdown));
+    };
+
 
 
     return (
@@ -165,16 +174,33 @@ export default function Navbar() {
                         </div>
 
                         <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                            <div className="flow-root">
-                                <Link href="/sign-in" className="-m-2 block p-2 font-medium text-gray-900">
-                                    Sign in
-                                </Link>
-                            </div>
-                            <div className="flow-root">
-                                <Link href="/register" className="-m-2 block p-2 font-medium text-gray-900">
-                                    Register
-                                </Link>
-                            </div>
+                            {firstname ? (
+                                <>
+                                    <div className="flow-root">
+                                        <Link href="/customer/orders" className="-m-2 block p-2 font-medium text-gray-900">
+                                            Order History
+                                        </Link>
+                                    </div>
+                                    <div className="flow-root font-medium">
+                                        Logout
+                                    </div>
+                                </>
+
+                            ) : (
+                                <>
+                                    <div className="flow-root">
+                                        <Link href="/sign-in" className="-m-2 block p-2 font-medium text-gray-900">
+                                            Sign in
+                                        </Link>
+                                    </div>
+                                    <div className="flow-root">
+                                        <Link href="/register" className="-m-2 block p-2 font-medium text-gray-900">
+                                            Register
+                                        </Link>
+                                    </div>
+                                </>
+                            )}
+
                         </div>
 
                         <div className="border-t border-gray-200 px-4 py-6">
@@ -218,69 +244,43 @@ export default function Navbar() {
                             </div>
 
                             {/* Flyout menus */}
-                            <PopoverGroup className="hidden lg:ml-8 lg:block lg:self-stretch z-40">
-                                <div className="flex h-full space-x-8">
+                            <div className="ml-7 hidden lg:block">
+                                <ul className="inline-flex space-x-6 text-sm font-medium cursor-pointer" ref={dropdownUlRef}>
                                     {navigation.categories.map((category) => (
-                                        <Popover key={category.name} className="flex">
-                                            <div className="relative flex">
-                                                <PopoverButton className="outline-none relative z-10 -mb-px flex items-center border-b-2 border-transparent pt-px text-sm font-medium  transition-colors duration-200 ease-out hover:text-gray-800 data-[open]:border-gray-900 data-[open]:text-gray-900">
-                                                    {category.name}
-                                                </PopoverButton>
-                                            </div>
-
-                                            <PopoverPanel
-                                                transition
-                                                className="absolute inset-x-0 top-full text-sm text-gray-500 transition data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
+                                        <li key={category.id} className="relative">
+                                            <button
+                                                onClick={() => toggleDropdown(category.id)}
+                                                className="hover:text-gray-800"
                                             >
-                                                {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
-                                                <div aria-hidden="true" className="absolute inset-0 top-1/2 bg-white shadow" />
-
-                                                <div className="relative bg-white">
-                                                    <div className="mx-auto max-w-full px-20">
-                                                        <div className="grid grid-cols-2 gap-x-8 gap-y-10 py-16">
-                                                            <div className="col-start-2 grid grid-cols-2 gap-x-8">
-
-                                                            </div>
-                                                            <div className="row-start-1 grid grid-cols-3 gap-x-8 gap-y-10 text-sm">
-                                                                {category.sections.map((section) => (
-                                                                    <div key={section.name}>
-                                                                        <p id={`${section.name}-heading`} className="font-medium text-gray-900">
-                                                                            {section.name}
-                                                                        </p>
-                                                                        <ul
-                                                                            role="list"
-                                                                            aria-labelledby={`${section.name}-heading`}
-                                                                            className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                                                        >
-                                                                            {section.items.map((item) => (
-                                                                                <li key={item.name} className="flex">
-                                                                                    <Link href={item.href} className="hover:text-gray-800">
-                                                                                        {item.name}
-                                                                                    </Link>
-                                                                                </li>
-                                                                            ))}
-                                                                        </ul>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                {category.name}
+                                            </button>
+                                            {openDropdown === category.id && (
+                                                <div className="absolute">
+                                                    {category.sections.map((section) => (
+                                                        <ProductDropdown
+                                                            key={section.id}
+                                                            links={section.items.map((item) => ({
+                                                                name: item.name,
+                                                                href: item.href,
+                                                            }))}
+                                                        />
+                                                    ))}
                                                 </div>
-                                            </PopoverPanel>
-                                        </Popover>
+                                            )}
+                                        </li>
                                     ))}
 
+                                    {/* Pages Link */}
                                     {navigation.pages.map((page) => (
-                                        <Link
-                                            key={page.name}
-                                            href={page.href}
-                                            className="flex items-center text-sm font-medium  hover:text-gray-800"
-                                        >
-                                            {page.name}
-                                        </Link>
+                                        <li key={page.name}>
+                                            <Link href={page.href} className="hover:text-gray-800">
+                                                {page.name}
+                                            </Link>
+                                        </li>
                                     ))}
-                                </div>
-                            </PopoverGroup>
+                                </ul>
+                            </div>
+
 
                             <div className="ml-auto flex items-center">
                                 <div className='hidden lg:flex relative' ref={dropdownRef}>

@@ -121,3 +121,7 @@ interface FilterSortSidebarProps {
     baseRoute: string;
     onFilterChange: (data: Product[], pages: number) => void;
 }
+
+interface ProductDropdownProps {
+    links: { href: string; name: string }[];
+}

@@ -23,11 +23,11 @@ export default function DropDown() {
     }
 
     return (
-        <div className="z-50  top-full absolute  bg-white border rounded w-36 mt-3 justify-center shadow-sm">
+        <div className="z-50  top-full absolute  bg-white border rounded w-44 mt-3 justify-center shadow-sm tracking-wide">
             <ul className="p-3 text-sm">
-                <Link href={'/customer/orders'}> <li className="px-3 py-1 hover:bg-gray-100 hover:rounded">Orders</li></Link>
+                <Link href={'/customer/orders'}> <li className="px-3 py-2 hover:bg-gray-100 hover:rounded">Your Orders</li></Link>
                 <hr className="my-3" />
-                <button onClick={HandleLogOut} className="px-3 py-2 bg-red-700 text-white justify-self-center rounded w-full">Logout</button>
+                <button onClick={HandleLogOut} className="px-3 py-2 bg-red-700 hover:bg-red-500 text-white justify-self-center rounded w-full">Logout</button>
             </ul>
         </div>
     )

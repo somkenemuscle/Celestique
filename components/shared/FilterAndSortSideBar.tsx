@@ -79,7 +79,7 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
       {/* FOR LARGE DEVICES */}
       <div className="hidden md:block cursor-pointer  w-64 h-screen max-h-[calc(100vh-64px)] p-4 pl-7 tracking-wider rounded-lg sticky top-9 filter-body text-sm overflow-y-auto mt-9">
         {/* Sort By */}
-        <div className="mb-6">
+        <div className="mb-4">
           <h4 onClick={toggleSortDropdown} className="hover:bg-gray-100 p-2 rounded font-medium mb-2 w-full flex justify-between items-center">
             Sort By
             {isSortDropdownOpen ? <MinusIcon className="text-black" size={16} /> : <PlusIcon className="text-black" size={16} />}
@@ -103,8 +103,10 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
           )}
         </div>
 
+        <hr />
+
         {/* Filter by Color */}
-        <div className="mb-6">
+        <div className="mb-4 mt-4">
           <h4 onClick={toggleColorDropdown} className="hover:bg-gray-100 p-2 rounded font-medium mb-2 w-full flex justify-between items-center">
             Colors {isColorDropdownOpen ? <MinusIcon className="text-black" size={16} /> : <PlusIcon className="text-black" size={16} />}
           </h4>
@@ -130,9 +132,10 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
             </ul>
           )}
         </div>
+        <hr />
 
         {/* Filter by Size */}
-        <div>
+        <div className="mt-4 mb-4">
           <h4 onClick={toggleSizeDropdown} className="hover:bg-gray-100 p-2 rounded font-medium mb-2 w-full flex justify-between items-center">Size
             {isSizeDropdownOpen ? <MinusIcon className="text-black" size={16} /> : <PlusIcon className="text-black" size={16} />}
           </h4>
@@ -154,14 +157,15 @@ function FilterSortSidebar({ baseRoute, onFilterChange }: FilterSortSidebarProps
             </ul>
           )}
         </div>
+        <hr />
 
         {(selectedColors.length > 0 || selectedSizes.length > 0 || sortOption) && (
           <div className="mt-14">
-            <button onClick={clearFilters} className="bg-black text-white rounded mb-6 w-full border border-gray-300 p-3 mr-2 hover:bg-slate-800 hover:text-white">
-              Clear all ({selectedColors.length + selectedSizes.length + (sortOption ? 1 : 0)})
-            </button>
-            <button onClick={fetchFilteredProducts} className="bg-black text-white rounded  border border-gray-300 w-full p-3 hover:bg-slate-800 hover:text-white">
+            <button onClick={fetchFilteredProducts} className="mb-4 bg-black text-white rounded  border border-gray-300 w-full p-3 hover:bg-slate-800 hover:text-white">
               Apply ({selectedColors.length + selectedSizes.length + (sortOption ? 1 : 0)})
+            </button>
+            <button onClick={clearFilters} className="bg-black text-white rounded  w-full border border-gray-300 p-3 mr-2 hover:bg-slate-800 hover:text-white">
+              Clear all ({selectedColors.length + selectedSizes.length + (sortOption ? 1 : 0)})
             </button>
           </div>
         )}
