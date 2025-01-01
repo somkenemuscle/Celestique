@@ -220,7 +220,7 @@ export default function Navbar() {
             {/* ON LARGE SCREEN */}
             <header className="relative bg-gray-50 border-b border-gray-200">
                 <p className="p-3 text-center tracking-wider bg-black px-4 text-xs font-extrabold text-white sm:px-6 lg:px-10">
-                    FREE DELIVERY ON ORDERS ABOVE ₦10,000
+                    FREE DELIVERY ON ORDERS ABOVE ₦15,000
                 </p>
 
                 <nav aria-label="Top" className="mx-auto max-w-full  px-4 py-2 sm:px-6 lg:px-20">

@@ -79,10 +79,10 @@ export default function SearchPage() {
 
   return (
     <>
-      <div onClick={() => setshowSuggestions(false)} className='my-10'>
-        <div onClick={() => setshowSuggestions(false)} className="w-10/12   md:w-8/12 ">
+      <div onClick={() => setshowSuggestions(false)} className={`${Products.length > 0 ? 'mt-5' : 'my-20'}`} >
+        <div onClick={() => setshowSuggestions(false)} className="justify-self-center w-10/12   md:w-8/12 ">
           <h1 className="font-medium md:text-xl text-center pb-10 tracking-wider text-lg font-sans">Search Our Store</h1>
-          <form onSubmit={HandleSubmit} className="relative">
+          <form onSubmit={HandleSubmit} className="relative flex-col">
             <input
               onChange={Handlechange}
               value={searchedTerm}
