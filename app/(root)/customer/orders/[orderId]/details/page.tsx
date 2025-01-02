@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { getOrderDetails } from '@/services/order';
-import { CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 
 export default function page({ params: { orderId } }: { params: { orderId: string } }) {
@@ -11,6 +10,7 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
 
     async function fetchOrderDetails() {
         try {
+            setLoading(true);
             const res = await getOrderDetails(orderId);
             setOrdrDetails(res.orders)
         } catch (err: any) {
@@ -25,11 +25,8 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
         fetchOrderDetails()
     }, [orderId])
 
-    let ConvertedDate = ''
 
-    let formattedDeliveryDate = ''
-
-    let formattedExpectedDeliveryDate = ''
+    let [ConvertedDate, formattedDeliveryDate, formattedExpectedDeliveryDate] = ['', '', ''];
 
     if (OrderDetails) {
         const ExpectedDeliveryDate = new Date(OrderDetails.createdAt);
@@ -41,15 +38,13 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
             year: 'numeric',
         }).replace(/\//g, '-');
 
-
         formattedDeliveryDate = new Date(OrderDetails.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'long' });
-
         formattedExpectedDeliveryDate = ExpectedDeliveryDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'long' });
-
     }
 
+
     return (
-        <div id='order-details-container' className='mt-16 justify-self-center tracking-wider'>
+        <div id='order-details-container' className='mt-16 mx-auto tracking-wider'>
             {OrderDetails && (
                 <>
                     <div className='border rounded pb-2 mb-10'>
@@ -91,13 +86,13 @@ export default function page({ params: { orderId } }: { params: { orderId: strin
                                     <button className='bg-green-700 text-white rounded p-1'>{OrderDetails.orderStatus}</button>
                                 </span>
                             ) : (
-                                    <button className='bg-red-700 text-white rounded p-1'>{OrderDetails.orderStatus}</button>
+                                <button className='bg-red-700 text-white rounded p-1'>{OrderDetails.orderStatus}</button>
                             )}
                         </section>
-                        <hr className='mt-4'/>
+                        <hr className='mt-4' />
                         <section className='py-5'>
-                            {OrderDetails.items.map((item:CartItem, index: number) => (
-                                <div key={index}>  
+                            {OrderDetails.items.map((item: CartItem, index: number) => (
+                                <div key={index}>
                                     <div className='flex'>
                                         <Image
                                             src={item.product.images.length === 0 ? '' : item.product.images[0]}
