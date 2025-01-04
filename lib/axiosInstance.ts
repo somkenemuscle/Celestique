@@ -24,7 +24,7 @@ axiosInstance.interceptors.response.use(
       // Only handle token refresh if the error message indicates token expiration on unauthorization
       if (errorCode === 'UNAUTHORIZED') {
         try {
-          await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/apiauth/token`, {}, { withCredentials: true });
+          await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/token`, {}, { withCredentials: true });
           return axiosInstance(originalRequest);
         } catch (refreshError) {
           console.error('Token refresh error:', refreshError);
