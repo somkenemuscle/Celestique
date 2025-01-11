@@ -271,7 +271,7 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
           </div>
 
           {/* CHECKOUT SUMMARY SECTION - Right */}
-          <div className="p-6 border lg:px-10 lg:col-span-6 rounded-xl sm:h-full lg:h-full bg-gray-50">
+          <div className="p-6 border lg:px-10 lg:col-span-6 rounded-xl h-fit bg-gray-50">
             {cart.items.map((item, index) => (
               <div key={index} className="flex items-center border-b pb-4 mb-4">
                 {/* Product Image */}
