@@ -72,6 +72,7 @@ export default function RegisterForm() {
       const errorMessage = axios.isAxiosError(error) && error.response?.data?.error
         ? error.response.data.error
         : "An unexpected error occurred. Please try again.";
+      console.log(error);
       toast.error(errorMessage)
       setRecaptchaToken(null);
       resetRecaptcha();
