@@ -6,6 +6,21 @@ html {
   scroll-behavior: smooth;
 }
 
+@keyframes nav-flyout {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-nav-flyout {
+  animation: nav-flyout 180ms ease-out;
+}
+
 @layer components {
   .eyebrow {
     @apply text-[11px] font-medium uppercase tracking-[0.25em] text-ink-400;

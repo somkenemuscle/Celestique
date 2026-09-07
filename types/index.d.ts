@@ -124,4 +124,5 @@ interface FilterSortSidebarProps {
 
 interface ProductDropdownProps {
     links: { href: string; name: string }[];
+    onNavigate?: () => void;
 }
