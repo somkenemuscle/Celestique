@@ -1,29 +1,27 @@
-
 function ProductHomePageSkeleton() {
     return (
-        <div className="pl-8">
-            <ul className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <section className="mx-auto max-w-7xl px-6 py-20 sm:px-10 lg:px-20">
+            <div className="mb-10 flex animate-pulse flex-col items-center">
+                <div className="h-2.5 w-24 bg-ink-100" />
+                <div className="mt-4 h-8 w-64 bg-ink-100" />
+                <div className="mt-5 h-2.5 w-16 bg-ink-100" />
+            </div>
+
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 lg:gap-x-8">
                 {Array.from({ length: 4 }).map((_, index) => (
-                    <li key={index} className="mb-7 mt-7 relative animate-pulse mr-8">
-                        {/* Skeleton Image */}
-                        <div className="w-[170px] md:w-[200px] xl:w-[250px] h-96 bg-gray-200 rounded"></div>
-
-                        {/* Skeleton Product Name */}
-                        <div className="mt-2 w-3/4 h-4 bg-gray-200 rounded"></div>
-
-                        {/* Skeleton Price */}
-                        <div className="mt-2 w-1/2 h-4 bg-gray-200 rounded"></div>
-
-                        {/* Skeleton Colors */}
-                        <ul className="mt-2 flex space-x-2">
-                            <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
-                            <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
-                            <div className="w-4 h-4 bg-gray-300 rounded-full"></div>
-                        </ul>
+                    <li key={index} className="animate-pulse">
+                        <div className="aspect-[3/4] w-full bg-ink-100" />
+                        <div className="mt-3 h-3 w-3/4 bg-ink-100" />
+                        <div className="mt-2 h-3 w-1/3 bg-ink-100" />
+                        <div className="mt-3 flex gap-1.5">
+                            <div className="h-3 w-3 rounded-full bg-ink-100" />
+                            <div className="h-3 w-3 rounded-full bg-ink-100" />
+                            <div className="h-3 w-3 rounded-full bg-ink-100" />
+                        </div>
                     </li>
                 ))}
             </ul>
-        </div>
+        </section>
     );
 }
 

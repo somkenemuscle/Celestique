@@ -32,7 +32,7 @@ export default function ProductSet2({ header, subheader }: { header: string, sub
     };
 
 
-    if (loading) return <div><ProductHomePageSkeleton /></div>;
+    if (loading) return <ProductHomePageSkeleton />;
     if (error) return <div>Error: {error}</div>;
 
     return (
@@ -44,7 +44,7 @@ export default function ProductSet2({ header, subheader }: { header: string, sub
                     View all
                 </Link>
             </div>
-            <ul className="grid grid-cols-2 gap-x-4 gap-y-2 md:grid-cols-4 lg:gap-x-8">
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 lg:gap-x-8">
                 {products.map((product) => (
                     <ProductCard key={product._id} product={product} />
                 ))}
