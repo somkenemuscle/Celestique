@@ -1,55 +1,39 @@
-
 function CartSkeleton() {
-    return (
-        <div className="cart-body mt-10 container mx-auto p-10 grid lg:grid-cols-3 gap-8">
+  return (
+    <div className="mx-auto max-w-[1400px] px-4 pb-20 pt-14 sm:px-6 lg:px-10 lg:pt-20">
+      <div className="border-b border-ink-100 pb-6">
+        <div className="h-9 w-56 animate-pulse bg-ink-100" />
+        <div className="mt-3 h-3 w-20 animate-pulse bg-ink-100" />
+      </div>
 
-            {/* Cart Items */}
-            <div className="lg:col-span-2">
-                <div className="h-8 bg-gray-200 animate-pulse rounded mb-6"></div>
-
-                {/* Skeleton for Cart Items */}
-                <div className="space-y-4">
-                    {[...Array(2)].map((_, index) => (
-                        <div key={index} className="flex items-center border-b pb-4 mb-4">
-                            {/* Product Image Skeleton */}
-                            <div className="w-20 h-20 bg-gray-200 animate-pulse rounded-xl"></div>
-                            <div className="ml-4 flex-grow">
-                                {/* Product Details Skeleton */}
-                                <div className="h-4 bg-gray-200 animate-pulse rounded w-1/2 mb-2"></div>
-                                <div className="h-4 bg-gray-200 animate-pulse rounded w-1/3 mb-2"></div>
-                                {/* Quantity Controls Skeleton */}
-                                <div className="flex items-center space-x-2">
-                                    <div className="h-6 w-6 bg-gray-200 animate-pulse rounded"></div>
-                                    <div className="h-6 w-12 bg-gray-200 animate-pulse rounded"></div>
-                                    <div className="h-6 w-6 bg-gray-200 animate-pulse rounded"></div>
-                                    <div className="h-6 w-6 bg-gray-200 animate-pulse rounded ml-4"></div>
-                                </div>
-                            </div>
-                            {/* Price Skeleton */}
-                            <div className="h-6 w-12 bg-gray-200 animate-pulse rounded"></div>
-                        </div>
-                    ))}
+      <div className="mt-8 grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-[1fr_380px]">
+        <ul className="divide-y divide-ink-100 border-y border-ink-100">
+          {[...Array(3)].map((_, index) => (
+            <li key={index} className="flex animate-pulse gap-4 py-6 sm:gap-6">
+              <div className="aspect-[3/4] w-24 shrink-0 bg-ink-100 sm:w-28" />
+              <div className="flex flex-1 flex-col">
+                <div className="h-3 w-1/2 bg-ink-100" />
+                <div className="mt-2 h-3 w-1/3 bg-ink-100" />
+                <div className="mt-auto flex items-center justify-between pt-4">
+                  <div className="h-9 w-28 bg-ink-100" />
+                  <div className="h-3 w-16 bg-ink-100" />
                 </div>
-            </div>
+              </div>
+            </li>
+          ))}
+        </ul>
 
-            {/* Order Summary */}
-            <div className="h-72 border p-6 rounded-lg space-y-4">
-                <div className="h-6 bg-gray-200 animate-pulse rounded w-1/2"></div>
-                <hr className="my-4" />
-                <div className="flex justify-between">
-                    <div className="h-4 bg-gray-200 animate-pulse rounded w-1/3"></div>
-                    <div className="h-4 bg-gray-200 animate-pulse rounded w-1/4"></div>
-                </div>
-                <hr className="my-4" />
-                <div className="h-4 bg-gray-200 animate-pulse rounded w-2/3"></div>
-                <hr className="my-4" />
-                <div className="h-12 bg-gray-200 animate-pulse rounded"></div>
-                <div className="h-4 bg-gray-200 animate-pulse rounded w-1/3 ml-auto"></div>
-            </div>
+        <div className="lg:h-fit">
+          <div className="animate-pulse space-y-4 border border-ink-100 p-6">
+            <div className="h-3 w-1/3 bg-ink-100" />
+            <div className="h-4 w-full bg-ink-100" />
+            <div className="h-4 w-full bg-ink-100" />
+            <div className="h-12 w-full bg-ink-100" />
+          </div>
         </div>
-
-
-    )
+      </div>
+    </div>
+  );
 }
 
-export default CartSkeleton
+export default CartSkeleton;
