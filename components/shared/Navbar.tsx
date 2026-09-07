@@ -91,7 +91,7 @@ export default function Navbar() {
 
 
     return (
-        <div className="bg-white w-full top-0 z-50">
+        <div className="sticky top-0 z-50 w-full bg-white">
             {/* Mobile menu */}
             <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden lg:fixed">
                 <DialogBackdrop
@@ -125,7 +125,7 @@ export default function Navbar() {
                                     {navigation.categories.map((category) => (
                                         <Tab
                                             key={category.name}
-                                            className="flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-base font-medium text-gray-900 data-[selected]:border-indigo-600 data-[selected]:text-indigo-600"
+                                            className="flex-1 whitespace-nowrap border-b-2 border-transparent px-1 py-4 text-sm font-medium uppercase tracking-[0.15em] text-gray-900 data-[selected]:border-ink-900 data-[selected]:text-ink-900"
                                         >
                                             {category.name}
                                         </Tab>
@@ -218,134 +218,130 @@ export default function Navbar() {
 
 
             {/* ON LARGE SCREEN */}
-            <header className="relative bg-gray-50 border-b border-gray-200">
-                <p className="p-3 text-center tracking-wider bg-black px-4 text-xs font-extrabold text-white sm:px-6 lg:px-10">
-                    FREE DELIVERY ON ORDERS ABOVE ₦15,000
-                </p>
-
-                <nav aria-label="Top" className="mx-auto max-w-full  px-4 py-2 sm:px-6 lg:px-20">
-                    <div className="">
-                        <div className="flex h-16 items-center">
+            <header className="relative border-t border-ink-100 bg-white">
+                <nav aria-label="Top" className="mx-auto max-w-full px-3 sm:px-6 lg:px-10">
+                    {/* Tier 2: main row */}
+                    <div className="relative flex h-16 items-center justify-between border-b border-ink-100 lg:h-20">
+                        {/* Left: menu (mobile / tablet only) */}
+                        <div className="flex flex-1 items-center lg:flex-none">
                             <button
                                 type="button"
                                 onClick={() => setOpen(true)}
-                                className="relative rounded-md  p-2 text-gray-500 lg:hidden"
+                                className="relative -ml-1.5 inline-flex items-center gap-2 p-1.5 text-ink-900 lg:hidden"
                             >
                                 <span className="absolute -inset-0.5" />
-                                <span className="sr-only">Open menu</span>
                                 <Bars3Icon aria-hidden="true" className="size-6" />
+                                <span className="hidden text-[11px] font-semibold uppercase tracking-[0.22em] sm:inline">
+                                    Menu
+                                </span>
                             </button>
+                        </div>
 
-                            {/* Logo */}
-                            <div className="ml-4 flex lg:ml-0">
-                                <Link href="/">
-                                    <h1 className="font-extrabold" id='logo'> ᥫ᭡ <span className='font-normal'> Celes</span>tique</h1>
+                        {/* Center: wordmark */}
+                        <div className="pointer-events-none absolute inset-x-0 flex justify-center">
+                            <Link href="/" className="pointer-events-auto">
+                                <h1 className="font-display text-2xl font-medium tracking-[0.02em] text-ink-900 sm:text-3xl lg:text-[2rem]">
+                                    Celestique
+                                </h1>
+                            </Link>
+                        </div>
+
+                        {/* Right: actions */}
+                        <div className="flex flex-1 items-center justify-end lg:flex-none">
+                            <div className="hidden lg:flex relative" ref={dropdownRef}>
+                                <Link href={firstname ? '' : '/sign-in'} className="text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-600 hover:text-ink-900">
+                                    {firstname ? (
+                                        <button onClick={DropDownFunc} className="inline-flex items-center outline-none">
+                                            Hi, {firstname}
+                                            {ShowDropDown ? (
+                                                <ChevronUpIcon className="pl-1 w-5 h-5" />
+                                            ) : (
+                                                <ChevronDownIcon className="pl-1 w-5 h-5" />
+                                            )}
+                                        </button>
+                                    ) : (
+                                        'Sign in'
+                                    )}
+                                </Link>
+                                {ShowDropDown && <DropDown />}
+                            </div>
+
+                            <div className="hidden lg:ml-6 lg:flex lg:items-center">
+                                <Link href="#" className="flex items-center hover:text-gray-800">
+                                    <img
+                                        alt="Flag of Nigeria"
+                                        src="https://flagcdn.com/w320/ng.png"
+                                        className="block h-auto w-5 shrink-0"
+                                    />
+                                </Link>
+                                <span aria-hidden="true" className="ml-6 h-5 w-px bg-ink-200" />
+                            </div>
+
+                            <div className="flex lg:ml-5">
+                                <Link href="/customer/wishlist" className="p-1.5 text-ink-900 hover:text-ink-500 lg:p-2">
+                                    <span className="sr-only">WishLists</span>
+                                    <HeartIcon aria-hidden="true" className="size-5 lg:size-6" />
                                 </Link>
                             </div>
 
-                            {/* Flyout menus */}
-                            <div className="ml-7 hidden lg:block">
-                                <ul className="inline-flex space-x-6 text-sm font-medium cursor-pointer" ref={dropdownUlRef}>
-                                    {navigation.categories.map((category) => (
-                                        <li key={category.id} className="relative">
-                                            <button
-                                                onClick={() => toggleDropdown(category.id)}
-                                                className="hover:text-gray-800"
-                                            >
-                                                {category.name}
-                                            </button>
-                                            {openDropdown === category.id && (
-                                                <div className="absolute">
-                                                    {category.sections.map((section) => (
-                                                        <ProductDropdown
-                                                            key={section.id}
-                                                            links={section.items.map((item) => ({
-                                                                name: item.name,
-                                                                href: item.href,
-                                                            }))}
-                                                        />
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </li>
-                                    ))}
-
-                                    {/* Pages Link */}
-                                    {navigation.pages.map((page) => (
-                                        <li key={page.name}>
-                                            <Link href={page.href} className="hover:text-gray-800">
-                                                {page.name}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
+                            <div className="flex">
+                                <Link href="/search" className="p-1.5 text-ink-900 hover:text-ink-500 lg:p-2">
+                                    <span className="sr-only">Search</span>
+                                    <MagnifyingGlassIcon aria-hidden="true" className="size-5 lg:size-6" />
+                                </Link>
                             </div>
 
-
-                            <div className="ml-auto flex items-center">
-                                <div className='hidden lg:flex relative' ref={dropdownRef}>
-                                    <Link href={firstname ? '' : '/sign-in'} className="text-sm font-medium  hover:text-gray-800">
-                                        {firstname ? (
-                                            <button onClick={DropDownFunc} className='inline-flex items-center outline-none'>
-                                                Hi, {firstname}
-                                                {ShowDropDown ? (
-                                                    <ChevronUpIcon className='pl-1 w-5 h-5 top-1' />
-                                                ) : (
-                                                    <ChevronDownIcon className='pl-1 w-5 h-5 top-1' />
-                                                )}
-                                            </button>) :
-                                            ('Sign in')
-                                        }
-                                    </Link>
-                                    {ShowDropDown && <DropDown />}
-                                </div>
-
-                                <div className="hidden lg:ml-8 lg:flex">
-                                    <Link href="#" className="flex items-center  hover:text-gray-800">
-                                        <img
-                                            alt="Flag of Nigeria"
-                                            src="https://flagcdn.com/w320/ng.png"
-                                            className="block h-auto w-5 shrink-0"
-                                        />
-
-                                    </Link>
-                                    <span aria-hidden="true" className="ml-6 h-6 w-px bg-gray-300" />
-                                </div>
-
-
-                                <div className="flex lg:ml-8">
-                                    <Link href="/customer/wishlist" className="p-2  hover:text-gray-500">
-                                        <span className="sr-only">WishLists</span>
-                                        <HeartIcon aria-hidden="true" className="size-6" />
-                                    </Link>
-                                </div>
-
-
-                                {/* Search */}
-                                <div className="flex lg:ml-1">
-                                    <Link href="/search" className="p-2  hover:text-gray-500">
-                                        <span className="sr-only">Search</span>
-                                        <MagnifyingGlassIcon aria-hidden="true" className="size-6" />
-                                    </Link>
-                                </div>
-
-
-                                {/* Cart */}
-                                <div className="ml-2 flow-root lg:ml-3">
-                                    <Link href="/cart" className="group -m-2 flex items-center p-2 relative">
-                                        <ShoppingBagIcon
-                                            aria-hidden="true"
-                                            className="w-6 h-6  group-hover:text-gray-500"
-                                        />
-                                        {cartItemCount > 0 && (
-                                            <span className="absolute top-1 -right-0 flex h-5 w-5 items-center justify-center rounded-full bg-black text-white text-xs font-bold">
-                                                {cartItemCount}
-                                            </span>
-                                        )}
-                                    </Link>
-                                </div>
+                            <div className="flow-root">
+                                <Link href="/cart" className="group relative flex items-center p-1.5 text-ink-900 lg:p-2">
+                                    <ShoppingBagIcon aria-hidden="true" className="size-5 group-hover:text-ink-500 lg:size-6" />
+                                    {cartItemCount > 0 && (
+                                        <span className="absolute -right-0.5 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-black text-[10px] font-bold text-white lg:h-5 lg:w-5 lg:text-xs">
+                                            {cartItemCount}
+                                        </span>
+                                    )}
+                                </Link>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Tier 3: category bar */}
+                    <div className="hidden border-b border-ink-100 lg:block">
+                        <ul
+                            className="flex items-center justify-center gap-x-10 py-3.5 text-[12px] font-bold uppercase tracking-[0.2em] text-ink-900"
+                            ref={dropdownUlRef}
+                        >
+                            {navigation.categories.map((category) => (
+                                <li key={category.id} className="relative">
+                                    <button
+                                        onClick={() => toggleDropdown(category.id)}
+                                        className="link-underline uppercase hover:text-ink-500"
+                                    >
+                                        {category.name}
+                                    </button>
+                                    {openDropdown === category.id && (
+                                        <div className="absolute left-1/2 top-full z-40 -translate-x-1/2 pt-4">
+                                            {category.sections.map((section) => (
+                                                <ProductDropdown
+                                                    key={section.id}
+                                                    links={section.items.map((item) => ({
+                                                        name: item.name,
+                                                        href: item.href,
+                                                    }))}
+                                                />
+                                            ))}
+                                        </div>
+                                    )}
+                                </li>
+                            ))}
+
+                            {navigation.pages.map((page) => (
+                                <li key={page.name}>
+                                    <Link href={page.href} className="link-underline hover:text-ink-500">
+                                        {page.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </nav>
             </header>

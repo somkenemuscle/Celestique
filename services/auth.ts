@@ -9,9 +9,9 @@ export const signIn = async (email: string, password: string) => {
 };
 
 //SIGN UP 
-export const signUp = async (firstname: string, lastname: string, phoneNumber: string, email: string, password: string, recaptchaToken: string) => {
+export const signUp = async (firstname: string, lastname: string, phoneNumber: string, email: string, password: string) => {
     const response = await axiosInstance.post('/auth/signup', {
-        email, password, firstname, lastname, phoneNumber, recaptchaToken
+        email, password, firstname, lastname, phoneNumber
     });
     return response.data;
 };

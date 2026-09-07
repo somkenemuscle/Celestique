@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { getAllProducts } from "@/services/product";
 import ProductCard from "@/components/ui/ProductCard";
 import ProductHomePageSkeleton from "../ui/skelentons/ProductCardHomePageSkeleton";
@@ -35,15 +36,19 @@ export default function ProductSet1({ header, subheader }: { header: string, sub
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <>
-            <h1 className="pl-4 lg:pl-8 font-extrabold text-xl tracking-wide mt-16 font-sans"> {header}</h1>
-            <h4 className="pl-4 lg:pl-8 font-medium text-sm tracking-wide text-gray-500 font-sans">{subheader}</h4>
-            <ul className="grid grid-cols-2 sm:grid-cols-2  md:grid-cols-4 lg:grid-cols-4 px-4 sm:p-4 lg:px-8 gap-x-8 mt-4">
+        <section className="mx-auto max-w-7xl px-6 py-20 sm:px-10 lg:px-20">
+            <div className="mb-10 flex flex-col items-center text-center">
+                <span className="eyebrow">{subheader}</span>
+                <h2 className="mt-2 font-display text-3xl font-medium text-ink-900 sm:text-4xl">{header}</h2>
+                <Link href="/products" className="link-underline mt-4 text-xs font-medium uppercase tracking-[0.2em] text-ink-500">
+                    View all
+                </Link>
+            </div>
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-2 md:grid-cols-4 lg:gap-x-8">
                 {products.map((product) => (
                     <ProductCard key={product._id} product={product} />
                 ))}
             </ul>
-        </>
-
+        </section>
     )
 }

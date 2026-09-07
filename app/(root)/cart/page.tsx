@@ -47,7 +47,8 @@ function CartPage() {
 
 
   //Handle Update cart quantity functionality
-  const handleCartQuantityUpdate = async (productId: string, size: string, color: string, quantity: number) => {
+  const handleCartQuantityUpdate = async (productId: string, size: string,
+    color: string, quantity: number) => {
     try {
       setLoadingItemId(`${productId}-${size}-${color}`); // Unique ID for the loading item
       setLoading(true)
@@ -106,7 +107,9 @@ function CartPage() {
 
         {/* Cart Items */}
         <div className="lg:col-span-2">
-          <h1 className="text-lg font-medium tracking-wider mb-6 bg-gr">Shopping Cart <span className="text-gray-500">( {cart.items.length} items )</span> </h1>
+          <h1 className="text-lg font-medium tracking-wider mb-6 bg-gr">
+            Shopping Cart <span className="text-gray-500">( {cart.items.length} items )</span>
+          </h1>
 
           {!cart || cart.items.length === 0 ? (
             <div className="text-center text-sm tracking-wider pt-16 text-gray-600">

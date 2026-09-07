@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-[11px] font-medium uppercase tracking-[0.25em] text-ink-400;
+  }
+  .font-display {
+    font-family: var(--font-display), 'Fraunces', Georgia, serif;
+  }
+  .link-underline {
+    @apply relative inline-block after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full;
+  }
+}
+
 #signup-form-input-lastname::placeholder,
 #signup-form-input-firstname::placeholder,
 #signup-form-input-email::placeholder,

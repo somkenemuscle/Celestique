@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 import WhatsappIcon from "@/components/shared/WhatasappIcon";
 import { Toaster } from 'react-hot-toast'
@@ -16,6 +17,18 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+const hanken = Hanken_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Celestique",
@@ -30,10 +43,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${hanken.variable} ${fraunces.variable} ${geistSans.variable} ${geistMono.variable} flex min-h-screen flex-col font-sans text-ink antialiased`}
       >
         <Navbar />
-        {children}
+        <div className="flex-1">{children}</div>
         <WhatsappIcon />
         <Toaster position="bottom-left" toastOptions={{
           // Global default options

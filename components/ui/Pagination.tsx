@@ -1,20 +1,16 @@
 function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
     // Generate a simple range of page numbers with ellipsis
     const getPageNumbers = () => {
-        const pages = [];
+        const pages: (number | string)[] = [];
 
-        // Show the first page, current page, and last page
         if (totalPages <= 5) {
-            // If there are 5 or fewer pages, just show all of them
             for (let i = 1; i <= totalPages; i++) {
                 pages.push(i);
             }
         } else {
-            // Always show the first and last page
             pages.push(1);
             if (currentPage > 3) pages.push('...');
 
-            // Show a range around the current page
             for (let i = Math.max(currentPage - 1, 2); i <= Math.min(currentPage + 1, totalPages - 1); i++) {
                 pages.push(i);
             }
@@ -26,42 +22,54 @@ function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) 
         return pages;
     };
 
+    if (totalPages <= 1) return null;
+
+    const arrow =
+        'flex h-9 w-9 items-center justify-center border border-ink-200 text-ink-700 transition hover:border-ink-900 hover:text-ink-900 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-ink-200 disabled:hover:text-ink-700';
+
     return (
-        <div className="flex justify-center items-center m-6 mt-10 mb-20 space-x-4 text-xs">
-            {/* Previous Button */}
+        <div className="mb-8 mt-16 flex items-center justify-center gap-1.5 text-xs">
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="w-8 h-8 flex justify-center items-center bg-gray-200 hover:bg-gray-300 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Previous page"
+                className={arrow}
             >
-                &lt;
+                &lsaquo;
             </button>
 
-            {/* Page Numbers */}
-            <div className="flex space-x-2">
-                {getPageNumbers().map((page, index) => {
-                    if (page === '...') {
-                        return <span key={index} className="text-gray-500">...</span>;
-                    }
+            {getPageNumbers().map((page, index) => {
+                if (page === '...') {
                     return (
-                        <button
-                            key={index}
-                            onClick={() => onPageChange(Number(page))}
-                            className={`w-8 h-8 flex justify-center items-center ${currentPage === Number(page) ? 'bg-black text-white' : 'bg-gray-200 hover:bg-gray-300'} rounded-full`}
-                        >
-                            {page}
-                        </button>
+                        <span key={index} className="px-1 text-ink-400">
+                            …
+                        </span>
                     );
-                })}
-            </div>
+                }
+                const active = currentPage === Number(page);
+                return (
+                    <button
+                        key={index}
+                        onClick={() => onPageChange(Number(page))}
+                        aria-current={active ? 'page' : undefined}
+                        className={`flex h-9 w-9 items-center justify-center border text-xs transition ${
+                            active
+                                ? 'border-ink-900 bg-ink-900 text-white'
+                                : 'border-ink-200 text-ink-700 hover:border-ink-900 hover:text-ink-900'
+                        }`}
+                    >
+                        {page}
+                    </button>
+                );
+            })}
 
-            {/* Next Button */}
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="w-8 h-8 flex justify-center items-center bg-gray-200 hover:bg-gray-300 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Next page"
+                className={arrow}
             >
-                &gt;
+                &rsaquo;
             </button>
         </div>
     );

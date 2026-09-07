@@ -2,18 +2,44 @@ import HeroSection from "@/components/ui/HeroSection";
 import GenderGridImage from "@/components/ui/GenderGridImages";
 import ProductSet1 from "@/components/shared/ProductSet1";
 import ProductSet2 from "@/components/shared/ProductSet2";
-
-
+import UspStrip from "@/components/shared/UspStrip";
+import FeaturedCategories from "@/components/shared/FeaturedCategories";
+import Newsletter from "@/components/shared/Newsletter";
 
 export default function Home() {
   return (
-    <div>
-      <HeroSection videoUrl="https://cdn.shopify.com/videos/c/o/v/f4f59cd761da4057807fd19b9e2ab16b.mp4" />
-      <ProductSet1 header="SHOP THE LATEST" subheader="Men's T-Shirts" />
+    <div className="bg-white">
+      <HeroSection
+        imageUrl="https://www.bolapsd.xyz/cdn/shop/files/88.jpg?v=1788559375&width=2000"
+        eyebrow="New Season"
+        title={"Quiet luxury,\nworn every day"}
+        subtitle="Considered essentials in a restrained palette, made to last and made to layer."
+        ctaLabel="Shop the collection"
+        ctaHref="/products"
+      />
+
+      <UspStrip />
+
+      <ProductSet1 header="Shop the latest" subheader="Men's T-Shirts" />
+
+      <FeaturedCategories />
+
       <GenderGridImage />
-      <ProductSet2 header="FEMALE CATALOGUE" subheader="Dresses & Gowns" />
-      <HeroSection videoUrl="https://cdn.shopify.com/videos/c/o/v/189099819a87448e8de16605f2ba18f1.mp4" />
-      <ProductSet2 header="FEMALE CATALOGUE" subheader="Dresses & Gowns" />
+
+      <HeroSection
+        imageUrl="https://www.bolapsd.xyz/cdn/shop/files/88.jpg?v=1788559375&width=2000"
+        eyebrow="The Edit"
+        title={"Made for\nthe evening"}
+        subtitle="Dresses and gowns with a sculptural line, for the moments that ask for more."
+        ctaLabel="Explore the edit"
+        ctaHref="/products/collections/women/dresses"
+        align="left"
+        height="tall"
+      />
+
+      <ProductSet2 header="Female catalogue" subheader="Dresses & Gowns" />
+
+      <Newsletter />
     </div>
   );
 }

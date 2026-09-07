@@ -1,29 +1,46 @@
 'use client';
 
 import Link from 'next/link';
+import { Instagram, Facebook, Twitter } from 'lucide-react';
 import { FooterSections } from '@/constants/footer';
-
 
 export default function Footer() {
     return (
-        <>
-            <div className='bg-gray-100 text-gray-600 text-sm font-sans p-4 lg:p-10 text-left lg:text-center border mt-20 border-t-gray-300'>
-                <h1 className='font-extrabold text-sm tracking-wider mb-4 text-black'>ABOUT US</h1>
-                We are more than just a brand. We aim to inspire confidence when it comes to how you dress and present yourself to the world. We have gone beyond offering just women’s clothing and accessories, to become an authority in fashion and beauty in our own right, endeavoring to build a community of #EveryBODYinPLT. If fast delivery and easy returns are your thing then PLT should be your go-to for women’s clothing online.
-            </div>
-            <footer className="bg-black text-white py-8 font-sans text-sm">
+        <footer className="bg-ink-900 text-ink-300">
+            <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-20">
+                <div className="h-px bg-white/10" />
+                <div className="grid grid-cols-1 gap-12 py-16 lg:grid-cols-[1.5fr_2fr]">
+                    <div className="max-w-sm">
+                        <h2 className="font-display text-2xl font-medium tracking-[0.02em] text-white">Celestique</h2>
+                        <p className="mt-4 text-sm leading-relaxed text-ink-400">
+                            A considered wardrobe for the everyday. Restrained design, honest
+                            materials and pieces made to stay with you well beyond a single season.
+                        </p>
+                        <div className="mt-6 flex items-center gap-4">
+                            <Link href="#" aria-label="Instagram" className="text-ink-400 transition-colors hover:text-white">
+                                <Instagram strokeWidth={1.5} className="h-5 w-5" />
+                            </Link>
+                            <Link href="#" aria-label="Facebook" className="text-ink-400 transition-colors hover:text-white">
+                                <Facebook strokeWidth={1.5} className="h-5 w-5" />
+                            </Link>
+                            <Link href="#" aria-label="Twitter" className="text-ink-400 transition-colors hover:text-white">
+                                <Twitter strokeWidth={1.5} className="h-5 w-5" />
+                            </Link>
+                        </div>
+                    </div>
 
-                <div className="container mx-auto px-4">
-                    <div className="leading-9 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20 mt-10">
+                    <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
                         {FooterSections.map((section, index) => (
                             <div key={index}>
-                                <h3 className="text-sm font-bold mb-4">{section.title}</h3>
-                                <ul>
+                                <h3 className="text-[11px] font-medium uppercase tracking-[0.2em] text-white">
+                                    {section.title}
+                                </h3>
+                                <ul className="mt-4 space-y-3">
                                     {section.links.map((link, linkIndex) => (
                                         <li key={linkIndex}>
                                             <Link
                                                 href={link.href}
-                                                className="hover:underline text-gray-300"
+                                                className="text-sm text-ink-400 transition-colors hover:text-white"
                                             >
                                                 {link.label}
                                             </Link>
@@ -33,14 +50,13 @@ export default function Footer() {
                             </div>
                         ))}
                     </div>
-                    <div className="text-center mt-8 border-t border-gray-200 pt-4">
-                        <p className="text-xs">&copy; 2024 Celestique. All rights reserved</p>
-                    </div>
                 </div>
-            </footer>
-        </>
 
+                <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pb-10 pt-6 sm:flex-row">
+                    <p className="text-xs text-ink-500">&copy; {new Date().getFullYear()} Celestique. All rights reserved.</p>
+                    <p className="text-xs uppercase tracking-[0.15em] text-ink-500">Visa · Mastercard · Verve · Paystack</p>
+                </div>
+            </div>
+        </footer>
     );
 }
-
-

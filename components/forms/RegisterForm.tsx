@@ -22,8 +22,6 @@ export default function RegisterForm() {
 
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const { firstname, setFirstname } = useFirstNameStore();
 
@@ -39,40 +37,23 @@ export default function RegisterForm() {
     }
   });
 
-  const onReCAPTCHAChange = (token: string | null) => {
-    setRecaptchaToken(token);
-  };
-
-  const resetRecaptcha = () => {
-    if (recaptchaRef.current) {
-      recaptchaRef.current.reset();
-    }
-  };
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const onSubmit = async (values: z.infer<typeof SignUpFormSchema>) => {
     try {
-      if (!recaptchaToken) {
-        toast.error('Please complete the reCAPTCHA');
-        return;
-      }
       setLoading(true);
-      const res = await signUp(values.firstname, values.lastname, values.phonenumber, values.email, values.password, recaptchaToken);
+      const res = await signUp(values.firstname, values.lastname, values.phonenumber, values.email, values.password);
       const { message, firstname } = res;
       localStorage.setItem('firstname', firstname);
       setFirstname(firstname);
       form.reset();
-      setRecaptchaToken(null);
-      resetRecaptcha();
       router.push('/');
       toast.success(message)
 
     } catch (error: any) {
       const errorMessage = error.response.data.message || 'An unexpected error occured';
       toast.error(errorMessage)
-      setRecaptchaToken(null);
-      resetRecaptcha();
     } finally {
       setLoading(false);
     }
@@ -170,23 +151,6 @@ export default function RegisterForm() {
               )}
             />
 
-            <div
-              style={{
-                transform: 'scale(0.8)',
-                transformOrigin: '0 0',
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'left',
-                marginTop: '15px',
-                marginBottom: '-20px',
-              }}
-            >
-              <ReCAPTCHA
-                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
-                onChange={onReCAPTCHAChange}
-                ref={recaptchaRef}
-              />
-            </div>
 
             {/* Submit Button */}
             <Button
