@@ -79,7 +79,7 @@ function CheckoutPage() {
     }
 
     return (
-        <div className="mx-auto max-w-[1400px] px-4 pb-20 pt-14 sm:px-6 lg:px-10 lg:pt-20">
+        <div className="mx-auto max-w-[1120px] px-4 pb-20 pt-14 sm:px-6 lg:px-10 lg:pt-20">
             <Link
                 href="/cart"
                 className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-500 transition-colors hover:text-ink-900"

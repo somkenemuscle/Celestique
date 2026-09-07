@@ -15,6 +15,7 @@ import { NIGERIAN_STATES } from "@/constants/states";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { FaLock } from "react-icons/fa";
 import Image from "next/image";
+import PaymentMarks, { PaystackMark } from "@/components/ui/PaymentMarks";
 import {
   Select,
   SelectContent,
@@ -82,10 +83,10 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
   };
 
   return (
-    <div className="mt-8 grid grid-cols-1 gap-x-12 gap-y-12 lg:grid-cols-[1fr_400px]">
+    <div className="mt-8 grid grid-cols-1 gap-x-14 gap-y-12 lg:grid-cols-2">
       {/* Form */}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-xl space-y-10">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
           {/* Delivery */}
           <section className="space-y-4">
             <SectionHeading>Delivery</SectionHeading>
@@ -235,11 +236,14 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
           <section className="space-y-4">
             <SectionHeading>Payment</SectionHeading>
             <p className="text-sm text-ink-500">All transactions are secure and encrypted.</p>
-            <div className="flex items-center justify-between border border-ink-200 px-4 py-3.5 text-sm text-ink-700">
-              <span>Paystack</span>
-              <span className="text-[11px] uppercase tracking-[0.12em] text-ink-400">
-                Card / Transfer / USSD
-              </span>
+            <div className="flex flex-wrap items-center justify-between gap-3 border border-ink-200 px-4 py-3.5">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-4 w-4 items-center justify-center rounded-full border border-ink-900">
+                  <span className="h-2 w-2 rounded-full bg-ink-900" />
+                </span>
+                <PaystackMark />
+              </div>
+              <PaymentMarks />
             </div>
             <p className="text-xs leading-relaxed text-ink-400">
               After you tap Pay, you will be redirected to Paystack to complete your purchase securely.
