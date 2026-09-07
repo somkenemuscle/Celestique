@@ -16,7 +16,7 @@ const panels = [
 
 export default function GenderGridImage() {
     return (
-        <section className="grid grid-cols-1 gap-4 px-6 py-4 sm:px-10 lg:grid-cols-2 lg:gap-6 lg:px-20">
+        <section className="mx-auto grid max-w-7xl grid-cols-1 gap-4 px-6 py-20 sm:px-10 lg:grid-cols-2 lg:gap-6 lg:px-20">
             {panels.map((panel) => (
                 <Link
                     key={panel.label}

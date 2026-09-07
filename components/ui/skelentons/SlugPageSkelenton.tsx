@@ -1,59 +1,45 @@
-
 function SlugPageSkelenton() {
     return (
-        <div className="grid grid-cols-12 slug-page-body mt-10 gap-6">
+        <div className="mx-auto max-w-[1400px] px-4 pb-20 pt-8 sm:px-6 lg:px-10">
+            <div className="h-3 w-40 animate-pulse bg-ink-100" />
 
-            {/* Skeleton Carousel Section */}
-            <div className="col-span-12 md:col-span-6 flex justify-center">
-                <div className="w-full h-full bg-gray-200 animate-pulse rounded"></div>
-            </div>
-
-            {/* Skeleton Product Details Section */}
-            <div className="col-span-12 p-10 lg:pr-20 sm:p-20 md:col-span-6 space-y-6">
-                {/* Brand Name */}
-                <div className="h-4 w-1/3 bg-gray-200 animate-pulse rounded"></div>
-                {/* Product Name */}
-                <div className="h-6 w-3/4 bg-gray-200 animate-pulse rounded"></div>
-                {/* Product Price */}
-                <div className="h-4 w-1/2 bg-gray-200 animate-pulse rounded"></div>
-                {/* Stock Status */}
-                <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded"></div>
-                {/* Size Selection */}
-                <div>
-                    <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded mb-3"></div>
-                    <div className="h-10 bg-gray-200 animate-pulse rounded"></div>
-                </div>
-                {/* Color Selection */}
-                <div>
-                    <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded mb-3"></div>
-                    <div className="h-10 bg-gray-200 animate-pulse rounded"></div>
-                </div>
-                {/* Quantity Selection */}
-                <div>
-                    <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded mb-3"></div>
-                    <div className="flex items-center space-x-3">
-                        <div className="h-10 w-10 bg-gray-200 animate-pulse rounded"></div>
-                        <div className="h-10 w-10 bg-gray-200 animate-pulse rounded"></div>
-                        <div className="h-10 w-10 bg-gray-200 animate-pulse rounded"></div>
-                    </div>
-                </div>
-                {/* Add to Cart Button */}
-                <div className="h-12 w-full bg-gray-200 animate-pulse rounded"></div>
-                {/* Save for Later Button */}
-                <div className="h-12 w-full bg-gray-200 animate-pulse rounded"></div>
-                {/* Product Details */}
-                <div>
-                    <div className="h-4 w-1/3 bg-gray-200 animate-pulse rounded mb-3"></div>
-                    <div className="space-y-2">
-                        {[...Array(3)].map((_, idx) => (
-                            <div key={idx} className="h-4 bg-gray-200 animate-pulse rounded w-full"></div>
+            <div className="mt-6 grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-2 xl:gap-x-16">
+                {/* Gallery */}
+                <div className="animate-pulse">
+                    <div className="aspect-[3/4] w-full bg-ink-100" />
+                    <div className="mt-4 grid grid-cols-5 gap-3">
+                        {[...Array(5)].map((_, i) => (
+                            <div key={i} className="aspect-[3/4] bg-ink-100" />
                         ))}
                     </div>
                 </div>
+
+                {/* Info */}
+                <div className="animate-pulse space-y-4">
+                    <div className="h-3 w-24 bg-ink-100" />
+                    <div className="h-7 w-3/4 bg-ink-100" />
+                    <div className="h-5 w-1/3 bg-ink-100" />
+                    <div className="h-3 w-28 bg-ink-100" />
+                    <div className="h-px w-full bg-ink-100" />
+                    <div className="h-3 w-16 bg-ink-100" />
+                    <div className="flex gap-2">
+                        {[...Array(4)].map((_, i) => (
+                            <div key={i} className="h-10 w-12 bg-ink-100" />
+                        ))}
+                    </div>
+                    <div className="h-3 w-16 bg-ink-100" />
+                    <div className="flex gap-2">
+                        {[...Array(3)].map((_, i) => (
+                            <div key={i} className="h-10 w-24 bg-ink-100" />
+                        ))}
+                    </div>
+                    <div className="h-11 w-32 bg-ink-100" />
+                    <div className="h-12 w-full bg-ink-100" />
+                    <div className="h-12 w-full bg-ink-100" />
+                </div>
             </div>
         </div>
-
-    )
+    );
 }
 
-export default SlugPageSkelenton
+export default SlugPageSkelenton;

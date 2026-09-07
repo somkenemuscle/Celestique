@@ -257,7 +257,7 @@ export default function Navbar() {
 
                     {/* Category bar */}
                     <div className="hidden border-b border-ink-100 lg:block">
-                        <ul className="flex items-center justify-center gap-x-10 py-3.5 text-[12px] font-bold uppercase tracking-[0.2em] text-ink-900">
+                        <ul className="flex items-center justify-center gap-x-10 py-3.5 text-[11px] font-medium uppercase tracking-[0.22em] text-ink-800">
                             {navigation.categories.map((category) => {
                                 const links = category.sections.flatMap((section) =>
                                     section.items.map((item) => ({ name: item.name, href: item.href }))

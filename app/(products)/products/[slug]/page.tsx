@@ -1,252 +1,316 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { getProductBySlug } from "@/services/product";
-import LoaderDark from "@/components/ui/loaders/LoaderDark";
-import Loader from "@/components/ui/loaders/Loader";
+import Link from "next/link";
 import Image from "next/image";
-import { addToCart } from "@/services/cart";
-import useCartStore from "@/store/cartStore";
 import toast from "react-hot-toast";
-import StatusGraphic from "@/components/ui/StatusGraphic";
-import ProductSet1 from "@/components/shared/ProductSet1";
-import { validateCartInputs } from "@/lib/validate";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { X, Search } from "lucide-react";
+import { getProductBySlug } from "@/services/product";
+import { addToCart } from "@/services/cart";
 import { saveProductToFavorite } from "@/services/favoriteProduct";
+import useCartStore from "@/store/cartStore";
+import { validateCartInputs } from "@/lib/validate";
+import Loader from "@/components/ui/loaders/Loader";
+import LoaderDark from "@/components/ui/loaders/LoaderDark";
+import ProductSet1 from "@/components/shared/ProductSet1";
 import SlugPageSkelenton from "@/components/ui/skelentons/SlugPageSkelenton";
-
-
 
 function Slugpage({ params: { slug } }: { params: { slug: string } }) {
     const [product, setProduct] = useState<Product | null>(null);
+    const [initialLoading, setInitialLoading] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [WishlistLoading, setWishlistLoading] = useState(false);
-    const [initialLoading, setInitialLoading] = useState(false);
+    const [wishlistLoading, setWishlistLoading] = useState(false);
+    const [saved, setSaved] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { setGlobalCart } = useCartStore();
 
+    const [selectedQuantity, setSelectedQuantity] = useState(1);
+    const [selectedSize, setSelectedSize] = useState("");
+    const [selectedColor, setSelectedColor] = useState("");
 
-    // States for user input
-    const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
-    const [selectedSize, setSelectedSize] = useState<string>("");
-    const [selectedColor, setSelectedColor] = useState<string>("");
-
-    // State for fullscreen image modal
+    const [activeImage, setActiveImage] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [currentImage, setCurrentImage] = useState<string | null>(null);
 
     useEffect(() => {
         async function fetchProduct() {
-            setInitialLoading(true); // Set loading to true at the start
+            setInitialLoading(true);
             try {
                 const res = await getProductBySlug(slug);
                 setProduct(res.product);
             } catch (err: any) {
-                setError(err.message || "Failed to fetch product");
+                setError(err?.response?.data?.message || err?.message || "Failed to load this product");
             } finally {
-                setInitialLoading(false); // Ensure loading is false at the end
+                setInitialLoading(false);
             }
         }
         fetchProduct();
     }, [slug]);
 
+    useEffect(() => {
+        function onKey(e: KeyboardEvent) {
+            if (e.key === "Escape") setIsModalOpen(false);
+        }
+        document.addEventListener("keydown", onKey);
+        return () => document.removeEventListener("keydown", onKey);
+    }, []);
 
-
-
-    // Handler for adding to cart
     const handleAddToCart = async () => {
         const validationErrors = validateCartInputs(selectedColor, selectedSize, selectedQuantity);
         if (validationErrors) {
             toast.error(validationErrors);
             return;
         }
-
         try {
             setLoading(true);
             const res = await addToCart(product!._id, selectedQuantity, selectedSize, selectedColor);
             setGlobalCart(res.cart);
             toast.success(res.message);
-        } catch (error: any) {
-            toast.error(error.response?.data?.message || 'An error occurred while adding to the cart');
+        } catch (err: any) {
+            toast.error(err?.response?.data?.message || "Could not add to bag");
         } finally {
             setLoading(false);
         }
     };
 
-
-
-    const openModal = (image: string) => {
-        setCurrentImage(image);
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setCurrentImage(null);
-    };
-
-    async function handleSave(id: string) {
+    const handleSave = async () => {
+        if (!product) return;
         try {
-            setWishlistLoading(true)
-            const res = await saveProductToFavorite(id);
-            toast.success(res.message)
-
-        } catch (error) {
-            console.log(error);
+            setWishlistLoading(true);
+            const res = await saveProductToFavorite(product._id);
+            setSaved(true);
+            toast.success(res.message);
+        } catch (err: any) {
+            toast.error(err?.response?.data?.message || "Could not save this item");
         } finally {
-            setWishlistLoading(false)
+            setWishlistLoading(false);
         }
-    }
-
+    };
 
     if (initialLoading) return <SlugPageSkelenton />;
-    if (!product) return (<div className="mt-72 justify-self-center"><StatusGraphic message="Product Not Found" /></div>)
 
+    if (!product) {
+        return (
+            <div className="mx-auto max-w-[1400px] px-4 py-32 text-center sm:px-6 lg:px-10">
+                <p className="text-sm text-ink-700">{error ?? "Product not found"}</p>
+                <Link
+                    href="/products"
+                    className="mt-6 inline-block border border-ink-900 px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-900 transition hover:bg-ink-900 hover:text-white"
+                >
+                    Back to shop
+                </Link>
+            </div>
+        );
+    }
+
+    const outOfStock = product.quantity === 0;
+    const lowStock = product.quantity > 0 && product.quantity <= 10;
+    const dotColor = outOfStock ? "bg-red-600" : lowStock ? "bg-amber-500" : "bg-emerald-500";
+    const stockLabel = outOfStock
+        ? "Out of stock"
+        : lowStock
+        ? `Low stock, ${product.quantity} left`
+        : "In stock";
 
     return (
-        <div>
-            {product && (
-                <div className="grid grid-cols-12 slug-page-body">
-                    {/* Carousel Section */}
-                    <div className="col-span-12 md:col-span-6  flex">
-                        <Image
-                            src={product.images[0]}
-                            alt={`${product.name}`}
-                            width={500}
-                            height={500}
-                            className="object-cover w-full hover:cursor-zoom-in"
-                            onClick={() => openModal(product.images[0])}
-                        />
+        <>
+            <div className="mx-auto max-w-[1400px] px-4 pb-20 pt-8 sm:px-6 lg:px-10">
+                <nav className="text-[11px] uppercase tracking-[0.16em] text-ink-400">
+                    <Link href="/" className="transition-colors hover:text-ink-900">Home</Link>
+                    <span className="px-1.5">/</span>
+                    <Link href="/products" className="transition-colors hover:text-ink-900">Shop</Link>
+                    <span className="px-1.5">/</span>
+                    <span className="text-ink-700">{product.name}</span>
+                </nav>
+
+                <div className="mt-6 grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-2 xl:gap-x-16">
+                    {/* Gallery */}
+                    <div>
+                        <button
+                            type="button"
+                            onClick={() => setIsModalOpen(true)}
+                            className="group relative block aspect-[3/4] w-full cursor-zoom-in overflow-hidden bg-ink-50"
+                        >
+                            <Image
+                                src={product.images[activeImage] ?? product.images[0]}
+                                alt={product.name}
+                                fill
+                                priority
+                                sizes="(min-width: 1024px) 45vw, 100vw"
+                                className="pointer-events-none object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                            />
+                            <span className="pointer-events-none absolute bottom-4 right-4 flex items-center gap-1.5 bg-white/90 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-900 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+                                <Search className="h-3 w-3" />
+                                Zoom
+                            </span>
+                        </button>
+
+                        {product.images.length > 1 && (
+                            <div className="mt-4 grid grid-cols-5 gap-3">
+                                {product.images.map((img, index) => (
+                                    <button
+                                        key={index}
+                                        onMouseEnter={() => setActiveImage(index)}
+                                        onClick={() => setActiveImage(index)}
+                                        className={`relative aspect-[3/4] overflow-hidden bg-ink-50 transition ${
+                                            activeImage === index
+                                                ? "opacity-100 ring-1 ring-ink-400 ring-offset-2"
+                                                : "opacity-60 hover:opacity-100"
+                                        }`}
+                                    >
+                                        <Image src={img} alt="" fill sizes="120px" className="object-cover" />
+                                    </button>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
-                    {/* Product Details Section */}
-                    <div className="col-span-12 p-10 lg:pr-20 sm:p-20  md:col-span-6 hover:cursor-pointer">
-                        <p className="text-sm text-gray-500 mb-1">Celestique</p>
-                        <h1 className="text-2xl font-semibold mb-1 tracking-wide">{product.name}</h1>
-                        <p className="text-lg tracking-wide"> ₦ {product.price.toLocaleString()}</p>
-                        <p className="text-sm tracking-wider text-gray-500 mb-6 flex items-center ">
-                            <span className="flex items-center justify-center mr-2">
-                                <span
-                                    className={`absolute h-2 w-2 rounded-full bg-opacity-50 animate-pulse-ring ${product.quantity > 10 ? 'bg-green-600' : 'bg-red-600'
-                                        }`}
-                                ></span>
-                                <span
-                                    className={`h-2 w-2 rounded-full ${product.quantity > 10 ? 'bg-green-500' : 'bg-red-600'
-                                        }`}
-                                ></span>
+                    {/* Info */}
+                    <div className="lg:sticky lg:top-24 lg:h-fit">
+                        <span className="eyebrow">Celestique</span>
+                        <h1 className="mt-2 font-display text-2xl font-medium tracking-[0.01em] text-ink-900 sm:text-3xl">
+                            {product.name}
+                        </h1>
+                        <p className="mt-3 text-lg text-ink-900">&#8358;{product.price.toLocaleString()}</p>
+
+                        <p className="mt-3 flex items-center gap-2 text-xs uppercase tracking-[0.12em] text-ink-500">
+                            <span className="relative flex h-2 w-2 items-center justify-center">
+                                <span className={`absolute h-2 w-2 rounded-full opacity-60 animate-pulse-ring ${dotColor}`} />
+                                <span className={`h-2 w-2 rounded-full ${dotColor}`} />
                             </span>
-                            {product.quantity > 10 ? <span>In Stock </span> : <span>Low Stock </span>} . ( {product.quantity} Units left )
+                            {stockLabel}
                         </p>
 
-                        <p className="font-semibold text-sm text-red-500 tracking-wider mb-4">{product.quantity === 0 && 'OUT OF STOCK'}</p>
+                        <div className="my-7 h-px bg-ink-100" />
 
-                        <hr />
-
-                        {/* Size Selection */}
-                        <div className="my-6">
-                            <label htmlFor="size" className="block font-medium mb-2 text-gray-500">Size</label>
-                            <select
-                                id="size"
-                                value={selectedSize}
-                                onChange={(e) => setSelectedSize(e.target.value)}
-                                className="hover:cursor-pointer border border-gray-300 rounded p-3 w-full outline-none"
-                            >
-                                <option value="">Select Size</option>
-                                {product.sizes.map((size: string) => (
-                                    <option key={size} value={size}>{size}</option>
+                        {/* Size */}
+                        <div>
+                            <span className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-900">Size</span>
+                            <div className="mt-3 flex flex-wrap gap-2">
+                                {product.sizes.map((size) => (
+                                    <button
+                                        key={size}
+                                        onClick={() => setSelectedSize((s) => (s === size ? "" : size))}
+                                        className={`flex h-10 min-w-[3rem] items-center justify-center border px-3 text-xs uppercase tracking-[0.08em] transition ${
+                                            selectedSize === size
+                                                ? "border-ink-900 bg-ink-900 text-white"
+                                                : "border-ink-200 text-ink-700 hover:border-ink-900"
+                                        }`}
+                                    >
+                                        {size}
+                                    </button>
                                 ))}
-                            </select>
+                            </div>
                         </div>
 
-                        {/* Color Selection */}
-                        <div className="mb-4">
-                            <label htmlFor="color" className="block font-medium mb-2 text-gray-500">Color</label>
-                            <select
-                                id="color"
-                                value={selectedColor}
-                                onChange={(e) => setSelectedColor(e.target.value)}
-                                className="hover:cursor-pointer border border-gray-300 rounded p-3 w-full outline-none"
-                            >
-                                <option value="">Select Color</option>
-                                {product.colors.map((color: string) => (
-                                    <option key={color} value={color}>{color}</option>
+                        {/* Colour */}
+                        <div className="mt-6">
+                            <span className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-900">Colour</span>
+                            <div className="mt-3 flex flex-wrap gap-2">
+                                {product.colors.map((color) => (
+                                    <button
+                                        key={color}
+                                        onClick={() => setSelectedColor((c) => (c === color ? "" : color))}
+                                        className={`inline-flex h-10 items-center gap-2 border px-3 text-xs uppercase tracking-[0.08em] transition ${
+                                            selectedColor === color
+                                                ? "border-ink-900 text-ink-900"
+                                                : "border-ink-200 text-ink-600 hover:border-ink-900"
+                                        }`}
+                                    >
+                                        <span
+                                            className="inline-block h-3.5 w-3.5 rounded-full border border-ink-200"
+                                            style={{ backgroundColor: color.toLowerCase() }}
+                                        />
+                                        {color}
+                                    </button>
                                 ))}
-                            </select>
+                            </div>
                         </div>
 
-                        {/* Quantity Selection */}
-                        <div className="mb-6">
-                            <label htmlFor="quantity" className="block font-medium mb-2 text-gray-500">
-                                Quantity
-                            </label>
-                            <div className="flex items-center space-x-2 border border-gray-300 rounded w-24 py-2">
+                        {/* Quantity */}
+                        <div className="mt-6">
+                            <span className="block text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-900">Quantity</span>
+                            <div className="mt-3 flex h-9 w-fit items-center border border-ink-200">
                                 <button
-                                    onClick={() => setSelectedQuantity((prev) => Math.max(1, prev - 1))}
-                                    className="px-3  rounded text-gray-700"
+                                    onClick={() => setSelectedQuantity((q) => Math.max(1, q - 1))}
                                     disabled={selectedQuantity <= 1}
+                                    className="flex h-full w-9 items-center justify-center text-sm text-ink-700 transition-colors hover:bg-ink-50 disabled:cursor-not-allowed disabled:text-ink-300"
+                                    aria-label="Decrease quantity"
                                 >
-                                    -
+                                    &minus;
                                 </button>
-                                <input
-                                    type="text"
-                                    id="quantity"
-                                    value={selectedQuantity}
-                                    readOnly
-                                    className="text-sm text-center outline-none w-5"
-                                />
+                                <span className="flex h-full w-10 items-center justify-center border-x border-ink-200 text-xs">
+                                    {selectedQuantity}
+                                </span>
                                 <button
-                                    onClick={() => setSelectedQuantity((prev) => Math.min(product.quantity, prev + 1))}
-                                    className="px-3 rounded text-gray-700 text-sm"
+                                    onClick={() => setSelectedQuantity((q) => Math.min(product.quantity, q + 1))}
                                     disabled={selectedQuantity >= product.quantity}
+                                    className="flex h-full w-9 items-center justify-center text-sm text-ink-700 transition-colors hover:bg-ink-50 disabled:cursor-not-allowed disabled:text-ink-300"
+                                    aria-label="Increase quantity"
                                 >
                                     +
                                 </button>
                             </div>
                         </div>
 
-
-                        {/* Add to Cart Button */}
+                        {/* Actions */}
                         <button
-                            className="bg-black tracking-wider text-sm text-white p-3 rounded hover:bg-gray-800 transition w-full mt-3"
-                            onClick={handleAddToCart} >
-                            <span className="inline-block">{loading ? (<Loader />) : 'ADD TO CART'}</span>
+                            onClick={handleAddToCart}
+                            disabled={outOfStock || loading}
+                            className="mt-8 flex h-12 w-full items-center justify-center bg-ink-900 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-ink-700 disabled:cursor-not-allowed disabled:bg-ink-300"
+                        >
+                            {loading ? <Loader /> : outOfStock ? "Out of stock" : "Add to bag"}
                         </button>
 
-                        <button onClick={() => handleSave(product._id)} className="w-full p-3 tracking-wider text-sm mt-3 text-center border border-gray-400 rounded hover:bg-gray-100 transition">
-                            <span className="inline-block">{WishlistLoading ? (<LoaderDark />) : 'SAVE FOR LATER'}</span>
-
+                        <button
+                            onClick={handleSave}
+                            disabled={wishlistLoading}
+                            className="mt-3 flex h-12 w-full items-center justify-center gap-2 border border-ink-300 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-900 transition-colors hover:border-ink-900"
+                        >
+                            {wishlistLoading ? (
+                                <LoaderDark />
+                            ) : (
+                                <>
+                                    {saved ? <FaHeart className="h-3.5 w-3.5" /> : <FaRegHeart className="h-3.5 w-3.5" />}
+                                    {saved ? "Saved" : "Save for later"}
+                                </>
+                            )}
                         </button>
 
-
-                        <div className="mt-10">
-                            <h1 className="text-gray-500 font-semibold">Product Details</h1>
-                            <p className="text-sm text-left pt-2">{product.description}</p>
+                        <div className="mt-9 border-t border-ink-100 pt-6">
+                            <h2 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-900">Details</h2>
+                            <p className="mt-3 text-sm leading-relaxed text-ink-600">{product.description}</p>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    {/* Fullscreen Modal */}
-                    {isModalOpen && (
-                        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-                            <div className="relative">
-                                <button
-                                    onClick={closeModal}
-                                    className="absolute top-2 right-2 text-white bg-red-500 rounded-full w-8 h-8 flex items-center justify-center"
-                                >
-                                    ✕
-                                </button>
-                                <Image
-                                    src={currentImage!}
-                                    alt="Fullscreen Image"
-                                    width={800}
-                                    height={800}
-                                    className="object-contain max-h-screen"
-                                />
-                            </div>
-                        </div>
-                    )}
+            {isModalOpen && (
+                <div
+                    className="fixed inset-0 z-[60] flex items-center justify-center bg-ink-900/90 p-4"
+                    onClick={() => setIsModalOpen(false)}
+                >
+                    <button
+                        onClick={() => setIsModalOpen(false)}
+                        aria-label="Close"
+                        className="absolute right-5 top-5 text-white/80 transition-colors hover:text-white"
+                    >
+                        <X className="h-6 w-6" />
+                    </button>
+                    <div className="relative h-[88vh] w-full max-w-3xl" onClick={(e) => e.stopPropagation()}>
+                        <Image
+                            src={product.images[activeImage] ?? product.images[0]}
+                            alt={product.name}
+                            fill
+                            sizes="90vw"
+                            className="object-contain"
+                        />
+                    </div>
                 </div>
             )}
-            <ProductSet1 header="Recommended" subheader="You might also like this" />
-        </div>
+
+            <ProductSet1 header="You might also like" subheader="Recommended for you" />
+        </>
     );
 }
 
