@@ -1,6 +1,6 @@
-export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
+export default function AuthLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <main >
+        <main className="mx-auto w-full max-w-xl px-4 py-16 sm:py-20">
             {children}
         </main>
     );

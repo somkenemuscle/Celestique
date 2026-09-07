@@ -85,7 +85,7 @@ export default function ShippingAddressForm({ cart }: { cart: Cart }) {
     <div className="mt-8 grid grid-cols-1 gap-x-12 gap-y-12 lg:grid-cols-[1fr_400px]">
       {/* Form */}
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-xl space-y-10">
           {/* Delivery */}
           <section className="space-y-4">
             <SectionHeading>Delivery</SectionHeading>
