@@ -19,6 +19,7 @@ function CartPage() {
   const [isAnyOutOfStock, setIsAnyOutOfStock] = useState(false);
   const [loadingItemId, setLoadingItemId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [needsAuth, setNeedsAuth] = useState(false);
 
   useEffect(() => {
     async function fetchCartItems() {
@@ -27,7 +28,11 @@ function CartPage() {
         setCart(res.cart);
         setIsAnyOutOfStock(res.cart.items.some((item: any) => item.product.quantity === 0));
       } catch (err: any) {
-        setError(err?.message || "Failed to load your bag");
+        if (err?.response?.status === 401) {
+          setNeedsAuth(true);
+        } else {
+          setError(err?.response?.data?.message || "Failed to load your bag");
+        }
       } finally {
         setInitialLoading(false);
       }
@@ -80,6 +85,55 @@ function CartPage() {
   };
 
   if (initialLoading) return <CartSkeleton />;
+
+  if (needsAuth) {
+    return (
+      <div className="mx-auto max-w-[1400px] px-4 pb-24 pt-14 sm:px-6 lg:px-10 lg:pt-20">
+        <h1 className="border-b border-ink-100 pb-6 font-display text-3xl font-medium tracking-[0.01em] text-ink-900 sm:text-4xl">
+          Shopping bag
+        </h1>
+        <div className="mt-8 border border-ink-100 py-24 text-center">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            className="mx-auto h-10 w-10 text-ink-300"
+            stroke="currentColor"
+            strokeWidth="1.25"
+          >
+            <path d="M6 7h12l1 13H5L6 7Z" strokeLinejoin="round" />
+            <path d="M9 7V5a3 3 0 0 1 6 0v2" strokeLinecap="round" />
+          </svg>
+          <h2 className="mt-5 text-sm font-medium uppercase tracking-[0.14em] text-ink-900">
+            Sign in to see your bag
+          </h2>
+          <p className="mt-2 text-sm text-ink-500">
+            Your bag is saved to your account. Sign in to pick up where you left off.
+          </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/sign-in"
+              className="border border-ink-900 bg-ink-900 px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white transition hover:bg-ink-700"
+            >
+              Sign in
+            </Link>
+            <Link
+              href="/register"
+              className="border border-ink-300 px-6 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-900 transition hover:border-ink-900"
+            >
+              Create account
+            </Link>
+          </div>
+          <Link
+            href="/products"
+            className="mt-6 inline-block text-[11px] uppercase tracking-[0.14em] text-ink-400 underline underline-offset-4 transition-colors hover:text-ink-900"
+          >
+            Continue shopping
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   if (!cart) {
     return (
       <div className="mx-auto max-w-[1400px] px-4 py-32 text-center sm:px-6 lg:px-10">

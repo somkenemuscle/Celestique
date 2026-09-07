@@ -1,110 +1,52 @@
-
 function ShippingFormSkelenton() {
-    return (
-        <div className="mt-10 mb-10">
-            <div className="container mx-auto px-6 sm:px-6 md:px-20 lg:px-20">
-                {/* Main Grid Container */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+  return (
+    <div className="mx-auto max-w-[1400px] px-4 pb-20 pt-14 sm:px-6 lg:px-10 lg:pt-20">
+      <div className="h-3 w-24 animate-pulse bg-ink-100" />
+      <div className="mt-6 border-b border-ink-100 pb-6">
+        <div className="h-9 w-48 animate-pulse bg-ink-100" />
+      </div>
 
-                    {/* SHIPPING FORM SECTION - Left */}
-                    <div className="lg:col-span-6 space-y-6">
-                        {/* Delivery Details */}
-                        <div>
-                            <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded"></div>
-                            <div className="h-4 w-1/2 bg-gray-200 animate-pulse rounded mt-2"></div>
-                            <div className="w-full p-4 border border-gray-200 text-sm rounded-xl mt-3 flex justify-between items-center">
-                                <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded"></div>
-                                <div className="h-6 w-6 bg-gray-200 animate-pulse rounded"></div>
-                            </div>
-                        </div>
-
-                        {/* Firstname and Lastname Inputs */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div className="h-12 w-full bg-gray-200 animate-pulse rounded"></div>
-                            <div className="h-12 w-full bg-gray-200 animate-pulse rounded"></div>
-                        </div>
-
-                        {/* Country Input */}
-                        <div className="h-12 w-full bg-gray-200 animate-pulse rounded"></div>
-
-                        {/* Address Input */}
-                        <div className="h-12 w-full bg-gray-200 animate-pulse rounded"></div>
-
-                        {/* City, State, and Postal Code Inputs */}
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <div className="h-12 w-full bg-gray-200 animate-pulse rounded"></div>
-                            <div className="h-12 w-full bg-gray-200 animate-pulse rounded"></div>
-                            <div className="h-12 w-full bg-gray-200 animate-pulse rounded"></div>
-                        </div>
-
-                        {/* Phone Number Input */}
-                        <div className="h-12 w-full bg-gray-200 animate-pulse rounded"></div>
-
-                        {/* Shipping Method Section */}
-                        <div>
-                            <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded"></div>
-                            <div className="w-full p-4 border border-gray-200 text-sm rounded-xl mt-3 flex justify-between items-center">
-                                <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded"></div>
-                                <div className="h-6 w-12 bg-gray-200 animate-pulse rounded"></div>
-                            </div>
-                        </div>
-
-                        {/* Payment Method Section */}
-                        <div>
-                            <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded"></div>
-                            <div className="h-4 w-1/2 bg-gray-200 animate-pulse rounded mt-2"></div>
-                            <div className="w-full p-4 border border-gray-200 text-sm rounded-xl mt-3 flex justify-between items-center">
-                                <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded"></div>
-                                <div className="h-6 w-6 bg-gray-200 animate-pulse rounded"></div>
-                            </div>
-                            <div className="h-4 w-full bg-gray-200 animate-pulse rounded mt-3"></div>
-                        </div>
-
-                        {/* Submit Button */}
-                        <div className="h-12 w-full bg-gray-200 animate-pulse rounded"></div>
-                    </div>
-
-                    {/* CHECKOUT SUMMARY SECTION - Right */}
-                    <div className="p-6 border lg:px-10 lg:col-span-6 rounded-xl sm:h-full lg:h-full bg-gray-50">
-                        {/* Cart Items */}
-                        <div className="space-y-4">
-                            {[...Array(3)].map((_, i) => (
-                                <div key={i} className="flex items-center border-b pb-4">
-                                    {/* Product Image */}
-                                    <div className="h-12 w-12 bg-gray-200 animate-pulse rounded-xl"></div>
-                                    {/* Product Details */}
-                                    <div className="ml-4 flex-grow space-y-2">
-                                        <div className="h-4 w-1/2 bg-gray-200 animate-pulse rounded"></div>
-                                        <div className="h-4 w-1/3 bg-gray-200 animate-pulse rounded"></div>
-                                        <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded"></div>
-                                    </div>
-                                    <div className="h-4 w-12 bg-gray-200 animate-pulse rounded"></div>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Summary Section */}
-                        <div className="text-sm space-y-4">
-                            <div className="flex justify-between items-center py-2">
-                                <div className="h-4 w-1/3 bg-gray-200 animate-pulse rounded"></div>
-                                <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded"></div>
-                            </div>
-                            <div className="flex justify-between items-center py-2">
-                                <div className="h-4 w-1/3 bg-gray-200 animate-pulse rounded"></div>
-                                <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded"></div>
-                            </div>
-                            <hr className="my-2" />
-                            <div className="flex justify-between items-center font-bold text-lg py-2">
-                                <div className="h-4 w-1/4 bg-gray-200 animate-pulse rounded"></div>
-                                <div className="h-4 w-1/3 bg-gray-200 animate-pulse rounded"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <div className="mt-8 grid grid-cols-1 gap-x-12 gap-y-12 lg:grid-cols-[1fr_400px]">
+        {/* Form side */}
+        <div className="animate-pulse space-y-10">
+          {[...Array(3)].map((_, section) => (
+            <div key={section} className="space-y-5">
+              <div className="h-3 w-32 border-b border-ink-100 pb-3 bg-ink-100" />
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div className="h-11 w-full bg-ink-100" />
+                <div className="h-11 w-full bg-ink-100" />
+              </div>
+              <div className="h-11 w-full bg-ink-100" />
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+                <div className="h-11 w-full bg-ink-100" />
+                <div className="h-11 w-full bg-ink-100" />
+                <div className="h-11 w-full bg-ink-100" />
+              </div>
             </div>
+          ))}
+          <div className="h-12 w-full bg-ink-100" />
         </div>
 
-    )
+        {/* Summary side */}
+        <div className="lg:h-fit">
+          <div className="animate-pulse space-y-4 border border-ink-100 p-6">
+            <div className="h-3 w-1/3 bg-ink-100" />
+            {[...Array(2)].map((_, i) => (
+              <div key={i} className="flex gap-3 py-2">
+                <div className="aspect-[3/4] w-14 shrink-0 bg-ink-100" />
+                <div className="flex-1 space-y-2 pt-1">
+                  <div className="h-3 w-2/3 bg-ink-100" />
+                  <div className="h-3 w-1/3 bg-ink-100" />
+                </div>
+              </div>
+            ))}
+            <div className="h-4 w-full bg-ink-100" />
+            <div className="h-4 w-full bg-ink-100" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default ShippingFormSkelenton
+export default ShippingFormSkelenton;
