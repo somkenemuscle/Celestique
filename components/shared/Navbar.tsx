@@ -6,8 +6,7 @@ import {
     DialogBackdrop,
     DialogPanel,
 } from '@headlessui/react';
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon, HeartIcon } from '@heroicons/react/24/outline';
-import { ChevronDownIcon } from 'lucide-react';
+import { Menu as MenuIcon, Search as SearchIcon, ShoppingBag, X as XIcon, Heart, ChevronDownIcon } from 'lucide-react';
 import { navigation } from '@/constants/navigation';
 import Link from 'next/link';
 import { getCart } from '@/services/cart';
@@ -98,7 +97,7 @@ export default function Navbar() {
                                 className="-mr-1.5 p-1.5 text-ink-500 hover:text-ink-900"
                             >
                                 <span className="sr-only">Close menu</span>
-                                <XMarkIcon aria-hidden="true" className="size-6" />
+                                <XIcon aria-hidden="true" strokeWidth={1.5} className="size-6" />
                             </button>
                         </div>
 
@@ -179,7 +178,7 @@ export default function Navbar() {
                                 className="relative -ml-1.5 inline-flex items-center gap-2 p-1.5 text-ink-900 lg:hidden"
                             >
                                 <span className="absolute -inset-0.5" />
-                                <Bars3Icon aria-hidden="true" className="size-6" />
+                                <MenuIcon aria-hidden="true" strokeWidth={1.5} className="size-6" />
                                 <span className="hidden text-[11px] font-semibold uppercase tracking-[0.22em] sm:inline">
                                     Menu
                                 </span>
@@ -231,22 +230,22 @@ export default function Navbar() {
                             <div className="flex lg:ml-5">
                                 <Link href="/customer/wishlist" onClick={closeMenus} className="p-1.5 text-ink-900 hover:text-ink-500 lg:p-2">
                                     <span className="sr-only">Wishlist</span>
-                                    <HeartIcon aria-hidden="true" className="size-5 lg:size-6" />
+                                    <Heart aria-hidden="true" strokeWidth={1.5} className="size-5 lg:size-[1.375rem]" />
                                 </Link>
                             </div>
 
                             <div className="flex">
                                 <Link href="/search" onClick={closeMenus} className="p-1.5 text-ink-900 hover:text-ink-500 lg:p-2">
                                     <span className="sr-only">Search</span>
-                                    <MagnifyingGlassIcon aria-hidden="true" className="size-5 lg:size-6" />
+                                    <SearchIcon aria-hidden="true" strokeWidth={1.5} className="size-5 lg:size-[1.375rem]" />
                                 </Link>
                             </div>
 
                             <div className="flow-root">
                                 <Link href="/cart" onClick={closeMenus} className="group relative flex items-center p-1.5 text-ink-900 lg:p-2">
-                                    <ShoppingBagIcon aria-hidden="true" className="size-5 group-hover:text-ink-500 lg:size-6" />
+                                    <ShoppingBag aria-hidden="true" strokeWidth={1.5} className="size-5 group-hover:text-ink-500 lg:size-[1.375rem]" />
                                     {cartItemCount > 0 && (
-                                        <span className="absolute -right-0.5 top-0 flex h-4 w-4 items-center justify-center rounded-full bg-black text-[10px] font-bold text-white lg:h-5 lg:w-5 lg:text-xs">
+                                        <span className="absolute -right-1 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-ink-900 px-1 text-[9px] font-semibold leading-none text-white lg:text-[10px]">
                                             {cartItemCount}
                                         </span>
                                     )}
